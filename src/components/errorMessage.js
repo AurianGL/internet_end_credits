@@ -27,7 +27,7 @@ export default function ErrorMessage ({active, arrInd, clickOk, clickX}) {
 }
 
 ErrorMessage.propTypes = {
-  active: PropTypes.bool.isRequired,
+  active: PropTypes.bool,
   arrInd: PropTypes.number.isRequired,
   clickX: PropTypes.func.isRequired,
   clickOk: PropTypes.func.isRequired,

@@ -37,6 +37,12 @@
   }
 }
 
+/* my code */
+
+li {
+  list-style-type: none;
+}
+
 .error-container {
   display: flex;
   flex-direction: column;
@@ -108,4 +114,10 @@
   border-style: dotted;
   color: black;
   border-width: 1px
+}
+
+.blank-error {
+  width: 400px;
+  height: 150px;
+  border: 3px solid transparent;
 }
