@@ -1,28 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types'
+import WindowsDrag from './windowsDrag'
 
 export default function ErrorMessage ({active, arrInd, clickOk, clickX}) {
   return (
-    <div className='error-container'>
-      <div className='error-header'>
-        <p className='error-title'>
-          Error Message
-        </p>
-        <a href='#' onClick={() => clickX(arrInd)} className="error-close">
-          <div className='error-x'>x</div>
-        </a>
-      </div>
-      <div className="error-content">
-        <div className='error-message'>
-          The Internet has ended. <br/> Click OK to continue.
+    <WindowsDrag>
+      <div className='error-container windows'>
+        <div className='win-header'>
+          <p className='win-title'>
+            Error Message
+          </p>
+          <button href='#' onClick={() => clickX(arrInd)} className="win-close">
+            <div className='win-x'>x</div>
+          </button>
         </div>
-        <a href="#" onClick={active ? clickOk : null} className="error-button">
-          <div className="error-text-button">
-            OK
+        <div className="error-content">
+          <div className='error-message'>
+            The Internet has ended. <br/> Click OK to continue.
           </div>
-        </a>
+          <a href="#" onClick={active ? clickOk : null} className="win-button">
+            <div className="win-text-button">
+              OK
+            </div>
+          </a>
+        </div>
       </div>
-    </div>
+    </WindowsDrag>
   )
 }
 

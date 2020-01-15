@@ -1,0 +1,98 @@
+button:focus {
+  outline: none;
+}
+
+.windows {
+  background-color: #D6D3CE;
+  border: 3px solid;
+  border-top-color: #FFFCF1;
+  border-left-color: #FFFCF1;
+  border-bottom-color: #6F6C6F ;
+  border-right-color: #6F6C6F;
+  font-family: "MS Sans-serif", sans-serif;
+}
+
+.win-folder {
+  border: none;
+  background-color: transparent;
+  color: white;
+}
+
+.win-header {
+  background-color: $blue-95;
+  padding: 4px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
+.win-title {
+  text-align: left;
+  margin: 0px;
+  padding: 0px;
+  color: white;
+}
+
+
+.win-close {
+  position: relative;
+  background-color: #D6D3CE;
+  color: black;
+  width: 19px;
+  height:19px;
+  border: 2px solid;
+  border-top-color: $windows-light;
+  border-left-color: $windows-light;
+  border-bottom-color: $windows-shadow;
+  border-right-color: $windows-shadow;
+  font-size: 16px;
+  font-family: inherit;
+  font-weight: bold;
+
+  .win-x {
+    position: absolute;
+    bottom: 0px;
+    left: 3px;   
+  }
+}
+
+.win-button {
+  width: 75px;
+  height: 20px;
+  border-width: 1px 3px 3px 1px;
+  border-style: solid;
+  border-color: black;
+  color: black;
+  text-decoration: none;
+  padding: 2px;
+}
+
+.win-text-button {
+  border-style: dotted;
+  color: black;
+  border-width: 1px
+}
+
+.generic-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  height: 400px;
+  width: 600px;
+}
+
+.generic-content {
+  flex-grow: 100;
+}
+
+.generic-inner-content {
+  border: 2px solid;
+  border-top-color: $windows-shadow;
+  border-right-color: $windows-light;
+  border-bottom-color: $windows-light;
+  border-left-color: $windows-shadow;
+  background-color: white;
+  flex-grow: 100;
+  height: 92%;
+  margin: 3px;
+}

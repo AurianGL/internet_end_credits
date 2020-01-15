@@ -1,0 +1,34 @@
+
+.error-list {
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+li {
+  list-style-type: none;
+}
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  height: 150px;
+}
+
+
+
+.error-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  flex-grow: 100;
+}
+
+.blank-error {
+  display: none;
+  width: 400px;
+  height: 150px;
+  border: 3px solid transparent;
+}

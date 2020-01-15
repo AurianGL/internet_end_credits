@@ -1,0 +1,42 @@
+.paint-container {
+  height: 400px;
+  width: 600px;
+}
+
+.paint-content {
+  flex-grow: 100;
+}
+
+.paint-row {
+  display: flex;
+  margin: 3px 3px;
+}
+
+.paint-tools {
+  width: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  height: fit-content;
+  margin-right: 3px;
+}
+
+.paint-canvas {
+  border: 2px solid;
+  border-top-color: $windows-shadow;
+  border-right-color: $windows-light;
+  border-bottom-color: $windows-light;
+  border-left-color: $windows-shadow;
+  flex-grow: 100;
+}
+
+.paint-button {
+  height: 18px;
+  width: 18px;
+  border: 1px solid;
+  border-bottom-color: $windows-shadow;
+  border-left-color: $windows-light;
+  border-top-color: $windows-light;
+  border-right-color: $windows-shadow;
+}
