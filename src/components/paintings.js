@@ -16,7 +16,7 @@ function Miniature ({cloudId, onOpenContent, name}) {
 
 Miniature.propTypes = {
   cloudId: PropTypes.string.isRequired,
-  openContent: PropTypes.func.isRequired,
+  onOpenContent: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired
 }
 
@@ -58,7 +58,7 @@ function Gallerie ({pic, onChangePic, onClose}) {
 Gallerie.propTypes = {
   pic: PropTypes.string.isRequired,
   onChangePic: PropTypes.func.isRequired,
-  onCLose: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired
 }
 
 function Sheep () {
@@ -95,7 +95,9 @@ export default class Paintings extends React.Component {
   onChangePic = (direction) => {
     this.setState(state => {
       const indX = state.cloudIdCollec.findIndex(elem => elem.id === state.currentImage)
-      const currentImage = direction === 'next' ? state.cloudIdCollec[indX + 1].id : state.cloudIdCollec[indX - 1].id
+      const nextImage = state.cloudIdCollec[indX + 1] ?  state.cloudIdCollec[indX + 1].id : state.cloudIdCollec[0].id
+      const previousImage =  state.cloudIdCollec[indX - 1] ?  state.cloudIdCollec[indX - 1].id : state.cloudIdCollec[state.cloudIdCollec.length - 1].id
+      const currentImage = direction === 'next' ? nextImage : previousImage  
       return ({
         currentImage
       })

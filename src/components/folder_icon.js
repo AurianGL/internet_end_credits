@@ -44,5 +44,5 @@ export default class FolderIcon extends React.Component {
 
 FolderIcon.propTypes = {
   name: PropTypes.string.isRequired,
-  content: PropTypes.func
+  content: PropTypes.object
 }

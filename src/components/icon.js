@@ -19,7 +19,7 @@ export default function Icon ({imageId, openFolder, name}){
 }
 
 Icon.propTypes = {
-  id: PropTypes.string.isRequired,
+  imageId: PropTypes.string.isRequired,
   openFolder: PropTypes.func,
   name: PropTypes.string.isRequired
 }
