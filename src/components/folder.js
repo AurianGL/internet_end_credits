@@ -20,6 +20,7 @@ export default function Folder ({name, onCloseFolder, children}) {
           <div className='generic-inner-content'>
             {children}
           </div>
+          <div style={{height: '20px'}}></div>
         </div>
       </div>
     </WindowsDrag>

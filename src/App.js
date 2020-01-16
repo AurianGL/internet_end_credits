@@ -12,10 +12,10 @@ function App() {
 
     return (
       <div className="App">
-        <InternetHasEnded/>
         <Paint/>
         <FolderIcon name='Paintings' content={<Paintings cloudIdCollec={paintingsIds}/>}/>
         <FolderIcon name='Cult Dürer'/>
+        <InternetHasEnded/>
       </div>
     )
 }

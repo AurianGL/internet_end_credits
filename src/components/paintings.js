@@ -1,23 +1,25 @@
 import React from 'react';
 import {Image, CloudinaryContext} from 'cloudinary-react';
 import PropTypes from 'prop-types'
+import NotePad from './notepad';
 
 
-function Miniature ({cloudId, onOpenContent, name}) {
+function Miniature ({cloudId, onOpenContent}) {
   return (
-    <button onClick={() => {onOpenContent(cloudId)}}>
+    <button
+      className='win-folder' 
+      onClick={() => {onOpenContent(cloudId)}}>
       <CloudinaryContext cloudName="dav38qg9f">
-        <Image publicId={cloudId} width="32" />
+        <Image publicId={cloudId.id} width="32" />
       </CloudinaryContext>
-      <p>{name}</p>
+      <p style={{ color: '#282C34'}}>{cloudId.name}</p>
     </button>
   )
 }
 
 Miniature.propTypes = {
-  cloudId: PropTypes.string.isRequired,
+  cloudId: PropTypes.object.isRequired,
   onOpenContent: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired
 }
 
 function Collec ({collec, openContent}) {
@@ -26,7 +28,7 @@ function Collec ({collec, openContent}) {
       {collec.map((elem) => {
         return (
             <li key={elem.id}>
-              <Miniature cloudId={elem.id} onOpenContent={openContent} name={elem.name}/>
+              <Miniature cloudId={elem} onOpenContent={openContent}/>
             </li>
           )
         })
@@ -40,48 +42,56 @@ Collec.propTypes = {
   openContent: PropTypes.func.isRequired
 }
 
-function Gallerie ({pic, onChangePic, onClose}) {
+function Galerie ({pic, onChangePic, onClose}) {
   return (
-    <React.Fragment>
-      <button onClick={() => {onChangePic('previous')}}>PREVIOUS</button>
+    <div>
+      <div style={{ padding: '10px', display: 'flex', justifyContent: 'space-between'}}>
+        <button className="win-button" onClick={() => {onChangePic('previous')}}>
+          <div className='win-text-button'>PREVIOUS</div>
+        </button>
+        <button className="win-button" onClick={onClose}>
+          <div className='win-text-button'>CLOSE</div>
+        </button>
+        <button className="win-button" onClick={() => {onChangePic('next')}}>
+          <div className='win-text-button'>NEXT</div>
+        </button>
+      </div>
       <CloudinaryContext cloudName="dav38qg9f">
         <div>
-          <Image publicId={pic} width="500" />
+          <Image publicId={pic.id} width="500" />
         </div>
       </CloudinaryContext>
-      <button onClick={() => {onChangePic('next')}}>NEXT</button>
-      <button onClick={onClose}>CLOSE</button>
-    </React.Fragment>
+      
+    </div>
   )
 }
 
-Gallerie.propTypes = {
-  pic: PropTypes.string.isRequired,
+Galerie.propTypes = {
+  pic: PropTypes.object.isRequired,
   onChangePic: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired
-}
-
-function Sheep () {
-  return (
-    <CloudinaryContext cloudName="dav38qg9f">
-      <div>
-        <Image publicId={`zvrvlurtn1vsqtbnaboy`} width="500" />
-      </div>
-    </CloudinaryContext>
-  )
 }
 
 export default class Paintings extends React.Component {
   state = {
     cloudIdCollec: this.props.cloudIdCollec,
     open: false,
-    currentImage: ''
+    content: '',
+    currentImage: {}
   }
 
-  onOpenContent = (cloudId) => {
+  onOpenPaintings = (cloudId) => {
     this.setState({
       open: true,
+      content: 'paintings',
       currentImage: cloudId
+    })
+  }
+
+  onOpenNotePad = () => {
+    this.setState({
+      open: true,
+      content: 'notepad'
     })
   }
 
@@ -94,10 +104,10 @@ export default class Paintings extends React.Component {
 
   onChangePic = (direction) => {
     this.setState(state => {
-      const indX = state.cloudIdCollec.findIndex(elem => elem.id === state.currentImage)
-      const nextImage = state.cloudIdCollec[indX + 1] ?  state.cloudIdCollec[indX + 1].id : state.cloudIdCollec[0].id
-      const previousImage =  state.cloudIdCollec[indX - 1] ?  state.cloudIdCollec[indX - 1].id : state.cloudIdCollec[state.cloudIdCollec.length - 1].id
-      const currentImage = direction === 'next' ? nextImage : previousImage  
+      const indX = state.cloudIdCollec.findIndex(elem => elem.id === state.currentImage.id)
+      const nextImage = state.cloudIdCollec[indX + 1] ?  state.cloudIdCollec[indX + 1] : state.cloudIdCollec[0]
+      const previousImage =  state.cloudIdCollec[indX - 1] ?  state.cloudIdCollec[indX - 1] : state.cloudIdCollec[state.cloudIdCollec.length - 1]
+      const currentImage = direction === 'next' ? nextImage : previousImage 
       return ({
         currentImage
       })
@@ -106,8 +116,10 @@ export default class Paintings extends React.Component {
   render () {
     return (
       <React.Fragment>
+        {!this.state.open && <Miniature cloudId={{id:'zvrvlurtn1vsqtbnaboy', name:'Notepad'}} onOpenContent={this.onOpenNotePad}/>}  
         {!this.state.open && <Collec collec={this.state.cloudIdCollec} openContent={this.onOpenContent}/>}
-        {this.state.open && <Gallerie pic={this.state.currentImage} onClose={this.onClose} onChangePic={this.onChangePic}/>}
+        {this.state.open && this.state.content === "paintings" && <Galerie pic={this.state.currentImage} onClose={this.onClose} onChangePic={this.onChangePic}/>}
+        {this.state.open && this.state.content === 'notepad' && <NotePad content='lol this is a test'></NotePad>}
       </React.Fragment>
     )
   }
