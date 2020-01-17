@@ -96,3 +96,74 @@ button:focus {
   height: fit-content;
   margin: 3px;
 }
+
+.win-menu {
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 30px;
+  background-color: $windows-grey;
+  border-top: 3px solid;
+  border-top-color: $windows-light;
+
+  .win-start {
+    border: 2px solid;
+    border-top-color: $windows-light;
+    border-left-color: $windows-light;
+    border-bottom-color: $windows-shadow;
+    border-right-color: $windows-shadow;
+    background-color: $windows-grey;
+  }
+
+  .win-active {
+    border: 2px solid;
+    border-top-color: $windows-shadow;
+    border-right-color: $windows-light;
+    border-bottom-color: $windows-light;
+    border-left-color: $windows-shadow;
+    background-color: $windows-grey;
+  }
+}
+
+.open-menu {
+  display: flex;
+  border: 2px solid;
+  border-top-color: $windows-light;
+  border-left-color: $windows-light;
+  border-bottom-color: $windows-shadow;
+  border-right-color: $windows-shadow;
+  background-color: $windows-grey;
+  background-color: $windows-grey ;
+  position: fixed;
+  bottom: 30px;
+  left: 0;
+  width: 200px;
+  height:  300px;
+
+  .side-title {
+    background-color: $windows-shadow;
+    width: 40px;
+    color: white;
+    font-weight: bold;
+    border-bottom: solid 2px $windows-grey;
+    p {
+      position: absolute;
+      transform: rotate(-90deg);
+      bottom: 30px;
+      left: -22px;
+    }
+  }
+
+  .app-list {
+    flex-grow: 100;
+
+    .app-item {
+      height: 48px;
+      border: solid $windows-shadow;
+      border-width: 0 0 2px 0;
+    }
+  }
+}

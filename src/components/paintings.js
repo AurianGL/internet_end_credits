@@ -3,6 +3,8 @@ import {Image, CloudinaryContext} from 'cloudinary-react';
 import PropTypes from 'prop-types'
 import NotePad from './notepad';
 
+const lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+
 
 function Miniature ({cloudId, onOpenContent}) {
   return (
@@ -98,7 +100,8 @@ export default class Paintings extends React.Component {
   onClose = () => {
     this.setState({
       open: false,
-      currentImage: ''
+      currentImage: '',
+      content: ''
     })
   }
 
@@ -117,9 +120,9 @@ export default class Paintings extends React.Component {
     return (
       <React.Fragment>
         {!this.state.open && <Miniature cloudId={{id:'zvrvlurtn1vsqtbnaboy', name:'Notepad'}} onOpenContent={this.onOpenNotePad}/>}  
-        {!this.state.open && <Collec collec={this.state.cloudIdCollec} openContent={this.onOpenContent}/>}
+        {!this.state.open && <Collec collec={this.state.cloudIdCollec} openContent={this.onOpenPaintings}/>}
         {this.state.open && this.state.content === "paintings" && <Galerie pic={this.state.currentImage} onClose={this.onClose} onChangePic={this.onChangePic}/>}
-        {this.state.open && this.state.content === 'notepad' && <NotePad content='lol this is a test'></NotePad>}
+        {this.state.open && this.state.content === 'notepad' && <NotePad content={lorem} close={this.onClose}></NotePad>}
       </React.Fragment>
     )
   }

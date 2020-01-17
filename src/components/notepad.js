@@ -6,11 +6,16 @@ import PropTypes from 'prop-types'
 //   state
 // }
 
-export default function NotePad({content}) {
+export default function NotePad({content, close}) {
   return (
     <React.Fragment>
-      <div>
+      <div className="notepad">
         {content}
+        <button
+          onClick={close}
+        >
+         close text
+         </button>
       </div>
     </React.Fragment>
   )
@@ -18,4 +23,5 @@ export default function NotePad({content}) {
 
 NotePad.propTypes = {
   content: PropTypes.string.isRequired,
+  close: PropTypes.func.isRequired
 }

@@ -1,0 +1,19 @@
+.notepad {
+  padding: 5px;
+  position: relative;
+  font-family: $win-font;
+  min-height: 200px;
+  text-align: left;
+  font-size: 20px;
+
+  button {
+    bottom: 0;
+    right: 0;
+    font-size: 20px;
+    font-family: $win-font;
+    position: absolute;
+    border: none;
+    background: transparent;
+  }
+}
+
