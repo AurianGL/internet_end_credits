@@ -5,11 +5,10 @@ import Paint from './components/paint'
 import FolderIcon from './components/folder_icon';
 import Paintings from './components/paintings'
 import Menu from './components/menu'
+import paintingsIds from './components/images'
 
 function App() {
-    const paintingsIds = [
-      {id:'zvrvlurtn1vsqtbnaboy', name:'sheep'},{id:'tpdxbwogxstoittwqxtk', name:'another sheep'}
-    ]
+    
 
     return (
       <div className="App">

@@ -60,35 +60,37 @@ export default class InternetHasEnded extends React.Component {
     return (
       <React.Fragment>
         <Icon
-          imageId={'folder_close_pjgxhc'}
+          imageId={'map_icon_kwxthn'}
           name={'Internet'}
           openFolder={() => {this.openInternet()}}
         />
         {this.state.internet && (
-          <ul className='error-list'>
-            {this.state.errorMessages.map((errorMessage, index) => {
-              const errorPosition = {
-                position: 'absolute',
-                top: errorMessage.top,
-                left: errorMessage.left,
-              }
-              return (
-                <li key={index} style={errorPosition}>
-                    { errorMessage.visible && 
-                        <ErrorMessage 
-                          active= {errorMessage.active}
-                          arrInd={index} 
-                          clickX={onClickX} 
-                          clickOk={onClickOk}
-                        />
-                    }
-                    { !errorMessage.visible &&                
-                      <div className='blank-error'></div>
-                    }
-                </li>
-              )
-            })}
-          </ul>)
+          <div style={{position: 'absolute', top: '0', left: '0'}}>
+            <ul className='error-list'>
+              {this.state.errorMessages.map((errorMessage, index) => {
+                const errorPosition = {
+                  position: 'absolute',
+                  top: errorMessage.top,
+                  left: errorMessage.left,
+                }
+                return (
+                  <li key={index} style={errorPosition}>
+                      { errorMessage.visible && 
+                          <ErrorMessage 
+                            active= {errorMessage.active}
+                            arrInd={index} 
+                            clickX={onClickX} 
+                            clickOk={onClickOk}
+                          />
+                      }
+                      { !errorMessage.visible &&                
+                        <div className='blank-error'></div>
+                      }
+                  </li>
+                )
+              })}
+            </ul>
+          </div>)
         }
       </React.Fragment>
     )
