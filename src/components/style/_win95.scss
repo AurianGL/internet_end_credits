@@ -109,22 +109,26 @@ button:focus {
   border-top: 3px solid;
   border-top-color: $windows-light;
 
-  .win-start {
+  .start {
+    background-color: $windows-grey;
     border: 2px solid;
+    display: flex;
+    font-size: 20px;
+    font-family: $win-font;
+  }
+
+  .win-start {
     border-top-color: $windows-light;
     border-left-color: $windows-light;
     border-bottom-color: $windows-shadow;
     border-right-color: $windows-shadow;
-    background-color: $windows-grey;
   }
 
   .win-active {
-    border: 2px solid;
     border-top-color: $windows-shadow;
     border-right-color: $windows-light;
     border-bottom-color: $windows-light;
     border-left-color: $windows-shadow;
-    background-color: $windows-grey;
   }
 }
 
