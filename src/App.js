@@ -12,11 +12,17 @@ function App() {
 
     return (
       <div className="App">
-        <Paint/>
-        <FolderIcon name='Paintings' content={<Paintings cloudIdCollec={paintingsIds}/>}/>
-        <FolderIcon name='Cult Dürer'/>
-        <InternetHasEnded/>
-        <Menu/>
+        <div className='global-context'>
+          <div className='global-content'>
+            <Paint/>
+            <FolderIcon name='Paintings' content={<Paintings cloudIdCollec={paintingsIds}/>}/>
+            <FolderIcon name='Cult Dürer'/>
+            <InternetHasEnded/>
+          </div>
+          <div className="bottom">
+            <Menu/>
+          </div>
+        </div>
       </div>
     )
 }

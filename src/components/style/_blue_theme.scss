@@ -2,11 +2,31 @@
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  padding: 20px;
   position: fixed;
   overflow: hidden;
   text-align: center;
   background-color: $death-blue;
   height: 100vh;
   width: 100vw;
+}
+
+.global-context {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.global-content {
+  width: 100%;
+  text-align: left;
+  position: relative;
+  padding: 20px;
+  flex-grow: 100;
+}
+
+.bottom {
+  
 }

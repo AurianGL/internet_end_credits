@@ -74,15 +74,21 @@ button:focus {
 }
 
 .generic-container {
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
   position: absolute;
-  height: fit-content;
-  width: 600px;
+  height: 100%;
+  width: 100vw;
 }
 
 .generic-content {
   flex-grow: 100;
+  display: flex;
+  flex-direction: column;
 }
 
 .generic-inner-content {
@@ -93,16 +99,12 @@ button:focus {
   border-left-color: $windows-shadow;
   background-color: white;
   flex-grow: 100;
-  height: fit-content;
   margin: 3px;
 }
 
 .win-menu {
   display: flex;
   justify-content: space-between;
-  position: fixed;
-  bottom: 0;
-  left: 0;
   width: 100vw;
   height: 30px;
   background-color: $windows-grey;
@@ -170,4 +172,10 @@ button:focus {
       border-width: 0 0 2px 0;
     }
   }
+}
+
+.gal-img {
+  max-height: 85vh;
+  max-width: 85vw;
+
 }
