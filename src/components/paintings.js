@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, CloudinaryContext} from 'cloudinary-react';
+import {Image, CloudinaryContext, Transformation} from 'cloudinary-react';
 import PropTypes from 'prop-types'
 import NotePad from './notepad';
 
@@ -55,7 +55,7 @@ Collec.propTypes = {
 
 function Galerie ({pic, onChangePic, onClose}) {
   return (
-    <div>
+    <React.Fragment>
       <div style={{ padding: '10px', display: 'flex', justifyContent: 'space-between'}}>
         <button className="win-button" onClick={() => {onChangePic('previous')}}>
           <div className='win-text-button'>PREVIOUS</div>
@@ -67,13 +67,15 @@ function Galerie ({pic, onChangePic, onClose}) {
           <div className='win-text-button'>NEXT</div>
         </button>
       </div>
-      <CloudinaryContext cloudName="dav38qg9f">
-        <div>
-          <Image publicId={pic} width="500" />
-        </div>
+      <CloudinaryContext cloudName="dav38qg9f" style={{textAlign: 'center'}}>
+          <Image 
+            publicId={pic}
+            className='gal-img'
+            >  
+          </Image>
       </CloudinaryContext>
       
-    </div>
+    </React.Fragment>
   )
 }
 
