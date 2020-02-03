@@ -8,10 +8,10 @@ function OpenMenu ({setType}) {
         <div className='side-title'><p>AURIAN GL</p></div>
         <div className='app-list'>
           <div className='app-item'>
-            <button className='app-item' onClick={() => setType('art')}>ART</button>
+            <button onClick={() => setType('art')}>Contemporary Art</button>
           </div>
           <div className='app-item'>
-            <button onClick={() => setType('dev')}>DEV</button>
+            <button onClick={() => setType('dev')}>Web-Dev</button>
           </div>
           <div className='app-item'></div>
           <div className='app-item'></div>
