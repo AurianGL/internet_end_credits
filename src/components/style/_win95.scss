@@ -89,6 +89,7 @@ button:focus {
   flex-grow: 100;
   display: flex;
   flex-direction: column;
+  overflow: auto;
 }
 
 .generic-inner-content {
@@ -100,6 +101,12 @@ button:focus {
   background-color: white;
   flex-grow: 100;
   margin: 3px;
+  padding: 20px;
+
+  ul {
+    padding: 0;
+    margin: 0;
+  }
 }
 
 .win-menu {
@@ -170,6 +177,18 @@ button:focus {
       height: 48px;
       border: solid $windows-shadow;
       border-width: 0 0 2px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      button {
+        padding: 0;
+        height: 48px;
+        flex-grow: 100;
+        font-size: 16px;
+        border: none;
+        background-color: transparent;
+      }
     }
   }
 }
