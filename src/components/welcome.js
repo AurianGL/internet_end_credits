@@ -8,6 +8,8 @@ import paintingsIds from './images'
 import PropTypes from 'prop-types'
 import WindowsDrag from './windowsDrag'
 import { Durer } from './durer'
+import { HelloYou } from './HelloYou'
+
 
 
 
@@ -18,6 +20,7 @@ function Art () {
       <FolderIcon name='Paintings' content={<Paintings cloudIdCollec={paintingsIds}/>}/>
       <FolderIcon name='Cult Dürer' content={<Durer/>}/>
       <InternetHasEnded/>
+      <HelloYou/>
     </div>
   )
 }
