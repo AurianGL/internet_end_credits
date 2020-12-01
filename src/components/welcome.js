@@ -7,6 +7,7 @@ import Menu from './menu'
 import paintingsIds from './images'
 import PropTypes from 'prop-types'
 import WindowsDrag from './windowsDrag'
+import { Durer } from './durer'
 
 
 
@@ -15,7 +16,7 @@ function Art () {
     <div className='global-content'>
       <Paint/>
       <FolderIcon name='Paintings' content={<Paintings cloudIdCollec={paintingsIds}/>}/>
-      <FolderIcon name='Cult Dürer'/>
+      <FolderIcon name='Cult Dürer' content={<Durer/>}/>
       <InternetHasEnded/>
     </div>
   )
