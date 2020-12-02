@@ -6,12 +6,13 @@
   overflow: hidden;
   text-align: center;
   background-color: $death-blue;
-  height: 100vh;
+  // height: 100vh;
+  // height: calc(var(--vh, 1vh) * 100);
   width: 100vw;
 }
 
 .global-context {
-  height: 100vh;
+  // height: 100vh;
   width: 100vw;
   display: flex;
   flex-direction: column;

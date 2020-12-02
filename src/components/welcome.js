@@ -34,6 +34,7 @@ function Dev () {
 }
 
 function WelcomeMessage ({setType}) {
+
   return (
     <div className='global-content' style={{padding: '0', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
       <WindowsDrag>
@@ -83,8 +84,10 @@ export default class Welcome extends React.Component {
   }
     
   render () {
+    const height = `calc(${window.innerHeight * 0.01}px * 100)`
+
     return (
-      <div className='global-context'>
+      <div className='global-context' style={{height: height}}>
         {this.state.type === 'welcome' && <WelcomeMessage setType={this.onSetType}/>}
         {this.state.type === 'dev' && <Dev/>}
         {this.state.type === 'art' && <Art/>} 
