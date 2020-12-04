@@ -30,7 +30,7 @@ export const HelloYou = () => {
 					className='gal-img'
 					width={style.width}></Image>
 			</CloudinaryContext>
-      <div style={{color: 'white', fontWeight: '200'}}>
+      <div style={{color: 'white', fontWeight: '700'}}>
         HELLO YOU
       </div>
 		</div>
