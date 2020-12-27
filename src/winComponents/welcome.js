@@ -7,7 +7,7 @@ import Menu from './menu'
 import paintingsIds from './images'
 import PropTypes from 'prop-types'
 import WindowsDrag from './windowsDrag'
-
+import './style/_index.scss'
 
 
 function Art () {

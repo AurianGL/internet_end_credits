@@ -1,4 +1,4 @@
-import React, { Children } from 'react';
+import React from 'react';
 
 export default class FileSys extends React.Component {
   state = {
@@ -14,9 +14,9 @@ export default class FileSys extends React.Component {
     })
   }
 
-  const onClickX = ({program}) => {
+  onClickX = ({program}) => {
     this.setState(state => {
-      const programs = state.programs.filter(items => { items !== program })
+      const programs = state.programs.filter(items => items !== program )
       return  {
         programs,
       }
