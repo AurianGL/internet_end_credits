@@ -1,6 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { Image, CloudinaryContext, Transformation } from 'cloudinary-react';
+import React, { useState} from 'react';
+import { Image, CloudinaryContext } from 'cloudinary-react';
 
 const styles = [
 	{ position: 'absolute', width: '300px', top: '20%', left: '30%' },
