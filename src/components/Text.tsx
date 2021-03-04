@@ -1,7 +1,7 @@
 interface TextProps {}
 
 export const Text: React.FC<TextProps> = () => (
-  <div className="text-red-500">
+  <div className="text-red-500 w-1/2 border-red-500 border-r-2">
     While the inflation of images is on an endless rise <br />
     And as I grew older <br />
     The doubt that once inhabited me <br />
@@ -21,6 +21,11 @@ export const Text: React.FC<TextProps> = () => (
     The condition of existence of images is bearly still existing <br />
     As the inexorable uncovering of meaning advance<br />
     The obviousness territories' get bigger and bigger <br />
+    The experience has moved away in an unsolvable distance <br />
     And nothing is to remain hidden <br />
+    <br/>
+    But images.
+    <br/>
+    Truely, painting is the only thing that makes sense.
   </div>
 );
