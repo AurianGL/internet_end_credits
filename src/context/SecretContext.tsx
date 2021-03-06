@@ -1,32 +1,45 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, Reducer, useReducer } from "react";
 
 interface SecretContextProps {}
 
-export const SecretContext: React.Context<any> = createContext(undefined);
+type Action =
+  | { type: "ADD_CHAR"; payload: string }
+  | { type: "REMOVE_CHAR"; payload: number }
+  | { type: "RESET" };
+
+type State = [] | string[];
+
+export const SecretContext = createContext<State>([]);
+
+export const DispatchContext = createContext<React.Dispatch<Action>>(
+  () => null
+);
+
+const init = () => {
+  return [];
+};
+
+const reducer: Reducer<State, Action> = (state, action) => {
+  switch (action.type) {
+    case "ADD_CHAR":
+      if (action.payload !== " ") return [...state, action.payload];
+      return state;
+    case "REMOVE_CHAR":
+      return state.filter((_, i) => i !== action.payload);
+    case "RESET":
+      return [];
+    default:
+      throw new Error();
+  }
+};
 
 export const SecretProvider: React.FC<SecretContextProps> = ({ children }) => {
-  const [secret, setSecret] = useState<string[]>([]);
-
-  const addSecret = (letter: string) => {
-    if (letter === ' ') return
-    const newSecret = [...secret, letter];
-    setSecret(newSecret);
-  };
-
-  const resetSecret = (letter: string) => {
-    setSecret([]);
-  };
-
-  const removeSecret = (index: number) => {
-    const newSecret = secret.filter((_, i) => i !== index);
-    setSecret(newSecret);
-  };
-
+  const [state, dispatch] = useReducer(reducer, [], init);
   return (
-    <SecretContext.Provider
-      value={{ secret, addSecret, resetSecret, removeSecret }}
-    >
-      {children}
+    <SecretContext.Provider value={state}>
+      <DispatchContext.Provider value={dispatch}>
+        {children}
+      </DispatchContext.Provider>
     </SecretContext.Provider>
   );
 };

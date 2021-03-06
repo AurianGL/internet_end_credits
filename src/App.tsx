@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.scss';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import Welcome from './winComponents/welcome';
+import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+// import Welcome from './winComponents/welcome';
 import { DeRamp } from './pages/DeRamp';
 import { Home } from './pages/Home';
 
@@ -13,11 +13,11 @@ function App() {
 					<Route exact path='/'>
 						<Home />
 					</Route>
-					<Route path='/1995'>
+					{/* <Route path='/1995'>
 						<div className='App'>
 							<Welcome />
 						</div>
-					</Route>
+					</Route> */}
 					<Route path='/deramp'>
 						<DeRamp />
 					</Route>

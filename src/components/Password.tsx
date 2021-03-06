@@ -1,23 +1,23 @@
 import { useContext } from "react";
-import { SecretContext } from "../context/SecretContext";
+import { DispatchContext, SecretContext } from "../context/SecretContext";
 
 interface PasswordProps {}
 
 export const Password: React.FC<PasswordProps> = () => {
-  const { secret, removeSecret } = useContext<{
-    secret: string[];
-    removeSecret: (index: number) => void;
-  }>(SecretContext);
+  const secret = useContext(SecretContext);
+  const dispatch = useContext(DispatchContext);
   return (
-    <div className="flex justify-start">
-      {secret.map((letter, index) => (
-        <p
-          onClick={() => removeSecret(index)}
-          className="m-1 font-mono font-black text-white bg-red-500 text-4xl"
-        >
-          {letter}
-        </p>
-      ))}
+    <div className="flex justify-start bg-black">
+      {secret.length > 0 &&
+        secret.map((letter: string, index: number) => (
+          <p
+            onClick={() => dispatch({ type: "REMOVE_CHAR", payload: index })}
+            className="m-1 font-mono font-black text-black bg-green-500 text-4xl"
+            key={"letter-" + index}
+          >
+            {letter}
+          </p>
+        ))}
     </div>
   );
 };

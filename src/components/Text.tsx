@@ -1,32 +1,52 @@
-import React, { useContext } from "react";
-import { SecretContext } from "../context/SecretContext";
+import React, { useContext, useEffect, useReducer, useState } from "react";
+import { DispatchContext } from "../context";
+import { PolyTextType } from "../types";
 
 interface TextProps {
-  text: string[];
+  text: PolyTextType;
 }
 
 export const Text: React.FC<TextProps> = (props) => {
   const { text } = props;
+  const [renderText, setRenderText] = useState<string[][]>([])
+  useEffect(() => {
+    const addSentence = setTimeout(() => {
+      if (renderText.length < text.length) {
+        setRenderText([...renderText, text[renderText.length]])
+      }
+    }, 1000)
+    return () => clearTimeout(addSentence)
+  }, [text, renderText])
   return (
-    <div className="font-mono text-red-500 h-auto border-red-500 border-r-2 border-b-2">
-      {text.map((sentence) => (
-        <Sentence sentence={sentence} />
+    <div className=" h-auto">
+      {renderText.map((sentences, index) => (
+        <Sentence key={"sentence#" + index} sentences={sentences} sentenceIndex={index}/>
       ))}
     </div>
   );
 };
 
 interface SentenceProps {
-  sentence: string;
+  sentences: string[];
+  sentenceIndex: number;
 }
 
+const indexReducer = (state: number, action: { payload: string[] }) => {
+  return (state + 1) % action.payload.length;
+};
+
 export const Sentence: React.FC<SentenceProps> = (props) => {
-  const { sentence } = props;
-  const splitSentence = sentence.split("");
+  const { sentences, sentenceIndex } = props;
+  const [index, setIndex] = useReducer(indexReducer, 0);
+  const [splitSentence, setSplitSentence] = useState<string[]>([]);
+  useEffect(() => {
+    setSplitSentence(sentences[index].split(""));
+  }, [index, sentences]);
   return (
-    <p>
-      {splitSentence.map((character) => (
-        <Character character={character} />
+    <p onMouseEnter={() => setIndex({ payload: sentences })}>
+      {"> "}
+      {splitSentence.map((character, index) => (
+        <Character key={"char#" + index} character={character} charIndex={index} sentenceIndex={sentenceIndex}/>
       ))}
     </p>
   );
@@ -34,10 +54,30 @@ export const Sentence: React.FC<SentenceProps> = (props) => {
 
 interface CharacterProps {
   character: string;
+  charIndex: number;
+  sentenceIndex: number;
 }
 
 export const Character: React.FC<CharacterProps> = (props) => {
-  const {addSecret} = useContext(SecretContext)
-  const { character } = props;
-  return <span onClick={() => addSecret(character)} className="hover:bg-red-500 hover:text-white">{character}</span>;
+  const dispatch = useContext(DispatchContext);
+  const { character, charIndex, sentenceIndex } = props;
+  const [ASCII_CODE, setASCII_CODE] = useState(Math.max(32, character.charCodeAt(0) - charIndex - sentenceIndex));
+  useEffect(() => {
+    if (ASCII_CODE > 122) setASCII_CODE(32)
+    const incrementASCII = setTimeout(() => {
+      if (character.charCodeAt(0) !== ASCII_CODE) setASCII_CODE(ASCII_CODE + 1);
+    }, (100));
+    return () => {
+      clearTimeout(incrementASCII);
+    }
+  }, [ASCII_CODE, character]);
+
+  return (
+    <span
+      onClick={() => dispatch({ type: "ADD_CHAR", payload: character })}
+      className="hover:bg-green-500 hover:text-black"
+    >
+      {String.fromCharCode(ASCII_CODE)}
+    </span>
+  );
 };
