@@ -8,7 +8,7 @@ interface HomeProps {}
 
 export const Home: React.FC<HomeProps> = (props) => {
   return (
-    <div className="relative w-screen h-screen bg-black">
+    <div className="relative w-screen min-h-screen bg-black">
       {/* <nav className="text-red-500">
         <ul className="flex gap-3 p-2 border-red-500 border-b-2">
           <li>
@@ -29,7 +29,7 @@ export const Home: React.FC<HomeProps> = (props) => {
           <Password></Password>
         </div>
         <div className="flex align-top font-mono text-green-500">
-          <div className='w-1/2'>
+          <div className='sm:w-full lg:w-1/2'>
             <Text text={exlibris} />
             <p >
               <span>{"> "}</span>
