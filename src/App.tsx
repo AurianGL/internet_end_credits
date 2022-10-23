@@ -1,29 +1,34 @@
-import React from 'react';
-import './App.scss';
-import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
-// import Welcome from './winComponents/welcome';
-import { DeRamp } from './pages/DeRamp';
-import { Home } from './pages/Home';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import pages from "./pages";
+import { PAGES } from "./constants/routes";
+import {
+  ConsoleProvider,
+  LoadingProvider,
+  SecretProvider,
+} from "./context";
 
 function App() {
 	return (
 		<Router>
-			<div>
-				<Switch>
-					<Route exact path='/'>
-						<Home />
-					</Route>
-					{/* <Route path='/1995'>
-						<div className='App'>
-							<Welcome />
-						</div>
-					</Route> */}
-					<Route path='/deramp'>
-						<DeRamp />
-					</Route>
-				</Switch>
-			</div>
-		</Router>
+		<LoadingProvider>
+			<ConsoleProvider>
+				<SecretProvider>
+					<div>
+						{PAGES.map((page, index) => {
+							const PageComponent = pages[page.Component];
+							return (
+								<Switch key={index}>
+									<Route exact path={page.url}>
+										<PageComponent />
+									</Route>
+								</Switch>
+							);
+						})}
+					</div>
+				</SecretProvider>
+			</ConsoleProvider>
+		</LoadingProvider>
+	</Router>
 	);
 }
 

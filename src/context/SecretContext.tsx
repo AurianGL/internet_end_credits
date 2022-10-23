@@ -1,4 +1,5 @@
-import React, { createContext, Reducer, useReducer } from "react";
+import React, { createContext, Reducer, useReducer, useEffect } from "react";
+import { useHistory } from "react-router";
 
 interface SecretContextProps {}
 
@@ -15,13 +16,10 @@ export const DispatchContext = createContext<React.Dispatch<Action>>(
   () => null
 );
 
-const init = () => {
-  return [];
-};
-
 const reducer: Reducer<State, Action> = (state, action) => {
   switch (action.type) {
     case "ADD_CHAR":
+      if (state.length > 9) return [];
       if (action.payload !== " ") return [...state, action.payload];
       return state;
     case "REMOVE_CHAR":
@@ -34,7 +32,17 @@ const reducer: Reducer<State, Action> = (state, action) => {
 };
 
 export const SecretProvider: React.FC<SecretContextProps> = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, [], init);
+  const history = useHistory();
+  const [state, dispatch] = useReducer(reducer, []);
+
+  useEffect(() => {
+    switch (state.join("")) {
+      case "deramp":
+        history.push("/deramp");
+        dispatch({ type: "RESET" });
+    }
+    return () => {};
+  }, [state, history]);
   return (
     <SecretContext.Provider value={state}>
       <DispatchContext.Provider value={dispatch}>

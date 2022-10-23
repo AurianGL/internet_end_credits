@@ -1,0 +1,1 @@
+export const IMAGES = ['deramp_01','deramp_02','deramp_03','deramp_04','deramp_05','deramp_06','deramp_07','deramp_08','deramp_09','deramp_10','deramp_11','deramp_12','deramp_13']
