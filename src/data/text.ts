@@ -39,5 +39,5 @@ export const help: PolyTextType = [
   [`reset : clear the console`],
   [`tree : display folder tree`],
   [`anthume : enter anthume mode`],
-  [`posthume : enter psothume mode`]
+  [`posthume : enter posthume mode`]
 ]

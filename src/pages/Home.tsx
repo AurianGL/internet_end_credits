@@ -16,7 +16,7 @@ export const Home: React.FC<HomeProps> = (props) => {
   }, []);
   return (
     <div className='relative w-screen min-h-screen bg-black'>
-      <nav className='text-red-500'>
+      {/* <nav className='text-red-500'>
         <ul className='flex gap-3 p-2 border-red-500 border-b-2'>
           <li>
             <Link to='/' className='text-orange-600 bg-blue '>
@@ -30,7 +30,7 @@ export const Home: React.FC<HomeProps> = (props) => {
             <Link to='/deramp'>DE RAMP</Link>
           </li>
         </ul>
-      </nav>
+      </nav> */}
       {open && (
         <div className='h-screen w-screen flex justify-center items-center'>
           <Dialog>

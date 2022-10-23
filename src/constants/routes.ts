@@ -2,6 +2,11 @@ export const PAGES = [
   {
     name: "Home",
     url: "/",
+    Component: "NinetyFive",
+  },
+  {
+    name: "Term",
+    url: "/Term",
     Component: "Home",
   },
   {

@@ -1,19 +1,24 @@
 import React from 'react';
 import {Image, CloudinaryContext} from 'cloudinary-react';
 import PropTypes from 'prop-types'
+import { useHistory } from 'react-router-dom';
 
-function OpenMenu ({setType}) {
+const OpenMenu = ({setType}) => {
+  const history = useHistory()
+
     return (
       <div className='open-menu'>
         <div className='side-title'><p>AURIAN GL</p></div>
         <div className='app-list'>
           <div className='app-item'>
-            <button onClick={() => setType('art')}>Contemporary Art</button>
+            <button onClick={() => history.push('Term')}>>/</button>
           </div>
           <div className='app-item'>
-            <button onClick={() => setType('dev')}>Web-Dev</button>
+            <button onClick={() => history.push('1995')}>1995</button>
           </div>
-          <div className='app-item'></div>
+          <div className='app-item'>
+            <strike>DE RAMP</strike>
+          </div>
           <div className='app-item'></div>
         </div>
       </div>

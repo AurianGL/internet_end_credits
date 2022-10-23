@@ -22,11 +22,16 @@ export const Console: React.FC<ConsoleProps> = () => {
         command: '',
       }}
       validationSchema={validate}
-      onSubmit={(values) => {
+      onSubmit={(values, {resetForm}) => {
+        dispatchText({
+          type: 'ADD_TEXT',
+          payload: {data:  [[values.command]]}
+        })
         dispatchText({
           type: 'EVAL_COMMAND',
           payload: { command: values.command },
         })
+        resetForm()
       }}
     >
       {({ values }) => (

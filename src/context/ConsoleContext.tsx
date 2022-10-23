@@ -23,14 +23,23 @@ const init = () => {
   return []
 }
 
-const commands: Record<string, (state: string[][]) => string[][]> = {
-  reset: (_state) => [],
-  help: (state) => [...state, ...help],
+const notOverYet = (state: string[][]) => {
+  return [...state, ['Not Over Yet']]
 }
 
 const invalidCommand = (state: string[][]) => {
   return [...state, ['invalidCommand']]
 }
+
+const commands: Record<string, (state: string[][]) => string[][]> = {
+  reset: (_state) => [],
+  help: (state) => [...state, ...help],
+  posthume: notOverYet,
+  anthume: notOverYet,
+  tree: notOverYet
+}
+
+
 
 const reducer: Reducer<State, Action> = (state, action) => {
   const { type, payload } = action

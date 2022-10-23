@@ -31,6 +31,13 @@ const reducer: Reducer<State, Action> = (state, action) => {
   }
 };
 
+// const effect: Record<string, () => void> = {
+//   deramp: () => {
+//     history.push("/deramp");
+//     dispatch({ type: "RESET" });
+//   }
+// }
+
 export const SecretProvider: React.FC<SecretContextProps> = ({ children }) => {
   const history = useHistory();
   const [state, dispatch] = useReducer(reducer, []);
@@ -39,6 +46,10 @@ export const SecretProvider: React.FC<SecretContextProps> = ({ children }) => {
     switch (state.join("")) {
       case "deramp":
         history.push("/deramp");
+        dispatch({ type: "RESET" });
+        break
+      case "1995":
+        history.push("/1995")
         dispatch({ type: "RESET" });
     }
     return () => {};

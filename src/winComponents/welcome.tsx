@@ -7,6 +7,7 @@ import Menu from './menu'
 import paintingsIds from './images'
 import WindowsDrag from './windowsDrag'
 import { Durer } from './durer'
+import { TermIcon } from './termIcon';
 // import { HelloYou } from './HelloYou'
 
 
@@ -18,6 +19,7 @@ const Art = () => {
       <Paint/>
       <FolderIcon name='Paintings' content={<Paintings cloudIdCollec={paintingsIds}/>}/>
       <FolderIcon name='Cult Dürer' content={<Durer/>}/>
+      <TermIcon name='Terminal'/>
       <InternetHasEnded/>
       {/* <HelloYou/> */}
     </div>
@@ -57,7 +59,7 @@ const WelcomeMessage = ({setType}: Props) => {
                   YES
                 </div>
               </button>
-              <button onClick={() => setType('dev')} className="win-button">
+              <button onClick={() => window.location.href = 'https://www.spacejam.com/1996/'} className="win-button">
                 <div className="win-text-button">
                   NO
                 </div>
