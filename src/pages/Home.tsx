@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { Password, Text, Dialog, Console } from "../components";
 import { ConsoleContext, DispatchTextContext, SecretContext } from "../context";
-import { exlibris } from "../data/text";
+import { latency } from "../data/text";
 
 interface HomeProps {}
 
@@ -12,10 +11,10 @@ export const Home: React.FC<HomeProps> = (props) => {
   const text = useContext(ConsoleContext);
   const dispatchText = useContext(DispatchTextContext);
   useEffect(() => {
-    dispatchText({ type: "SET_TEXT", payload: { data: exlibris } });
+    dispatchText({ type: "SET_TEXT", payload: { data: latency } });
   }, []);
   return (
-    <div className='relative w-screen min-h-screen bg-black'>
+    <div className='relative w-full h-full bg-black'>
       {/* <nav className='text-red-500'>
         <ul className='flex gap-3 p-2 border-red-500 border-b-2'>
           <li>
@@ -32,10 +31,9 @@ export const Home: React.FC<HomeProps> = (props) => {
         </ul>
       </nav> */}
       {open && (
-        <div className='h-screen w-screen flex justify-center items-center'>
+        <div className='h-full w-full flex justify-center items-center'>
           <Dialog>
-            <p>Welcome</p>
-            <p>this application contains strobes</p>
+            <p>type help for help</p>
             <button
               onClick={() => setOpen(false)}
               className='bg-white px-4 text-black'>

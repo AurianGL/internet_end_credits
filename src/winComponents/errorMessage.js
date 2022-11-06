@@ -10,6 +10,7 @@ export default function ErrorMessage ({active, arrInd, clickOk, clickX}) {
           <p className='win-title'>
             Error Message
           </p>
+          <div className='draggable flex-grow'></div>
           <button href='#' onClick={() => clickX(arrInd)} className="win-close">
             <div className='win-x'>x</div>
           </button>
@@ -18,11 +19,11 @@ export default function ErrorMessage ({active, arrInd, clickOk, clickX}) {
           <div className='error-message'>
             The Internet has ended. <br/> Click OK to continue.
           </div>
-          <a href="#" onClick={active ? clickOk : null} className="win-button">
+          <button href="#" onClick={active ? clickOk : null} className="win-button">
             <div className="win-text-button">
               OK
             </div>
-          </a>
+          </button>
         </div>
       </div>
     </WindowsDrag>

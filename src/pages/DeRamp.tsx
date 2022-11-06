@@ -39,7 +39,7 @@ export const DeRamp: React.FC<DeRampProps> = () => {
             <p>
               On Saturday, 31 January 1953 a major flood struck Netherlands,
               north-west Belgium, England and Scotland. <br /> Dykes breached
-              and for a moment earth disappeard under water. <br /> Since then
+              and for a moment earth disappeard under waters. <br /> Since then
               more polders were built, and more lands were won over the sea.{" "}
               <br /> But in recent years more and more polders are returned to
               the sea, in an effort to work, not against but with the sea and in

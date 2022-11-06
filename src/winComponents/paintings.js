@@ -3,8 +3,11 @@ import {Image, CloudinaryContext, Transformation} from 'cloudinary-react';
 import PropTypes from 'prop-types'
 import NotePad from './notepad';
 
-const lorem = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-
+const text = `
+  These are images,
+  those don't live in the realm of language,
+  use your eyes.
+`
 
 function Miniature ({cloudId, onOpenContent, name}) {
   return (
@@ -55,7 +58,7 @@ Collec.propTypes = {
 
 function Galerie ({pic, onChangePic, onClose}) {
   return (
-    <React.Fragment>
+    <>
       <div style={{ padding: '10px', display: 'flex', justifyContent: 'space-between'}}>
         <button className="win-button" onClick={() => {onChangePic('previous')}}>
           <div className='win-text-button'>PREVIOUS</div>
@@ -67,7 +70,7 @@ function Galerie ({pic, onChangePic, onClose}) {
           <div className='win-text-button'>NEXT</div>
         </button>
       </div>
-      <CloudinaryContext cloudName="dav38qg9f" style={{textAlign: 'center'}}>
+      <CloudinaryContext cloudName="dav38qg9f" className='flex justify-center'>
           <Image 
             publicId={pic}
             className='gal-img'
@@ -75,7 +78,7 @@ function Galerie ({pic, onChangePic, onClose}) {
           </Image>
       </CloudinaryContext>
       
-    </React.Fragment>
+    </>
   )
 }
 
@@ -122,7 +125,7 @@ export default class Paintings extends React.Component {
       const nextImage = state.cloudIdCollec[indX + 1] ?  state.cloudIdCollec[indX + 1].id : state.cloudIdCollec[0].id
       const previousImage =  state.cloudIdCollec[indX - 1] ?  state.cloudIdCollec[indX - 1].id : state.cloudIdCollec[state.cloudIdCollec.length - 1].id
       const currentImage = direction === 'next' ? `Internet_end_credit/paintings/${nextImage}` : `Internet_end_credit/paintings/${previousImage}`
-      console.log(currentImage)
+      // console.log(currentImage)
       return ({
         currentImage
       })
@@ -130,12 +133,12 @@ export default class Paintings extends React.Component {
   }
   render () {
     return (
-      <React.Fragment>
+      <>
         {!this.state.open && <Miniature cloudId='Internet_end_credit/icons/bloc_note_icon_kmeia9' name='Read me' onOpenContent={this.onOpenNotePad}/>}  
         {!this.state.open && <Collec collec={this.state.cloudIdCollec} openContent={this.onOpenPaintings}/>}
         {this.state.open && this.state.content === "paintings" && <Galerie pic={this.state.currentImage} onClose={this.onClose} onChangePic={this.onChangePic}/>}
-        {this.state.open && this.state.content === 'notepad' && <NotePad content={lorem} close={this.onClose}></NotePad>}
-      </React.Fragment>
+        {this.state.open && this.state.content === 'notepad' && <NotePad content={text} close={this.onClose}></NotePad>}
+      </>
     )
   }
 }

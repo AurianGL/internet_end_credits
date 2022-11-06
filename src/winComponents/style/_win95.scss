@@ -38,21 +38,21 @@ button:focus {
   position: relative;
   background-color: #D6D3CE;
   color: black;
-  width: 19px;
-  height:19px;
+  width: 24px;
+    height: 24px;
   border: 2px solid;
   border-top-color: $windows-light;
   border-left-color: $windows-light;
   border-bottom-color: $windows-shadow;
   border-right-color: $windows-shadow;
-  font-size: 16px;
+  font-size: 22px;
   font-family: inherit;
   font-weight: bold;
 
   .win-x {
     position: absolute;
     bottom: -4px;
-    left: 3px;   
+      left: 4px;
   }
 }
 
@@ -84,15 +84,16 @@ button:focus {
   height: 100%;
   width: 100vw;
 }
+/*absolute box-border top-0 left-0 flex w-screen h-full flex-col */
 
 .generic-content {
   flex-grow: 100;
   display: flex;
   flex-direction: column;
-  overflow: auto;
 }
 
 .generic-inner-content {
+  overflow: auto;
   border: 2px solid;
   border-top-color: $windows-shadow;
   border-right-color: $windows-light;
@@ -101,7 +102,6 @@ button:focus {
   background-color: white;
   flex-grow: 100;
   margin: 3px;
-  padding: 20px;
 
   ul {
     padding: 0;
@@ -123,7 +123,7 @@ button:focus {
     border: 2px solid;
     display: flex;
     font-size: 20px;
-    font-family: $win-font;
+    // font-family: $win-font;
   }
 
   .win-start {
@@ -194,7 +194,7 @@ button:focus {
 }
 
 .gal-img {
-  max-height: 85vh;
+  max-height: 80vh;
   max-width: 85vw;
 
 }

@@ -1,5 +1,5 @@
 import React, { createContext, Reducer, useReducer, useState } from 'react'
-import { help } from '../data/text'
+import { exlibris, help } from '../data/text'
 
 interface ConsoleContextProps {}
 
@@ -36,7 +36,8 @@ const commands: Record<string, (state: string[][]) => string[][]> = {
   help: (state) => [...state, ...help],
   posthume: notOverYet,
   anthume: notOverYet,
-  tree: notOverYet
+  tree: notOverYet,
+  exlibris: state => [...state, ...exlibris]
 }
 
 

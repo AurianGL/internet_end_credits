@@ -37,6 +37,7 @@ export default class Paint extends React.Component {
               <p className='win-title'>
                 Paint
               </p>
+              <div className='draggable flex-grow'></div>
               <button onClick={() => {this.closePaint()}} className="win-close">
                 <div className='win-x'>x</div>
               </button>

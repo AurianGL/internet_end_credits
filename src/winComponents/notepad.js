@@ -1,15 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 
-
-// export default class NotePad extends React.Component {
-//   state
-// }
-
 export default function NotePad({content, close}) {
   return (
     <React.Fragment>
-      <div className="notepad">
+      <div className="notepad font-death">
         {content}
         <button
           onClick={close}

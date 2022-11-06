@@ -1,4 +1,4 @@
-import React, { Children } from 'react';
+import React from 'react';
 import Draggable from 'react-draggable';
 
 export default class WindowsDrag extends React.Component {
@@ -58,7 +58,7 @@ export default class WindowsDrag extends React.Component {
 
   render () {
     return (
-      <Draggable handle='.win-header'>
+      <Draggable handle='.draggable'>
         {this.props.children}
       </Draggable>
     )

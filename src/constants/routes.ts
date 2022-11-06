@@ -18,6 +18,11 @@ export const PAGES = [
     name: "1995",
     url: "/1995",
     Component: "NinetyFive"
+  },
+  {
+    name: 'BlueScreen',
+    url: "/bluescreen",
+    Component: 'BlueScreen'
   }
 ];
 

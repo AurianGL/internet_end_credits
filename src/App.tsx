@@ -13,7 +13,6 @@ function App() {
 		<LoadingProvider>
 			<ConsoleProvider>
 				<SecretProvider>
-					<div>
 						{PAGES.map((page, index) => {
 							const PageComponent = pages[page.Component];
 							return (
@@ -24,7 +23,6 @@ function App() {
 								</Switch>
 							);
 						})}
-					</div>
 				</SecretProvider>
 			</ConsoleProvider>
 		</LoadingProvider>

@@ -30,14 +30,15 @@ export const exlibris: PolyTextType = [
 ];
 
 export const latency: PolyTextType = [
-  [`Everything now lives in an unresolved latency`],
+  [`Everything now lives in an unresolved latency`,`take my heart away`],
 ];
 
 
 export const help: PolyTextType = [
   [`help : display help`],
   [`reset : clear the console`],
-  [`tree : display folder tree`],
+  // [`tree : display folder tree`],
   [`anthume : enter anthume mode`],
-  [`posthume : enter posthume mode`]
+  [`posthume : enter posthume mode`],
+  [`exlibris : display exlibris` ]
 ]
