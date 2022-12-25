@@ -12,7 +12,7 @@ export const ConsoleInput: React.FC<ConsoleInputProps> = (props) => {
       <input
         {...field}
         {...props}
-        className="bg-black text-white caret-black font-mono border-0 rounded-none focus:outline-none min-w-0"
+        className="bg-black text-white caret-black font-death border-0 rounded-none focus:outline-none min-w-0"
         autoFocus={true}
       />
       <span

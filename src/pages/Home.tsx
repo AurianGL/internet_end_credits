@@ -43,8 +43,8 @@ export const Home: React.FC<HomeProps> = (props) => {
         </div>
       )}
       {!open && (
-        <div className='flex align-top font-mono text-white'>
-          <div className='sm:w-full lg:w-1/2'>
+        <div className='flex align-top font-death text-white'>
+          <div className='sm:w-full lg:w-2/3'>
             <Text text={text} />
             <Console></Console>
           </div>

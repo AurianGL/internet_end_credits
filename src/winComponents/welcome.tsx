@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import {InternetHasEnded} from './internettHasEnded'
-import Paint from './paint'
+import { InternetHasEnded } from './internettHasEnded'
+import { Paint } from './paint'
 import { FolderIcon } from './folder_icon';
 import Paintings from './paintings'
-import {Menu} from './menu'
+import { Menu } from './menu'
 import paintingsIds from './images'
 import WindowsDrag from './windowsDrag'
 import { Durer } from './durer'
@@ -55,7 +55,7 @@ const WelcomeMessage = ({ setType }: Props) => {
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <button onClick={() => setType('art')} className="win-button">
                 <div className="win-text-button">
-                  1995 
+                  1995
                 </div>
               </button>
               <button onClick={() => window.location.href = 'https://www.spacejam.com/1996/'} className="win-button">
