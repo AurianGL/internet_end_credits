@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { ConsoleContext } from '../context';
 import WindowsDrag from './windowsDrag'
 
 interface Props {
@@ -11,6 +12,7 @@ const height = `calc(${window.innerHeight}px - 30px)`
 
 export const Folder: React.FC<Props> = ({ name, onCloseFolder, margin = true, children }) => {
   const [fullScreen, setFullScreen] = useState(false)
+  const {mode} = useContext(ConsoleContext);
 
   return (
     <WindowsDrag>
@@ -30,8 +32,8 @@ export const Folder: React.FC<Props> = ({ name, onCloseFolder, margin = true, ch
           </button>
           </div>
         </div>
-        <div className="generic-content">
-          <div className={margin ? 'generic-inner-content p-3' : 'generic-inner-content p-0'}>
+        <div className="flex grow flex-column">
+          <div className={`${mode === 'ANTHUME' ? 'bg-white' : 'bg-black'} ${margin ? 'generic-inner-content p-3' : 'generic-inner-content p-0'}`}>
             {children}
           </div>
           <div style={{ height: '20px' }}></div>

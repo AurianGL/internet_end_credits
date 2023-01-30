@@ -1,4 +1,5 @@
-import React, { createContext, Reducer, useReducer, useState } from 'react'
+import { mode } from '@cloudinary/url-gen/actions/rotate';
+import React, { createContext, Reducer, useContext, useReducer, useState } from 'react'
 import { exlibris, help } from '../data/text'
 
 interface ConsoleContextProps {}
@@ -11,9 +12,12 @@ type Action = {
   payload: payload
 }
 
-type State = [] | string[][]
+type State = {
+  mode: 'ANTHUME' | 'POSTHUME'
+  text: [] | string[][]
+}
 
-export const ConsoleContext = createContext<State>([])
+export const ConsoleContext = createContext<State>({mode: 'ANTHUME', text: []})
 
 export const DispatchTextContext = createContext<React.Dispatch<Action>>(
   () => null
@@ -23,38 +27,44 @@ const init = () => {
   return []
 }
 
-const notOverYet = (state: string[][]) => {
-  return [...state, ['Not Over Yet']]
-}
+const notOverYet = ({mode, text}: State) => ({mode, text: [...text, ['Not Over Yet']]})
 
-const invalidCommand = (state: string[][]) => {
-  return [...state, ['invalidCommand']]
-}
+const invalidCommand = ({mode, text}: State) => ({mode, text: [...text, ['invalidCommand']]})
 
-const commands: Record<string, (state: string[][]) => string[][]> = {
-  reset: (_state) => [],
-  help: (state) => [...state, ...help],
-  posthume: notOverYet,
-  anthume: notOverYet,
+type command = (state: State) => State
+
+const commands: Record<string, command> = {
+  reset: ({mode, text}) => ({mode: 'ANTHUME', text: []}),
+  help: ({mode, text}) => ({mode, text:[...text, ...help]}),
+  posthume: ({mode, text}) => {
+    if (mode === 'POSTHUME') 
+      return {mode, text: [...text, ['you are already in posthume mode']]}
+    return {mode: 'POSTHUME', text: [...text, ['you are now in pothume mode']]}
+  },
+  anthume: ({mode, text}) => {
+    if (mode === 'ANTHUME') 
+      return {mode, text: [...text, ['you are already in anthume mode']]}
+    return {mode: 'ANTHUME', text: [...text, ['you are now in anthume mode']]}
+  },
   tree: notOverYet,
-  exlibris: state => [...state, ...exlibris]
+  exlibris: ({mode, text}) => ({mode, text: [...text, ...exlibris]})
 }
 
 
 
 const reducer: Reducer<State, Action> = (state, action) => {
-  const { type, payload } = action
+  const { type, payload} = action
+  const {mode, text} = state
   switch (type) {
     case 'EVAL_COMMAND':
-      console.log('evaluating command', payload.command)
       if (!payload.command || !commands[payload.command])
         return invalidCommand(state)
       return commands[payload.command](state)
     case 'SET_TEXT':
-      if (payload.data) return payload.data
-      return []
+      if (payload.data) return {mode, text: payload.data}
+      return {mode, text: []}
     case 'ADD_TEXT':
-      if (payload.data) return [...state, ...payload.data]
+      if (payload.data) return {mode, text: [...text, ...payload.data]}
       return state
     default:
       throw new Error('Missing action type')
@@ -64,7 +74,8 @@ const reducer: Reducer<State, Action> = (state, action) => {
 export const ConsoleProvider: React.FC<ConsoleContextProps> = ({
   children,
 }) => {
-  const [text, dispatchText] = useReducer(reducer, [], init)
+  const [text, dispatchText] = useReducer(reducer, {mode: 'ANTHUME', text: []})
+
   return (
     <ConsoleContext.Provider value={text}>
       <DispatchTextContext.Provider value={dispatchText}>

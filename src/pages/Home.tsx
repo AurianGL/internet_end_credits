@@ -45,7 +45,7 @@ export const Home: React.FC<HomeProps> = (props) => {
       {!open && (
         <div className='flex align-top font-death text-white'>
           <div className='sm:w-full lg:w-2/3'>
-            <Text text={text} />
+            <Text text={text.text} />
             <Console></Console>
           </div>
           <div>{/* <Text text={latency} /> */}</div>

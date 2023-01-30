@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Image, CloudinaryContext } from 'cloudinary-react';
+import { ConsoleContext } from '../context';
 
 
 const durerIds = [
@@ -21,8 +22,9 @@ const Imago = ({pic}: ImagoProps) => {
 };
 
 export const Durer = () => {
+	const {mode} = useContext(ConsoleContext);
 	return <div className='durer-imgs'>
-    {durerIds.map(durerId => <Imago key={durerId.id} pic={durerId.id}/>)}
+    {<Imago pic={durerIds[mode === 'ANTHUME' ? 0 : 1].id}/>}
   </div>;
 };
 

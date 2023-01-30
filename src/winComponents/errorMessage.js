@@ -19,7 +19,7 @@ export default function ErrorMessage ({active, arrInd, clickOk, clickX}) {
           <div className='error-message'>
             The Internet has ended. <br/> Click OK to continue.
           </div>
-          <button href="#" onClick={active ? clickOk : null} className="win-button">
+          <button href="#" onClick={active ? clickOk : null} className="win-button text-black">
             <div className="win-text-button">
               OK
             </div>

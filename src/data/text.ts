@@ -30,7 +30,7 @@ export const exlibris: PolyTextType = [
 ];
 
 export const latency: PolyTextType = [
-  [`Everything now lives in an unresolved latency`,`take my heart away`],
+  [`Everything now lives in an unresolved latency`, `take my heart away`],
 ];
 
 
@@ -40,5 +40,16 @@ export const help: PolyTextType = [
   // [`tree : display folder tree`],
   [`anthume : enter anthume mode`],
   [`posthume : enter posthume mode`],
-  [`exlibris : display exlibris` ]
+  [`exlibris : display exlibris`]
 ]
+
+export const NOTEPAD: Record<string, string> = {
+  POLAROIDS: `
+  crux volvitur orbis
+  `,
+  PAINTINGS: `
+  These are images,
+  those don't live in the realm of language,
+  use your eyes.
+`
+}
