@@ -1,5 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useRef } from 'react';
 import { ConsoleContext } from '../context';
+import { useOutsideAlerter } from '../hooks/onClickOutside';
 import WindowsDrag from './windowsDrag'
 
 interface Props {
@@ -13,10 +14,12 @@ const height = `calc(${window.innerHeight}px - 30px)`
 export const Folder: React.FC<Props> = ({ name, onCloseFolder, margin = true, children }) => {
   const [fullScreen, setFullScreen] = useState(false)
   const {mode} = useContext(ConsoleContext);
+  const wrapperRef = useRef(null)
+  const focus = useOutsideAlerter(wrapperRef)
 
   return (
     <WindowsDrag>
-      <div className={`${fullScreen ? 'lg:w-full' : 'lg:w-1/2'  } absolute box-border top-0 left-0 flex sm:w-full flex-col windows`} style={{ height: height }}>
+      <div ref={wrapperRef} className={`${fullScreen ? 'lg:w-full' : 'lg:w-1/2'  } absolute box-border top-0 left-0 flex sm:w-full flex-col windows`} style={{ height: height, zIndex: focus ? 10000 : 1 }}>
         <div className='win-header'>
 
           <p className='win-title'>
@@ -41,4 +44,8 @@ export const Folder: React.FC<Props> = ({ name, onCloseFolder, margin = true, ch
       </div>
     </WindowsDrag>
   )
+}
+
+function userRef(arg0: null) {
+  throw new Error('Function not implemented.');
 }

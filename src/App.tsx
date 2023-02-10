@@ -4,6 +4,7 @@ import { PAGES } from "./constants/routes";
 import {
 	ConsoleProvider,
 	LoadingProvider,
+	ProgramsProvider,
 	SecretProvider,
 } from "./context";
 
@@ -11,8 +12,9 @@ function App() {
 	return (
 		<Router>
 			<LoadingProvider>
-					<ConsoleProvider>
-						<SecretProvider>
+				<ConsoleProvider>
+					<SecretProvider>
+						<ProgramsProvider>
 							{PAGES.map((page, index) => {
 								const PageComponent = pages[page.Component];
 								return (
@@ -23,8 +25,9 @@ function App() {
 									</Switch>
 								);
 							})}
-						</SecretProvider>
-					</ConsoleProvider>
+						</ProgramsProvider>
+					</SecretProvider>
+				</ConsoleProvider>
 			</LoadingProvider>
 		</Router>
 	);

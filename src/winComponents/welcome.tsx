@@ -4,38 +4,35 @@ import { Paint } from './paint'
 import { FolderIcon } from './folder_icon';
 import { Menu } from './menu'
 import WindowsDrag from './windowsDrag'
-import { Durer } from './durer'
+import { ConsoleContext, ProgramsContext } from '../context';
+import { Folder } from './folder';
+import { PROGRAMS } from '../constants/programs';
 import { TermIcon } from './termIcon';
-import { Home } from '../pages/Home';
-import { Tourniquet } from './tourniquet';
-import { ConsoleContext } from '../context';
-// import { HelloYou } from './HelloYou'
-
 
 const height = `calc(${window.innerHeight * 0.01}px * 100)`
 
 const Art = () => {
 
   const {mode} = useContext(ConsoleContext);
+  const { programs, setPrograms } = useContext(ProgramsContext)
 
   return (
     <div className='w-full text-left  p-5 grow flex flex-col flex-start items-start' style={{ height: height }}>
       <Paint />
-      {mode === 'ANTHUME'  && <FolderIcon name='Paintings'>
-        <Tourniquet target='Paintings'/>
-      </FolderIcon>}
-      {mode === 'POSTHUME'  && <FolderIcon name='As Above'>
-        <Tourniquet target='Polaroids'/>
-      </FolderIcon>}
-      <FolderIcon name='Cult Dürer'>
-        <Durer />
-      </FolderIcon>
-      <TermIcon name='Terminal'>
-        <Home />
-      </TermIcon>
-
+      {mode === 'ANTHUME'  && <FolderIcon name='Paintings' cle='painting'/>}
+      {mode === 'POSTHUME'  && <FolderIcon name='As Above' cle='crux'/>}
+      <FolderIcon name='Cult Dürer' cle='durer'/>
+      <TermIcon name='Terminal' cle='terminal'/>
+      {programs.map((program) => {
+        const {name, PgrComponent, props} = PROGRAMS[program]
+      return <Folder
+          margin={name !== 'Terminal'}
+          name={name}
+          onCloseFolder={() => setPrograms(programs.filter(e => e !== program))} key={name}>
+          <PgrComponent {...props}/>
+      </Folder>
+      })}
       <InternetHasEnded />
-      {/* <HelloYou/> */}
     </div>
   )
 }

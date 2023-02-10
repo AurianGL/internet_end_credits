@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Image, CloudinaryContext } from 'cloudinary-react';
 import { useHistory } from 'react-router-dom';
+import { ProgramsContext } from '../context';
 interface Props {
   setType: (type: string) => void
 }
@@ -27,10 +28,20 @@ const OpenMenu: React.FC<Props> = ({ setType }) => {
     </div>
   )
 }
+interface tabProps {
+  program: string
+}
+
+const ProgTab: React.FC<tabProps> = ({ program }) => {
+  return <div className='p-1 border-t-windows-300 border-x-windows-300 border-b-windows-100 border-r-windows-100 bg-windows-200 border-2 border-solid flex items-center pr-1'>
+    {program}
+  </div>
+}
 
 export const Menu: React.FC<Props> = ({ setType }) => {
   const [open, setOpen] = useState(false)
   const [countDown, setCountdown] = useState<string | undefined>(undefined)
+  const { programs, setPrograms } = useContext(ProgramsContext)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -52,6 +63,11 @@ export const Menu: React.FC<Props> = ({ setType }) => {
           </CloudinaryContext>
           Start
         </button>
+        <div className='flex align-start grow gap-1 mx-1'>
+          {programs.map((program) => {
+            return <ProgTab program={program} />
+          })}
+        </div>
         <div className='win-clock mr-1'>
           {countDown}
         </div>
