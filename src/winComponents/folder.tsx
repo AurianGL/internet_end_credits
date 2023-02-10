@@ -19,7 +19,7 @@ export const Folder: React.FC<Props> = ({ name, onCloseFolder, margin = true, ch
 
   return (
     <WindowsDrag>
-      <div ref={wrapperRef} className={`${fullScreen ? 'lg:w-full' : 'lg:w-1/2'  } absolute box-border top-0 left-0 flex sm:w-full flex-col windows`} style={{ height: height, zIndex: focus ? 10000 : 1 }}>
+      <div ref={wrapperRef} className={`${fullScreen ? 'lg:w-full' : 'lg:w-1/2'  } absolute box-border top-0 left-0 flex sm:w-full flex-col windows`} style={{ height: height, zIndex: focus ? 40 : 1 }}>
         <div className='win-header'>
 
           <p className='win-title'>

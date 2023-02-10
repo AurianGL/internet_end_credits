@@ -9,6 +9,7 @@ import { Folder } from './folder';
 import { PROGRAMS } from '../constants/programs';
 import { TermIcon } from './termIcon';
 
+
 const height = `calc(${window.innerHeight * 0.01}px * 100)`
 
 const Art = () => {
@@ -17,7 +18,7 @@ const Art = () => {
   const { programs, setPrograms } = useContext(ProgramsContext)
 
   return (
-    <div className='w-full text-left  p-5 grow flex flex-col flex-start items-start' style={{ height: height }}>
+    <div className='w-full text-left p-5 grow flex flex-col flex-start items-start' style={{ height: height }}>
       <Paint />
       {mode === 'ANTHUME'  && <FolderIcon name='Paintings' cle='painting'/>}
       {mode === 'POSTHUME'  && <FolderIcon name='As Above' cle='crux'/>}
