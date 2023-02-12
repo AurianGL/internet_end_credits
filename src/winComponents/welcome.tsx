@@ -27,6 +27,7 @@ const Art = () => {
       {programs.map((program) => {
         const {name, PgrComponent, props} = PROGRAMS[program]
       return <Folder
+          cle={program}
           margin={name !== 'Terminal'}
           name={name}
           onCloseFolder={() => setPrograms(programs.filter(e => e !== program))} key={name}>

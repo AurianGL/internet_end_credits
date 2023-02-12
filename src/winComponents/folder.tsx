@@ -1,25 +1,29 @@
 import React, { useContext, useState, useRef } from 'react';
-import { ConsoleContext } from '../context';
+import { ConsoleContext, ProgramsContext } from '../context';
 import { useOutsideAlerter } from '../hooks/onClickOutside';
 import WindowsDrag from './windowsDrag'
 
 interface Props {
   name: string
+  cle: string
   onCloseFolder: () => void
   margin?: boolean
 }
 
 const height = `calc(${window.innerHeight}px - 30px)`
 
-export const Folder: React.FC<Props> = ({ name, onCloseFolder, margin = true, children }) => {
+export const Folder: React.FC<Props> = ({ cle, name, onCloseFolder, margin = true, children }) => {
   const [fullScreen, setFullScreen] = useState(false)
   const {mode} = useContext(ConsoleContext);
+  const {currentProgram, setCurrentProgram} = useContext(ProgramsContext)
   const wrapperRef = useRef(null)
-  const focus = useOutsideAlerter(wrapperRef)
-
+  
   return (
     <WindowsDrag>
-      <div ref={wrapperRef} className={`${fullScreen ? 'lg:w-full' : 'lg:w-1/2'  } absolute box-border top-0 left-0 flex sm:w-full flex-col windows`} style={{ height: height, zIndex: focus ? 40 : 1 }}>
+      <div 
+        onClick={() => setCurrentProgram(cle)}
+        ref={wrapperRef} 
+        className={`${fullScreen ? 'lg:w-full' : 'lg:w-1/2'  } absolute box-border top-0 left-0 flex sm:w-full flex-col windows ${currentProgram === cle ? 'z-40' : 'z-auto'}`} style={{ height: height}}>
         <div className='win-header'>
 
           <p className='win-title'>

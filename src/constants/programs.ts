@@ -27,14 +27,12 @@ export const PROGRAMS: Record<string, {name: string, PgrComponent: FC<any>, prop
     name: "Paint",
     PgrComponent: programs.Paint,
     props: {
-      target: 'Paintings'
     }
   },
   terminal: {
     name: "Terminal",
     PgrComponent: programs.Home,
     props: {
-      target: 'Paintings'
     }
   }
 }

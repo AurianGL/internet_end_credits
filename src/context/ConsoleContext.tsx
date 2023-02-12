@@ -57,9 +57,9 @@ const reducer: Reducer<State, Action> = (state, action) => {
   const {mode, text} = state
   switch (type) {
     case 'EVAL_COMMAND':
-      if (!payload.command || !commands[payload.command])
+      if (!payload.command || !commands[payload.command.toLowerCase()])
         return invalidCommand(state)
-      return commands[payload.command](state)
+      return commands[payload.command.toLowerCase()](state)
     case 'SET_TEXT':
       if (payload.data) return {mode, text: payload.data}
       return {mode, text: []}
