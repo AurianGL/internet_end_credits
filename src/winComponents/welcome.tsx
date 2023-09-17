@@ -5,9 +5,8 @@ import { FolderIcon } from './folder_icon';
 import { Menu } from './menu'
 import WindowsDrag from './windowsDrag'
 import { ConsoleContext, ProgramsContext } from '../context';
-import { Folder } from './folder';
 import { PROGRAMS } from '../constants/programs';
-import { TermIcon } from './termIcon';
+import { ProgramContainer } from './ProgramContainer';
 
 
 const height = `calc(${window.innerHeight * 0.01}px * 100)`
@@ -23,16 +22,18 @@ const Art = () => {
       {mode === 'ANTHUME'  && <FolderIcon name='Paintings' cle='painting'/>}
       {mode === 'POSTHUME'  && <FolderIcon name='As Above' cle='crux'/>}
       <FolderIcon name='Cult Dürer' cle='durer'/>
-      <TermIcon name='Terminal' cle='terminal'/>
+      <FolderIcon name='Contact' cle='contact'/>
+      <FolderIcon name='Terminal' cle='terminal'/>
       {programs.map((program) => {
         const {name, PgrComponent, props} = PROGRAMS[program]
-      return <Folder
+      return <ProgramContainer
           cle={program}
           margin={name !== 'Terminal'}
           name={name}
-          onCloseFolder={() => setPrograms(programs.filter(e => e !== program))} key={name}>
+          onCloseFolder={() => setPrograms(programs.filter(e => e !== program))} 
+          key={name}>
           <PgrComponent {...props}/>
-      </Folder>
+      </ProgramContainer>
       })}
       <InternetHasEnded />
     </div>
