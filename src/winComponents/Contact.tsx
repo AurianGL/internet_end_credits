@@ -34,7 +34,7 @@ const ContactText: React.FC = () => {
 
 export const Contact = () => {
   return (
-    <div className="error-content">
+    <div className="error-content"  style={{ overflow: 'hidden' }}>
       <div className='error-message font-death text-lg'>
         <ContactText />
       </div>
