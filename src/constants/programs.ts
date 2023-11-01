@@ -1,15 +1,17 @@
-import programs from "../components/programs/index"
-import { programsComponents } from "../components/programs/index";
+import programs, { programsComponents } from "../components/programs/index";
+import wrappers, { programsWrapper } from "../components/programs/wrappers";
+
+type program = {
+  name: string,
+  PgrComponent: programsComponents,
+  props: any,
+  icon: keyof typeof ICONS
+  Wrapper: programsWrapper
+}
 
 export type ProgramsType = Record<
-  string,
-  {
-    name: string,
-    PgrComponent: programsComponents,
-    props: any,
-    icon: keyof typeof ICONS
-    Wrapper: string
-  }
+  'durer' | 'contact' | 'terminal' | 'crux' | 'painting' | 'whereIsHome' | 'paint',
+  program
 >
 
 
@@ -33,7 +35,7 @@ export const PROGRAMS: ProgramsType = {
   painting: {
     name: "Paintings",
     PgrComponent: programs.Tourniquet,
-    Wrapper: 'folder',
+    Wrapper: wrappers.ProgramContainer,
     props: {
       target: 'Paintings'
     },
@@ -42,7 +44,7 @@ export const PROGRAMS: ProgramsType = {
   crux: {
     name: "As Above",
     PgrComponent: programs.Tourniquet,
-    Wrapper: 'folder',
+    Wrapper: wrappers.ProgramContainer,
     props: {
       target: 'Polaroids'
     },
@@ -51,7 +53,7 @@ export const PROGRAMS: ProgramsType = {
   durer: {
     name: "Cult Dürer",
     PgrComponent: programs.Durer,
-    Wrapper: 'folder',
+    Wrapper: wrappers.ProgramContainer,
     props: {
       target: 'Durer'
     },
@@ -60,7 +62,7 @@ export const PROGRAMS: ProgramsType = {
   paint: {
     name: "Paint",
     PgrComponent: programs.Paint,
-    Wrapper: 'folder',
+    Wrapper: wrappers.ProgramContainer,
     props: {
     },
     icon: 'folder'
@@ -68,7 +70,7 @@ export const PROGRAMS: ProgramsType = {
   terminal: {
     name: "Terminal",
     PgrComponent: programs.Home,
-    Wrapper: 'folder',
+    Wrapper: wrappers.ProgramContainer,
     props: {
     },
     icon: 'pgr'
@@ -76,9 +78,17 @@ export const PROGRAMS: ProgramsType = {
   contact: {
     name: "Contact",
     PgrComponent: programs.Contact,
-    Wrapper: 'error',
+    Wrapper: wrappers.ErrorWrapper,
     props: {
     },
     icon: 'rezo'
+  },
+  whereIsHome: {
+    name: "Where is Home ?",
+    PgrComponent: programs.PgrLoader,
+    Wrapper: wrappers.LoaderContainer,
+    props: {
+    },
+    icon: 'pgr'
   }
 }

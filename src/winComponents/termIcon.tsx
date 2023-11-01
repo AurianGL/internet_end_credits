@@ -1,10 +1,11 @@
 import React, { useContext } from 'react'
 import Icon from './icon'
 import { ProgramsContext } from '../context'
+import { Cle } from '../context/ProgramsContext'
 
 interface Props {
   name: string
-  cle: string
+  cle: Cle
 }
 
 export const TermIcon: React.FC<Props> = ({ name, cle }) => {

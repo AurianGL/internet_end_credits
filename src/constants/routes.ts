@@ -23,6 +23,11 @@ export const PAGES = [
     name: 'BlueScreen',
     url: "/bluescreen",
     Component: 'BlueScreen'
+  },
+  {
+    name: 'Where is Home',
+    url: "/whereishome",
+    Component: 'WhereIsHome'
   }
 ];
 

@@ -17,7 +17,7 @@ export const Text: React.FC<TextProps> = (props) => {
         return
       }
       setRenderText(text)
-    }, 1000)
+    }, 0)
     return () => clearTimeout(addSentence)
   }, [text, renderText])
   return (

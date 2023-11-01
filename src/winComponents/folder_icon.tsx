@@ -2,10 +2,11 @@ import React, { useContext } from 'react'
 import Icon from './icon'
 import { ProgramsContext } from '../context'
 import { ICONS, PROGRAMS } from '../constants/programs'
+import { Cle } from '../context/ProgramsContext'
 
 interface Props {
   name: string
-  cle: string
+  cle: Cle
 }
 
 

@@ -2,10 +2,11 @@ import React, { useContext, useState, useRef } from 'react';
 import { ConsoleContext, ProgramsContext } from '../context';
 import { useOutsideAlerter } from '../hooks/onClickOutside';
 import WindowsDrag from './windowsDrag'
+import { Cle } from '../context/ProgramsContext';
 
 interface Props {
   name: string
-  cle: string
+  cle: Cle
   onCloseFolder: () => void
   margin?: boolean
 }

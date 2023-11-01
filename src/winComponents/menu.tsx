@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Image, CloudinaryContext } from 'cloudinary-react';
 import { useHistory } from 'react-router-dom';
 import { ProgramsContext } from '../context';
+import { Cle } from '../context/ProgramsContext';
 
 interface Props {
   setType: (type: string) => void
@@ -30,9 +31,9 @@ const OpenMenu: React.FC<Props> = ({ setType }) => {
   )
 }
 interface tabProps {
-  program: string
+  program: Cle
   isFocus: boolean
-  setCurrentProgram: React.Dispatch<string>
+  setCurrentProgram: React.Dispatch<Cle>
 }
 
 const ProgTab: React.FC<tabProps> = ({ program, setCurrentProgram, isFocus }) => {

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import { InternetHasEnded } from './internettHasEnded'
 import { Paint } from './paint'
 import { FolderIcon } from './folder_icon';
@@ -6,34 +6,39 @@ import { Menu } from './menu'
 import WindowsDrag from './windowsDrag'
 import { ConsoleContext, ProgramsContext } from '../context';
 import { PROGRAMS } from '../constants/programs';
-import { ProgramContainer } from './ProgramContainer';
-
-
-const height = `calc(${window.innerHeight * 0.01}px * 100)`
+import { useWindowDimensions } from '../hooks/useWindowDimensions';
 
 const Art = () => {
 
   const {mode} = useContext(ConsoleContext);
   const { programs, setPrograms } = useContext(ProgramsContext)
 
+  const { height } = useWindowDimensions();
+
+  const deriveHeight = useMemo(() => `calc(${height * 0.01}px * 100)`, [height])
+
+
   return (
-    <div className='w-full text-left p-5 grow flex flex-col flex-start items-start' style={{ height: height }}>
+    <div className='w-full text-left p-5 grow flex flex-col flex-start items-start' style={{ height: deriveHeight }}>
       <Paint />
       {mode === 'ANTHUME'  && <FolderIcon name='Paintings' cle='painting'/>}
       {mode === 'POSTHUME'  && <FolderIcon name='As Above' cle='crux'/>}
       <FolderIcon name='Cult Dürer' cle='durer'/>
       <FolderIcon name='Contact' cle='contact'/>
       <FolderIcon name='Terminal' cle='terminal'/>
+      <FolderIcon name='Where is Home' cle="whereIsHome"/>
       {programs.map((program) => {
-        const {name, PgrComponent, props} = PROGRAMS[program]
-      return <ProgramContainer
+        const {name, PgrComponent, props, Wrapper} = PROGRAMS[program]
+      return <Wrapper
           cle={program}
           margin={name !== 'Terminal'}
           name={name}
           onCloseFolder={() => setPrograms(programs.filter(e => e !== program))} 
-          key={name}>
+          key={name}
+          isOpen={programs.includes(program)}
+          >
           <PgrComponent {...props}/>
-      </ProgramContainer>
+      </Wrapper>
       })}
       <InternetHasEnded />
     </div>
@@ -46,9 +51,13 @@ interface Props {
 const WelcomeMessage = ({ setType }: Props) => {
   const {mode} = useContext(ConsoleContext);
 
+  const { height } = useWindowDimensions();
+
+  const deriveHeight = useMemo(() => `calc(${height * 0.01}px * 100)`, [height])
+
 
   return (
-    <div className='w-full text-left flex grow justify-center items-center' style={{ height: height }}>
+    <div className='w-full text-left flex grow justify-center items-center' style={{ height: deriveHeight }}>
       <WindowsDrag>
         <div className='error-container windows' style={{ maxHeight: '100vw' }}>
           <div className='win-header'>
@@ -82,9 +91,12 @@ const WelcomeMessage = ({ setType }: Props) => {
 
 export const Welcome = () => {
   const [type, setType] = useState('welcome')
+  const { height } = useWindowDimensions();
+
+  const deriveHeight = useMemo(() => `calc(${height * 0.01}px * 100)`, [height])
 
   return (
-    <div className='flex flex-col' style={{ height: height }}>
+    <div className='flex flex-col' style={{ height: deriveHeight }}>
       {type === 'welcome' && <WelcomeMessage setType={setType} />}
       {type === 'art' && <Art />}
       <Menu setType={setType} />
