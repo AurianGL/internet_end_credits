@@ -1,16 +1,32 @@
-import { useState } from "react"
-import { whereIsHome } from "../data/whereIsHome"
-import { Text } from './Text'
+import { useMemo, useRef, useState } from "react";
+import { whereIsHome, whereIsHomeFR } from "../data/whereIsHome";
+import { SimpleText } from "./SimpleText";
+import WindowsDrag from "../winComponents/windowsDrag";
+import { SongCard } from "./SongCard";
 
-export const HomeMap = () => {
-  const [index, setIndex] = useState(0)
+type Props = {
+  lang: 'fr' | 'en'
+}
+
+export const HomeMap = ({lang}: Props) => {
+  const [currentCardIndex, setCurrentCardIndex] = useState(0);
+
+  const songs = useMemo(() => {
+    return lang === 'fr' ? whereIsHomeFR : whereIsHome
+  }, [lang])
+
 
   return (
-    <>
-    <button className="win-button" onClick={() => setIndex((index + 1 + whereIsHome.length ) % whereIsHome.length )}>
-      NEXT
-     </button>
-    <Text text={whereIsHome[index]}/>
-    </>
-  )
-}
+    <div className='grid grid-rows-4 grid-flow-col gap-0'>
+      {songs.map((text, index) => (
+        <SongCard
+          key={index}
+          song={text}
+          index={index}
+          currentCardIndex={currentCardIndex}
+          setCurrentCardIndex={setCurrentCardIndex}
+        />
+      ))}
+    </div>
+  );
+};

@@ -1,6 +1,5 @@
 import React, { useContext, useState, useRef } from 'react';
 import { ConsoleContext, ProgramsContext } from '../context';
-import { useOutsideAlerter } from '../hooks/onClickOutside';
 import WindowsDrag from './windowsDrag'
 import { Cle } from '../context/ProgramsContext';
 
@@ -49,8 +48,4 @@ export const Folder: React.FC<Props> = ({ cle, name, onCloseFolder, margin = tru
       </div>
     </WindowsDrag>
   )
-}
-
-function userRef(arg0: null) {
-  throw new Error('Function not implemented.');
 }
