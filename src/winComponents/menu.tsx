@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Image, CloudinaryContext } from 'cloudinary-react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ProgramsContext } from '../context';
 import { Cle } from '../context/ProgramsContext';
 
@@ -10,17 +10,17 @@ interface Props {
 
 
 const OpenMenu: React.FC<Props> = ({ setType }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
 
   return (
     <div className='open-menu'>
       <div className='side-title'><p>AURIAN GL</p></div>
       <div className='app-list'>
         <div className='app-item'>
-          <button onClick={() => history.push('Term')}>{'>/'}</button>
+          <button onClick={() => navigate('Term')}>{'>/'}</button>
         </div>
         <div className='app-item'>
-          <button onClick={() => history.push('1995')}>1995</button>
+          <button onClick={() => navigate('1995')}>1995</button>
         </div>
         <div className='app-item line-through'>
           DE RAMP

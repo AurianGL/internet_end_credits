@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { programsWrapper } from "./wrappers";
 import { ReactPortal } from "../../utils/ReactPortal";
 import { useWindowDimensions } from "../../hooks/useWindowDimensions";
@@ -11,7 +11,7 @@ export const LoaderContainer: programsWrapper = ({
   onCloseFolder,
   cle,
 }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { height } = useWindowDimensions();
 
@@ -19,11 +19,11 @@ export const LoaderContainer: programsWrapper = ({
   
   useEffect(() => {
     const timer = setTimeout(() => {
-      history.push(`/${cle}`);
+      navigate(`/${cle}`);
     }, 4000);
 
     return () => clearTimeout(timer);
-  }, [cle, history]);
+  }, [cle, navigate]);
 
   if (!isOpen) {
     return null;

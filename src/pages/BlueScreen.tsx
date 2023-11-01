@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react'
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../winComponents/style/_index.scss'
 
 interface Props { }
 
 export const BlueScreen: React.FC<Props> = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const handleEsc = (event: KeyboardEvent) => {
        if (event.key === 'Enter') {
-        history.push('/1995')
+        navigate('/1995')
       } else if (event.key !== 'Enter') {
         console.log('posthume mode')
       }
@@ -20,7 +20,7 @@ export const BlueScreen: React.FC<Props> = () => {
     return () => {
       window.removeEventListener('keydown', handleEsc);
     };
-  }, [history]);
+  }, [navigate]);
 
   return (
     <div className='bg-death w-screen h-screen text-white text-xl  flex justify-center items-center'>

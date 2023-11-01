@@ -1,7 +1,5 @@
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { whereIsHome, whereIsHomeFR } from "../data/whereIsHome";
-import { SimpleText } from "./SimpleText";
-import WindowsDrag from "../winComponents/windowsDrag";
 import { SongCard } from "./SongCard";
 
 type Props = {

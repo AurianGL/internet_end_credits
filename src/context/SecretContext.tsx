@@ -1,5 +1,5 @@
 import React, { createContext, Reducer, useReducer, useEffect } from "react";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 
 interface SecretContextProps {}
 
@@ -39,21 +39,21 @@ const reducer: Reducer<State, Action> = (state, action) => {
 // }
 
 export const SecretProvider: React.FC<SecretContextProps> = ({ children }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [state, dispatch] = useReducer(reducer, []);
 
   useEffect(() => {
     switch (state.join("")) {
       case "deramp":
-        history.push("/deramp");
+        navigate("/deramp");
         dispatch({ type: "RESET" });
         break
       case "1995":
-        history.push("/1995")
+        navigate("/1995")
         dispatch({ type: "RESET" });
     }
     return () => {};
-  }, [state, history]);
+  }, [state, navigate]);
   return (
     <SecretContext.Provider value={state}>
       <DispatchContext.Provider value={dispatch}>

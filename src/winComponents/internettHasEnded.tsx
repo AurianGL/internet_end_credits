@@ -1,5 +1,5 @@
 import React, { Reducer, useEffect, useReducer, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ErrorMessage from "./errorMessage"
 import Icon from './icon'
 
@@ -62,7 +62,7 @@ const errorReducer: Reducer<errorMessage[] | undefined, { action: string, index?
 export const InternetHasEnded: React.FC = () => {
   const [internet, setInternet] = useState(false)
   const [errorMessages, dispathErrorMessages] = useReducer(errorReducer, initialError)
-  const history = useHistory()
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (errorMessages?.length === 0 && internet) {
@@ -74,10 +74,10 @@ export const InternetHasEnded: React.FC = () => {
       }, 100)
       if (errorMessages && errorMessages.length > 200) {
         clearInterval(interval)
-        history.push('/bluescreen')
+        navigate('/bluescreen')
       }
     }
-  }, [errorMessages, internet, history])
+  }, [errorMessages, internet, navigate])
 
 
   return (
