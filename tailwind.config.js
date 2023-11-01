@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       colors: {
         death: '#00A',
+        spotify: '#282828',
         windows: {
           100: '#FFFCF1',
           200: '#D6D3CE',
