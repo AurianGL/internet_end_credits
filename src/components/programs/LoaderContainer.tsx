@@ -33,10 +33,10 @@ export const LoaderContainer: programsWrapper = ({
 
   return (
     <ReactPortal id='react-portal-modal-container'>
-      <div className='absolute flex items-center justify-center w-screen overflow-hidden font-death '
+      <div className='absolute flex items-center justify-center w-screen overflow-hidden font-death top-0 left-0 z-50 pointer-events-none'
         style={{ height: deriveHeight }}
       >
-        <div className='text-center text-white p-4 bg-black border-white border shadow-lg shadow-red-700'>
+        <div className='text-center text-white p-4 bg-black border-white border shadow-lg shadow-red-700 pointer-events-auto'>
           <div className='text-2xl'>{name}</div>
           <div className="p-2">
             {children}

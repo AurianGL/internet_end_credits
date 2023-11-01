@@ -13,8 +13,9 @@ const createWrapperAndAppendToBody = (wrapperId: string) => {
 }
 
 export const ReactPortal: React.FC<Props> = ({ children, id }) => {
-  const portal = document.getElementById(id)
-
-  createWrapperAndAppendToBody(id)
+  let portal = document.getElementById(id)
+  if (!portal) {
+    portal = createWrapperAndAppendToBody(id)
+  }
   return portal ? createPortal(children, portal) : null
 }
