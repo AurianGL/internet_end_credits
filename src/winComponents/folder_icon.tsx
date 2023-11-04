@@ -1,28 +1,31 @@
-import React, { useContext } from 'react'
-import Icon from './icon'
-import { ProgramsContext } from '../context'
-import { ICONS, PROGRAMS } from '../constants/programs'
-import { Cle } from '../context/ProgramsContext'
+import React, { useContext } from "react";
+import { Icon } from "./icon";
+import { ProgramsContext } from "../context";
+import { ICONS, PROGRAMS } from "../constants/programs";
+import { Cle } from "../context/ProgramsContext";
 
 interface Props {
-  name: string
-  cle: Cle
+  name: string;
+  cle: Cle;
 }
 
-
-
 export const FolderIcon: React.FC<Props> = ({ name, cle }) => {
-  const { programs, setPrograms, setCurrentProgram } = useContext(ProgramsContext)
-  const icon = PROGRAMS[cle].icon
+  const { programs, setPrograms, setCurrentProgram } =
+    useContext(ProgramsContext);
+  const icon = PROGRAMS[cle].icon;
 
   return (
     <Icon
       imageId={programs.includes(cle) ? ICONS[icon].open : ICONS[icon].close}
       name={name}
       openFolder={() => {
-        setPrograms(programs.includes(cle) ? programs.filter(e => e !== cle) : [...programs, cle])
-        setCurrentProgram(cle)
+        setPrograms(
+          programs.includes(cle)
+            ? programs.filter((e) => e !== cle)
+            : [...programs, cle]
+        );
+        setCurrentProgram(cle);
       }}
     />
-  )
-} 
+  );
+};

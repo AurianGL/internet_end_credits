@@ -21,8 +21,6 @@ interface TransformationProps {
 
 declare module 'cloudinary-react' {
   class CloudinaryComponent {
-      constructor(props, context) {}
-
       getChildContext() {}
 
       render() {}

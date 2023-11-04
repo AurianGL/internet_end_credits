@@ -119,7 +119,7 @@ interface GalerieProps {
 
 type content = 'index' | 'show' | 'text'
 
-export const Tourniquet: React.FC<TourniquetProps>  = ({ target }) => {
+export const Tourniquet  = ({ target }: TourniquetProps) => {
   const [content, setContent] = useState<content>('index')
   const [initialPicIndex, setInitialPicIndex] = useState<number | null>(null)
   const targetKey = target.toUpperCase()

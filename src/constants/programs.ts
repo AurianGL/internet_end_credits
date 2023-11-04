@@ -1,16 +1,18 @@
-import programs, { programsComponents } from "../components/programs/index";
+import React from "react";
+import programs, { ProgramType } from "../components/programs/index";
 import wrappers, { programsWrapper } from "../components/programs/wrappers";
 
 type program = {
   name: string,
-  PgrComponent: programsComponents,
+  PgrComponent: ProgramType,
+  // props: React.ComponentProps<ProgramType>,
   props: any,
   icon: keyof typeof ICONS
   Wrapper: programsWrapper
 }
 
 export type ProgramsType = Record<
-  'durer' | 'contact' | 'terminal' | 'crux' | 'painting' | 'whereIsHome' | 'paint',
+  'durer' | 'contact' | 'terminal' | 'crux' | 'painting' | 'whereIsHome' | 'paint' | 'winAmp',
   program
 >
 
@@ -27,6 +29,10 @@ export const ICONS = {
   pgr: {
     open: 'pgr',
     close: 'pgr',
+  },
+  winamp: {
+    open: 'Winamp-logo.svg_mcbyim',
+    close: 'Winamp-logo.svg_mcbyim',
   },
 }
 
@@ -90,5 +96,13 @@ export const PROGRAMS: ProgramsType = {
     props: {
     },
     icon: 'pgr'
+  },
+  winAmp: {
+    name: "WinRar",
+    PgrComponent: programs.WinAmp,
+    Wrapper: wrappers.NeutralContainer,
+    props: {
+    },
+    icon: 'winamp'
   }
 }
