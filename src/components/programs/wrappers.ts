@@ -3,6 +3,7 @@ import { ProgramContainer } from "./ProgramContainer"
 import { Cle } from "../../context/ProgramsContext"
 import { ErrorWrapper } from "./ErrorWrapper"
 import { LoaderContainer } from "./LoaderContainer"
+import { NeutralContainer } from "./NeutralContainer"
 
 export type WrapperProps = {
   name: string
@@ -13,6 +14,6 @@ export type WrapperProps = {
 }
 
 export type programsWrapper = React.FC<WrapperProps>
-const wrappers: Record<string, programsWrapper> = {ProgramContainer, ErrorWrapper, LoaderContainer}
+const wrappers: Record<string, programsWrapper> = {ProgramContainer, ErrorWrapper, LoaderContainer, NeutralContainer}
 
 export default wrappers

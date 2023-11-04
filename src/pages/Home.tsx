@@ -3,16 +3,15 @@ import { Password, Text, Dialog, Console } from "../components";
 import { ConsoleContext, DispatchTextContext, SecretContext } from "../context";
 import { latency } from "../data/text";
 
-interface HomeProps {}
 
-export const Home: React.FC<HomeProps> = (props) => {
+export const Home = () => {
   const [open, setOpen] = useState<boolean>(true);
   const secret = useContext(SecretContext);
   const text = useContext(ConsoleContext);
   const dispatchText = useContext(DispatchTextContext);
   useEffect(() => {
     dispatchText({ type: "SET_TEXT", payload: { data: latency } });
-  }, []);
+  });
   return (
     <div className='relative w-full h-full bg-black'>
       {/* <nav className='text-red-500'>

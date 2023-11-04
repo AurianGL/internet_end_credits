@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 
-const ContactText: React.FC = () => {
+const ContactText = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
