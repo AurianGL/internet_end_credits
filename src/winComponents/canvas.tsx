@@ -5,7 +5,8 @@ interface Props {
   setDraw: (draw: boolean) => void
   grayscale: boolean
   setGrayscale: (draw: boolean) => void
-
+  mezzotinto: boolean
+  setMezzotinto: (draw: boolean) => void
 }
 
 const flecktarn = [
@@ -13,7 +14,7 @@ const flecktarn = [
 ]
 const transparent = 'rgba(0,0,0,0)'
 
-export const Canvas: React.FC<Props> = ({ draw, setDraw, grayscale, setGrayscale }) => {
+export const Canvas: React.FC<Props> = ({ draw, setDraw, grayscale, setGrayscale, mezzotinto, setMezzotinto }) => {
 
   const imageRef = useRef(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -123,6 +124,9 @@ export const Canvas: React.FC<Props> = ({ draw, setDraw, grayscale, setGrayscale
           const imageDataDeux = topContext.getImageData(0, 0, width, height);
           const atiDeux = atkinson(imageDataDeux)
           topContext.putImageData(atiDeux, 0, 0)
+        }
+
+        if (mezzotinto) {
         }
 
 

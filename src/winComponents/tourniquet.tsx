@@ -17,7 +17,8 @@ function Miniature({ cloudId, onOpenContent, name }: MiniatureProps) {
 
   return (
     <button
-      className='win-folder'
+      type='button'
+      className='border-none bg-transparent text-white'
       onClick={onOpenContent}>
       <CloudinaryContext cloudName="dav38qg9f">
         <Image publicId={cloudId} width="32" />
@@ -91,13 +92,13 @@ const Galerie = ({ pic, setContent, targetKey }: GalerieProps) => {
   return (
     <>
       <div style={{ padding: '10px', display: 'flex', justifyContent: 'space-between' }}>
-        <button className={`win-button ${mode === 'ANTHUME' ? 'text-black' : 'text-white'}`} onClick={() => { setImageIndex({ type: 'PREVIOUS', targetKey: targetKey }) }}>
+        <button type='button' className={`win-button ${mode === 'ANTHUME' ? 'text-black' : 'text-white'}`} onClick={() => { setImageIndex({ type: 'PREVIOUS', targetKey: targetKey }) }}>
           <div className={`border-dotted border-2 ${mode === 'ANTHUME' ?  'border-black' : 'border-white'}`}>PREVIOUS</div>
         </button>
-        <button className={`win-button ${mode === 'ANTHUME' ? 'text-black' : 'text-white'}`} onClick={() => setContent('index')}>
+        <button type='button' className={`win-button ${mode === 'ANTHUME' ? 'text-black' : 'text-white'}`} onClick={() => setContent('index')}>
           <div className={`border-dotted border-2 ${mode === 'ANTHUME' ?  'border-black' : 'border-white'}`}>CLOSE</div>
         </button>
-        <button className={`win-button ${mode === 'ANTHUME' ? 'text-black' : 'text-white'}`} onClick={() => { setImageIndex({ type: 'NEXT', targetKey: targetKey }) }}>
+        <button type='button' className={`win-button ${mode === 'ANTHUME' ? 'text-black' : 'text-white'}`} onClick={() => { setImageIndex({ type: 'NEXT', targetKey: targetKey }) }}>
           <div className={`border-dotted border-2 ${mode === 'ANTHUME' ?  'border-black' : 'border-white'}`}>NEXT</div>
         </button>
       </div>

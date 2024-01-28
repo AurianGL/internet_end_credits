@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import Icon from './icon'
+import {Icon} from './icon'
 import { ProgramsContext } from '../context'
 import { ICONS, PROGRAMS } from '../constants/programs'
 import { Cle } from '../context/ProgramsContext'

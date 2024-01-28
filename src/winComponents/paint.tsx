@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
 import WindowsDrag from './windowsDrag';
 import { Canvas } from './canvas'
-import Icon from './icon'
-interface Props { }
+import {Icon} from './icon'
 
-export const Paint: React.FC<Props> = () => {
+export const Paint = () => {
   const [open, setOpen] = useState(false)
   const [draw, setDraw] = useState(false)
   const [grayscale, setGrayscale] = useState(false)
+  const [mezzotinto, setMezzotinto] = useState(false)
 
   return (
     <React.Fragment>
@@ -24,26 +23,33 @@ export const Paint: React.FC<Props> = () => {
             <p className='win-title'>
               Paint
             </p>
-            <div className='draggable flex-grow'></div>
-            <button onClick={() => { setOpen(false) }} className="win-close">
+            <div className='draggable flex-grow' />
+            <button type='button' onClick={() => { setOpen(false) }} className="win-close">
               <div className='win-x'>x</div>
             </button>
           </div>
           <div className="paint-content">
             <div className="paint-row">
               <div className="paint-tools">
-                <button className="paint-button" onClick={() => setDraw(!draw)}>
-                  <div className='p-2 bg-black'></div>
+                <button type='button' className="paint-button" onClick={() => setDraw(!draw)}>
+                  <div className='p-2 bg-black' />
                 </button>
-                <button className="paint-button" onClick={() => setGrayscale(!grayscale)}>
-                  <div className='p-2 bg-gray-700'></div>
+                <button type='button' className="paint-button" onClick={() => setGrayscale(!grayscale)}>
+                  <div className='p-2 bg-gray-700' />
                   </button>
-                <button className="paint-button"></button>
-                <button className="paint-button"></button>
+                <button type='button' className="paint-button" onClick={() => setMezzotinto(!mezzotinto)} />
+                <button type='button' className="paint-button" />
               </div>
-              <Canvas draw={draw} setDraw={setDraw} grayscale={grayscale} setGrayscale={setGrayscale} />
+              <Canvas 
+                draw={draw} 
+                setDraw={setDraw} 
+                grayscale={grayscale} 
+                setGrayscale={setGrayscale} 
+                mezzotinto={mezzotinto}
+                setMezzotinto={setMezzotinto}
+              />
             </div>
-            <div className="paint-row"></div>
+            <div className="paint-row" />
           </div>
         </div>
       </WindowsDrag>)}

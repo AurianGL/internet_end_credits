@@ -1,8 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types'
 import WindowsDrag from './windowsDrag'
 
-export default function ErrorMessage ({active, arrInd, clickOk, clickX}) {
+interface Props {
+  active: boolean
+  arrInd: number
+  clickOk: () => void
+  clickX: (arrInd: number) => void
+}
+
+export const ErrorMessage = ({active, arrInd, clickOk, clickX}: Props) => {
   return (
     <WindowsDrag>
       <div className='error-container windows'>
@@ -10,8 +16,8 @@ export default function ErrorMessage ({active, arrInd, clickOk, clickX}) {
           <p className='win-title'>
             Error Message
           </p>
-          <div className='draggable flex-grow'></div>
-          <button href='#' onClick={() => clickX(arrInd)} className="win-close">
+          <div className='draggable flex-grow' />
+          <button type="button" onClick={() => clickX(arrInd)} className="win-close">
             <div className='win-x'>x</div>
           </button>
         </div>
@@ -19,7 +25,7 @@ export default function ErrorMessage ({active, arrInd, clickOk, clickX}) {
           <div className='error-message'>
             The Internet has ended. <br/> Click OK to continue.
           </div>
-          <button href="#" onClick={active ? clickOk : null} className="win-button text-black">
+          <button type='button' onClick={active ? clickOk : () => null} className="win-button text-black">
             <div className="win-text-button">
               OK
             </div>
@@ -28,11 +34,4 @@ export default function ErrorMessage ({active, arrInd, clickOk, clickX}) {
       </div>
     </WindowsDrag>
   )
-}
-
-ErrorMessage.propTypes = {
-  active: PropTypes.bool,
-  arrInd: PropTypes.number.isRequired,
-  clickX: PropTypes.func.isRequired,
-  clickOk: PropTypes.func.isRequired,
 }
