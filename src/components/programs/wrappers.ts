@@ -10,6 +10,7 @@ export type WrapperProps = {
   onCloseFolder: () => void
   margin?: boolean
   isOpen?: boolean
+  bgColor?: string
 }
 
 export type programsWrapper = React.FC<WrapperProps>

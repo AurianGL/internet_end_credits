@@ -4,13 +4,11 @@ import { Form, Formik } from 'formik'
 import { ConsoleInput } from '.'
 import { object, string } from 'yup'
 
-interface ConsoleProps {}
-
 const validate = object().shape({
   command: string(),
 })
 
-export const Console: React.FC<ConsoleProps> = () => {
+export const Console = () => {
   // const handleKeyUp = (event) => {
   //   console.log(event)
   // }
@@ -35,7 +33,7 @@ export const Console: React.FC<ConsoleProps> = () => {
       }}
     >
       {({ values }) => (
-        <Form autoComplete="off" className="relative">
+        <Form autoComplete="off" className="relative text-left">
           <ConsoleInput name="command" />
         </Form>
       )}

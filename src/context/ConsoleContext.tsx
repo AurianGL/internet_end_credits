@@ -1,8 +1,9 @@
-import { mode } from '@cloudinary/url-gen/actions/rotate';
-import React, { createContext, Reducer, useContext, useReducer, useState } from 'react'
+import React, { createContext, Reducer, useReducer, } from 'react'
 import { exlibris, help } from '../data/text'
 
-interface ConsoleContextProps {}
+interface ConsoleContextProps {
+  children: React.ReactNode
+}
 
 type type = 'EVAL_COMMAND' | 'SET_TEXT' | 'ADD_TEXT'
 type payload = { command?: string; data?: string[][] }
@@ -23,10 +24,6 @@ export const DispatchTextContext = createContext<React.Dispatch<Action>>(
   () => null
 )
 
-const init = () => {
-  return []
-}
-
 const notOverYet = ({mode, text}: State) => ({mode, text: [...text, ['Not Over Yet']]})
 
 const invalidCommand = ({mode, text}: State) => ({mode, text: [...text, ['invalidCommand']]})
@@ -39,7 +36,7 @@ const commands: Record<string, command> = {
   posthume: ({mode, text}) => {
     if (mode === 'POSTHUME') 
       return {mode, text: [...text, ['you are already in posthume mode']]}
-    return {mode: 'POSTHUME', text: [...text, ['you are now in pothume mode']]}
+    return {mode: 'POSTHUME', text: [...text, ['you are now in posthume mode']]}
   },
   anthume: ({mode, text}) => {
     if (mode === 'ANTHUME') 

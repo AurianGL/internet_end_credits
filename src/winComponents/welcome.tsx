@@ -22,40 +22,45 @@ const Art = () => {
   );
 
   return (
-    <div className="grow"      style={{ height: deriveHeight}}
-    >
-    <div
-      className="p-5 grid grid-cols-2 gap-4 items-start w-fit justify-items-center"
-    >
-      <Paint />
-      {mode === "ANTHUME" && <FolderIcon name="Paintings" cle="painting" />}
-      {mode === "POSTHUME" && <FolderIcon name="As Above" cle="crux" />}
-      <FolderIcon name="Cult Dürer" cle="durer" />
-      <FolderIcon name="Contact" cle="contact" />
-      <ExternalLink href="https://www.instagram.com/bergenmij/">
-        <Icon imageId="insta_hpxstq" name="Instagram" />
-      </ExternalLink>
-      <FolderIcon name="Terminal" cle="terminal" />
-      <FolderIcon name="Where is Home" cle="whereIsHome" />
-      {programs.map((program) => {
-        const { name, PgrComponent, props, Wrapper } = PROGRAMS[program];
-        return (
-          <Wrapper
-            cle={program}
-            margin={name !== "Terminal"}
-            name={name}
-            onCloseFolder={() =>
-              setPrograms(programs.filter((e) => e !== program))
-            }
-            key={name}
-            isOpen={programs.includes(program)}
-          >
-            <PgrComponent {...props} />
-          </Wrapper>
-        );
-      })}
-      <InternetHasEnded />
-    </div>
+    <div className="grow" style={{ height: deriveHeight }}>
+      <div className="p-5 grid grid-cols-2 gap-4 items-start w-fit justify-items-center">
+        <Paint />
+        {mode === "ANTHUME" && <FolderIcon name="Paintings" cle="painting" />}
+        {mode === "POSTHUME" && <FolderIcon name="As Above" cle="crux" />}
+        <FolderIcon name="Cult Dürer" cle="durer" />
+        <FolderIcon name="Contact" cle="contact" />
+        <ExternalLink
+          href={`https://www.instagram.com/${
+            mode === "POSTHUME" ? "htdc_anbf" : "bergenmij"
+          }/`}
+        >
+          <Icon
+            imageId={mode === "POSTHUME" ? "insta_hpxstq" : "instanew_nnrgon"}
+            name="Instagram"
+          />
+        </ExternalLink>
+        <FolderIcon name="Terminal" cle="terminal" />
+        <FolderIcon name="Where is Home" cle="whereIsHome" />
+        {programs.map((program) => {
+          const { name, PgrComponent, props, Wrapper, bgColor } = PROGRAMS[program];
+          return (
+            <Wrapper
+              cle={program}
+              margin={name !== "Terminal"}
+              name={name}
+              onCloseFolder={() =>
+                setPrograms(programs.filter((e) => e !== program))
+              }
+              key={name}
+              isOpen={programs.includes(program)}
+              bgColor={bgColor}
+            >
+              <PgrComponent {...props} />
+            </Wrapper>
+          );
+        })}
+        <InternetHasEnded />
+      </div>
     </div>
   );
 };

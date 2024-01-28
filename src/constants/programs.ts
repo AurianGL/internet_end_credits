@@ -7,6 +7,7 @@ type program = {
   props: any,
   icon: keyof typeof ICONS
   Wrapper: programsWrapper
+  bgColor?: string
 }
 
 export type ProgramsType = Record<
@@ -73,7 +74,8 @@ export const PROGRAMS: ProgramsType = {
     Wrapper: wrappers.ProgramContainer,
     props: {
     },
-    icon: 'pgr'
+    icon: 'pgr',
+    bgColor: 'bg-black'
   },
   contact: {
     name: "Contact",

@@ -1,18 +1,19 @@
-import { useField } from 'formik'
+import { useField } from "formik";
 
 interface ConsoleInputProps {
-  name: string
+  name: string;
 }
 
 export const ConsoleInput: React.FC<ConsoleInputProps> = (props) => {
-  const [field, meta] = useField(props)
+  const [field, meta] = useField(props);
   return (
     <>
-      <span>{'> '}</span>
+      <span>{"> "}</span>
       <input
         {...field}
         {...props}
         className="bg-black text-white caret-black font-death border-0 rounded-none focus:outline-none hover:bg-white hover:text-black"
+        // biome-ignore lint/a11y/noAutofocus: <explanation>
         autoFocus={true}
       />
       <span
@@ -22,5 +23,5 @@ export const ConsoleInput: React.FC<ConsoleInputProps> = (props) => {
         _
       </span>
     </>
-  )
-}
+  );
+};

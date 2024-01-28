@@ -9,6 +9,7 @@ export const ProgramContainer: programsWrapper = ({
   name,
   onCloseFolder,
   margin = true,
+  bgColor,
   children,
 }) => {
   const [fullScreen, setFullScreen] = useState(false);
@@ -33,29 +34,30 @@ export const ProgramContainer: programsWrapper = ({
       >
         <div className='win-header'>
           <p className='win-title'>{name}</p>
-          <div className='draggable flex-grow'></div>
+          <div className='draggable flex-grow' />
           <div className='flex items-center gap-1'>
             <button
+              type='button'
               onClick={() => setFullScreen(!fullScreen)}
               className='win-close'
             >
               <div className='win-x '>□</div>
             </button>
-            <button onClick={onCloseFolder} className='win-close'>
+            <button type='button' onClick={onCloseFolder} className='win-close'>
               <div className='win-x'>x</div>
             </button>
           </div>
         </div>
         <div className='flex grow flex-column'>
           <div
-            className={`${mode === "ANTHUME" ? "bg-white" : "bg-black"} ${
+            className={`${bgColor ? bgColor : mode === "ANTHUME" ? "bg-white" : "bg-black"} ${
               margin ? "generic-inner-content p-3" : "generic-inner-content p-0"
             }`}
           >
             {children}
           </div>
 
-          <div style={{ height: "20px" }}></div>
+          <div style={{ height: "20px" }} />
         </div>
       </div>
     </WindowsDrag>
