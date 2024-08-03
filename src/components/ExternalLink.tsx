@@ -1,14 +1,14 @@
 import React from "react";
 
 interface Props {
-  href: string;
-  children: React.ReactNode;
+	href: string;
+	children: React.ReactNode;
 }
 
 export const ExternalLink = ({ href, children }: Props) => {
-  return React.createElement(
-    "a",
-    { href: href, target: "_blank", rel: "noopener noreferrer" },
-    children
-  );
+	return React.createElement(
+		"a",
+		{ href: href, target: "_blank", rel: "noopener noreferrer" },
+		children,
+	);
 };

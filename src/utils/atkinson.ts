@@ -20,35 +20,43 @@
 //   })
 // }
 
-var lumR: number[] = Array.from({length: 256});
-var lumG: number[] = Array.from({length: 256});
-var lumB: number[] = Array.from({length: 256});
+var lumR: number[] = Array.from({ length: 256 });
+var lumG: number[] = Array.from({ length: 256 });
+var lumB: number[] = Array.from({ length: 256 });
 for (var i = 0; i < 256; i++) {
-  lumR[i] = i * 0.299;
-  lumG[i] = i * 0.587;
-  lumB[i] = i * 0.114;
+	lumR[i] = i * 0.299;
+	lumG[i] = i * 0.587;
+	lumB[i] = i * 0.114;
 }
 
 export const atkinson = (imageData: ImageData) => {
-  const imageDataLength = imageData.data.length
+	const imageDataLength = imageData.data.length;
 
-  for (i = 0; i <= imageDataLength; i += 4) {
-    imageData.data[i] = Math.floor(lumR[imageData.data[i]] + lumG[imageData.data[i + 1]] + lumB[imageData.data[i + 2]])
+	for (i = 0; i <= imageDataLength; i += 4) {
+		imageData.data[i] = Math.floor(
+			lumR[imageData.data[i]] +
+				lumG[imageData.data[i + 1]] +
+				lumB[imageData.data[i + 2]],
+		);
+	}
+	const width = imageData.width;
 
-  }
-  const width = imageData.width
-
-  for (var currentPixel = 0; currentPixel <= imageDataLength; currentPixel += 4) {
-    const newPixel = imageData.data[currentPixel] < 129 ? 0 : 255
-    const err = Math.floor((imageData.data[currentPixel] - newPixel) / 8)
-    imageData.data[currentPixel] = newPixel
-    imageData.data[currentPixel + 4] += err
-    imageData.data[currentPixel + 8] += err
-    imageData.data[currentPixel + 4 * width - 4] += err;
-    imageData.data[currentPixel + 4 * width] += err;
-    imageData.data[currentPixel + 4 * width + 4] += err;
-    imageData.data[currentPixel + 8 * width] += err;
-    imageData.data[currentPixel + 1] = imageData.data[currentPixel + 2] = imageData.data[currentPixel];
-  }
-  return imageData
-}
+	for (
+		var currentPixel = 0;
+		currentPixel <= imageDataLength;
+		currentPixel += 4
+	) {
+		const newPixel = imageData.data[currentPixel] < 129 ? 0 : 255;
+		const err = Math.floor((imageData.data[currentPixel] - newPixel) / 8);
+		imageData.data[currentPixel] = newPixel;
+		imageData.data[currentPixel + 4] += err;
+		imageData.data[currentPixel + 8] += err;
+		imageData.data[currentPixel + 4 * width - 4] += err;
+		imageData.data[currentPixel + 4 * width] += err;
+		imageData.data[currentPixel + 4 * width + 4] += err;
+		imageData.data[currentPixel + 8 * width] += err;
+		imageData.data[currentPixel + 1] = imageData.data[currentPixel + 2] =
+			imageData.data[currentPixel];
+	}
+	return imageData;
+};

@@ -1,16 +1,16 @@
-import React, { useState} from 'react';
-import { Image, CloudinaryContext } from 'cloudinary-react';
+import { CloudinaryContext, Image } from "cloudinary-react";
+import React, { useState } from "react";
 
 const styles = [
-	{ position: 'absolute', width: '300px', top: '20%', left: '30%' },
+	{ position: "absolute", width: "300px", top: "20%", left: "30%" },
 	{
-		position: 'absolute',
-		width: '200px',
-		top: '30%',
-		left: '20%',
-		transition: 'all 1s ease-out',
-		transform: 'rotate(90deg)',
-		animation: '3s linear 1s infinite slidein',
+		position: "absolute",
+		width: "200px",
+		top: "30%",
+		left: "20%",
+		transition: "all 1s ease-out",
+		transform: "rotate(90deg)",
+		animation: "3s linear 1s infinite slidein",
 	},
 ];
 
@@ -23,15 +23,14 @@ export const HelloYou = () => {
 
 	return (
 		<div onClick={animateThisShit} style={style}>
-			<CloudinaryContext cloudName='dav38qg9f' style={{ textAlign: 'center' }}>
+			<CloudinaryContext cloudName="dav38qg9f" style={{ textAlign: "center" }}>
 				<Image
 					publicId={`Internet_end_credit/icons/helloyou_lmlltw.jpg`}
-					className='gal-img'
-					width={style.width}></Image>
+					className="gal-img"
+					width={style.width}
+				></Image>
 			</CloudinaryContext>
-      <div style={{color: 'white', fontWeight: '200'}}>
-        HELLO YOU
-      </div>
+			<div style={{ color: "white", fontWeight: "200" }}>HELLO YOU</div>
 		</div>
 	);
 };

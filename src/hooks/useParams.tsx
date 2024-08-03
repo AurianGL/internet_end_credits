@@ -1,18 +1,18 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
 type Params = {
-  [key: string]: string | undefined;
-}
+	[key: string]: string | undefined;
+};
 
 export const useQueryParams = () => {
-  const params = useParams<Params>();
+	const params = useParams<Params>();
 
-  const getParam = (key: string) => {
-    return params[key];
-  }
+	const getParam = (key: string) => {
+		return params[key];
+	};
 
-  return { getParam };
-}
+	return { getParam };
+};
 
 // function MyComponent() {
 //     const { getParam } = useQueryParams();

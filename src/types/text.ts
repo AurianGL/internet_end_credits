@@ -1,1 +1,1 @@
-export type PolyTextType = string[][]
+export type PolyTextType = string[][];
