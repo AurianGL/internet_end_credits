@@ -3,10 +3,9 @@ import { Link } from "react-router-dom";
 import { Canvas } from "../components";
 import { IMAGES } from "../constants/images";
 import { LoadingContext } from "../context";
+import { basedButtonProps } from "../utils/basedProps";
 
-interface DeRampProps {}
-
-export const DeRamp: React.FC<DeRampProps> = () => {
+export const DeRamp = () => {
   const [image, setImage] = useState(IMAGES[0]);
   const [page, setPage] = useState("intro");
   const { loading } = useContext(LoadingContext);
@@ -29,7 +28,7 @@ export const DeRamp: React.FC<DeRampProps> = () => {
       <div className='text-gray-100 font-extrabold '>
         {page === "intro" && <Link to='/'>{"< "}</Link>}
         {page === "galerie" && (
-          <span onClick={() => setPage("intro")}>{"< "}</span>
+          <span {...basedButtonProps} onClick={() => setPage("intro")}>{"< "}</span>
         )}
         DE RAMP - {page === "galerie" ? image : "synopsis"}
       </div>
@@ -47,23 +46,26 @@ export const DeRamp: React.FC<DeRampProps> = () => {
               changing.
             </p>
             <button
+              type='button'
               onClick={() => setPage("galerie")}
               className='text-2xl cursor-pointer'>
               See Images
             </button>
           </div>
         )}
-        {page === "galerie" && <Canvas image={image}></Canvas>}
+        {page === "galerie" && <Canvas image={image} />}
       </div>
       {page === "galerie" && (
         <div className='flex w-full justify-between'>
           <button
+            type="button"
             disabled={loading}
             className='text-gray-100 font-extrabold text-3xl'
             onClick={() => cycleImage(-1)}>
             {"<"}
           </button>
           <button
+            type="button"
             disabled={loading}
             className='text-gray-100 font-extrabold text-3xl'
             onClick={() => cycleImage(+1)}>

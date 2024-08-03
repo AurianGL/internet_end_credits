@@ -17,17 +17,21 @@ export const PAGES = [
   {
     name: "1995",
     url: "/1995",
-    Component: "NinetyFive"
+    Component: "NinetyFive",
   },
   {
-    name: 'BlueScreen',
+    name: "BlueScreen",
     url: "/bluescreen",
-    Component: 'BlueScreen'
+    Component: "BlueScreen",
   },
   {
-    name: 'Where is Home',
+    name: "Where is Home",
     url: "/whereishome",
-    Component: 'WhereIsHome'
-  }
+    Component: "WhereIsHome",
+  },
+  {
+    name: "gatcha",
+    url: "/gatcha",
+    Component: "Game",
+  },
 ];
-

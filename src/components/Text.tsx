@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useReducer, useState } from "react";
 import { DispatchContext } from "../context";
 import { PolyTextType } from "../types";
 import { KANJI } from "../constants/kanji";
+import { basedButtonProps } from "../utils/basedProps";
 
 interface TextProps {
   text: PolyTextType;
@@ -88,6 +89,7 @@ export const Character: React.FC<CharacterProps> = (props) => {
 
   return (
     <span
+      {...basedButtonProps}
       onClick={() => dispatch({ type: "ADD_CHAR", payload: character })}
       className="hover:bg-gray-200 hover:text-black"
     >

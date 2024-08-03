@@ -1,6 +1,8 @@
 import React, { createContext, useState } from "react";
 
-interface LoadingContextProps {}
+interface LoadingContextProps {
+  children: React.ReactNode;
+}
 
 type Loading = {
   loading: boolean;

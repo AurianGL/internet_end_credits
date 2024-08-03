@@ -2,9 +2,8 @@ import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import '../winComponents/style/_index.scss'
 
-interface Props { }
 
-export const BlueScreen: React.FC<Props> = () => {
+export const BlueScreen = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -24,8 +23,8 @@ export const BlueScreen: React.FC<Props> = () => {
 
   return (
     <div className='bg-death w-screen h-screen text-white text-xl  flex justify-center items-center'>
-      <div className="w-full h-full absolute z-10 bg-scanline bg-[length:6px_6px] pointer-events-none"></div>
-      <div className="w-full h-full absolute z-10 bg-vignette pointer-events-none"></div>
+      <div className="w-full h-full absolute z-10 bg-scanline bg-[length:6px_6px] pointer-events-none" />
+      <div className="w-full h-full absolute z-10 bg-vignette pointer-events-none" />
       <div className="px-2 py-3 flex justify-center items-center font-death">
         <div className="width-20">
           <div className="text-center">
