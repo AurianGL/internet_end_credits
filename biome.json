@@ -1,0 +1,32 @@
+{
+  "linter": {
+    "enabled": false,
+    "rules": {
+      "recommended": true,
+      "a11y": {
+        "useKeyWithClickEvents": "off"
+      }
+    }
+  },
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {},
+  "formatter": {
+    "indentStyle": "space",
+    "ignore": ["packs/**/spec/fixtures/*"]
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "semicolons": "asNeeded",
+      "trailingCommas": "es5"
+    }
+  },
+  "organizeImports": {
+    "enabled": false
+  }
+}

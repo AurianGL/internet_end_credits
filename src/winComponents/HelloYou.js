@@ -25,10 +25,10 @@ export const HelloYou = () => {
 		<div onClick={animateThisShit} style={style}>
 			<CloudinaryContext cloudName="dav38qg9f" style={{ textAlign: "center" }}>
 				<Image
-					publicId={`Internet_end_credit/icons/helloyou_lmlltw.jpg`}
+					publicId={"Internet_end_credit/icons/helloyou_lmlltw.jpg"}
 					className="gal-img"
 					width={style.width}
-				></Image>
+				/>
 			</CloudinaryContext>
 			<div style={{ color: "white", fontWeight: "200" }}>HELLO YOU</div>
 		</div>
