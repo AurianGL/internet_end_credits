@@ -261,7 +261,11 @@ export const BetterFrame = () => {
               Left
             </button>
             <div className="w-12 h-12  bg-transparent bg-gray-400 font-death text-lg" />
-            <button className="select-none rounded-r-lg w-12 h-12  bg-transparent bg-gray-400 text-blue-500 font-death text-lg">
+            <button
+              className="select-none rounded-r-lg w-12 h-12  bg-transparent bg-gray-400 text-blue-500 font-death text-lg"
+              onTouchStart={(e) => handleTouchStart("ArrowRight")}
+              onTouchEnd={(e) => handleTouchEnd("ArrowRight")}
+            >
               Right
             </button>
             <button
