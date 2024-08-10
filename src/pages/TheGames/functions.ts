@@ -20,6 +20,15 @@ export const isColliding = (rect1: position, rect2: position) => {
   );
 };
 
+export const isEggColliding = (rect1: position, rect2: position) => {
+  return (
+    rect1.x < rect2.x + 5 * 3 &&
+    rect1.x + WIDTH > rect2.x &&
+    rect1.y < rect2.y + 7 * 3 &&
+    rect1.y + HEIGHT > rect2.y
+  );
+};
+
 type OnInitType = (context: {
   ctx: CanvasRenderingContext2D;
   canvas: HTMLCanvasElement;

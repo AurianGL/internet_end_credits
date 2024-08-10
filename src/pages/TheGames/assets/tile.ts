@@ -1,6 +1,6 @@
 export const TILE_SIZE = 10;
 
-interface Tile {
+export interface Tile {
   color: string;
   crossable: boolean;
 }

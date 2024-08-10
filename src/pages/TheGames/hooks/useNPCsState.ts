@@ -33,7 +33,7 @@ const initialNPCs: NonPlayerCharacter[] = [
   },
   {
     id: 2,
-    position: { x: 200, y: 200 },
+    position: { x: 300, y: 300 },
     seqIndex: 0,
     direction: { x: 1, y: 0 },
     move: true,

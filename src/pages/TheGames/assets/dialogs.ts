@@ -8,3 +8,13 @@ export const dialogs = {
     farewell: "You win this time!",
   },
 };
+
+interface DialogueNode {
+  message: string;
+  choices?: Choice[];
+}
+
+interface Choice {
+  text: string;
+  nextNode: DialogueNode;
+}

@@ -2,7 +2,7 @@
 
 import { useCallback, useLayoutEffect, useRef } from "react";
 
-export type NexnextAnimationFrameHandlerType = ({
+export type NextAnimationFrameHandlerType = ({
   timeFraction,
   firstFrameTime,
   now,
@@ -13,7 +13,7 @@ export type NexnextAnimationFrameHandlerType = ({
 }) => void;
 
 interface UseAnimationFramePropsType {
-  nextAnimationFrameHandler: NexnextAnimationFrameHandlerType;
+  nextAnimationFrameHandler: NextAnimationFrameHandlerType;
   duration: number;
   shouldAnimate: boolean;
 }
