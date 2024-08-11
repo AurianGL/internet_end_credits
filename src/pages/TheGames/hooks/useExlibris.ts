@@ -1,16 +1,25 @@
 import { useCallback, useEffect, useState } from "react";
+import { rgbColors } from "../utils/functions";
 
-export const useExlibris = () => {
-  const [position, setPosition] = useState({ x: 200, y: 200 });
+interface ExlibrisProps {
+  selectedColor: string;
+  setSelectedColor: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export const useExlibris = ({
+  selectedColor,
+  setSelectedColor,
+}: ExlibrisProps) => {
+  const [position, setPosition] = useState({ x: 200, y: 150 });
   const [flicker, setFlicker] = useState(false);
 
   useEffect(() => {
     const updatePosition = () => {
-      const offsetX = Math.random() * 2 - 1; // Random offset between -2 and 2
-      const offsetY = Math.random() * 2 - 1; // Random offset between -2 and 2
+      const offsetX = Math.random() * 4 - 1; // Random offset between -4 and 4
+      const offsetY = Math.random() * 4 - 1; // Random offset between -4 and 4
       setPosition((prev) => ({
         x: 200 + offsetX,
-        y: 200 + offsetY,
+        y: 150 + offsetY,
       }));
     };
 
@@ -38,17 +47,20 @@ export const useExlibris = () => {
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         // Draw red component
-        ctx.fillStyle = "rgba(255, 0, 0, 0.8)";
-        ctx.fillText(text, position.x - 2, position.y);
-
+        if (Math.random() > 0.7) {
+          ctx.fillStyle = "rgba(255, 0, 0, 0.8)";
+          ctx.fillText(text, position.x - 4, position.y);
+        }
         // Draw green component
-        ctx.fillStyle = "rgba(0, 255, 0, 0.8)";
-        ctx.fillText(text, position.x + 2, position.y);
-
+        if (Math.random() > 0.7) {
+          ctx.fillStyle = "rgba(0, 255, 0, 0.8)";
+          ctx.fillText(text, position.x + 4, position.y);
+        }
         // Draw blue component
-        ctx.fillStyle = "rgba(0, 0, 255, 0.8)";
-        ctx.fillText(text, position.x, position.y - 2);
-
+        if (Math.random() > 0.7) {
+          ctx.fillStyle = "rgba(0, 0, 255, 0.8)";
+          ctx.fillText(text, position.x, position.y - 4);
+        }
         ctx.fillStyle = "white";
         ctx.fillText(text, position.x, position.y);
       }
@@ -57,7 +69,42 @@ export const useExlibris = () => {
       ctx.textBaseline = "middle";
       ctx.fillStyle = "white";
       ctx.fillText(subText, position.x, position.y + 40);
+
+      rgbColors(0.8).forEach((color, index) => {
+        const x = position.x - 125 + index * 100;
+        const y = position.y + 60;
+
+        if (selectedColor === color && flicker) {
+          // a randm number between 0.5 and 0.1 with only one decimal
+          const alpha = Math.floor(Math.random() * 4 + 1) / 10;
+          ctx.fillStyle = rgbColors(alpha)[index];
+          ctx.fillRect(x, y, 50, 50); // Flicker effect
+        } else {
+          ctx.fillStyle = color;
+          ctx.fillRect(x, y, 50, 50);
+        }
+      });
+
+      // Handle square clicks
+      canvas.addEventListener("click", (event: MouseEvent) => {
+        const rect = canvas.getBoundingClientRect();
+        const clickX = event.clientX - rect.left;
+        const clickY = event.clientY - rect.top;
+
+        rgbColors(0.8).forEach((color, index) => {
+          const x = position.x - 125 + index * 100;
+          const y = position.y + 60;
+          if (
+            clickX >= x &&
+            clickX <= x + 50 &&
+            clickY >= y &&
+            clickY <= y + 50
+          ) {
+            setSelectedColor(color);
+          }
+        });
+      });
     },
-    [flicker, position.x, position.y]
+    [flicker, position.x, position.y, selectedColor]
   );
 };

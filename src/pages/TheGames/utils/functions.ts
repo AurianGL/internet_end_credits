@@ -1,5 +1,5 @@
-import { createMap, TILE_SIZE } from "./assets/tile";
-import { Direction } from "./hooks/useNPCsState";
+import { createMap, TILE_SIZE } from "../assets/tile";
+import { Direction } from "../hooks/useNPCsState";
 
 export const randomDirection = () => {
   const directions: Direction["x"][] = [-1, 0, 1];
@@ -81,3 +81,9 @@ export const onUpdate: OnUpdateType = (
     }
   }
 };
+
+export const rgbColors = (alpha: number) => [
+  `rgba(255, 99, 71, ${alpha})`,
+  `rgba(255, 255, 124, ${alpha})`,
+  `rgba(255, 25, 255, ${alpha})`,
+];

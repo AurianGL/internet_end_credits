@@ -5,7 +5,12 @@ import { dialogs } from "../assets/dialogs";
 import { drawEggOnCanvas } from "../assets/eggs";
 import { drawHeartsOnCanvas } from "../assets/hearts";
 import { Tile, TILE_SIZE } from "../assets/tile";
-import { isColliding, randomDirection, isEggColliding } from "../functions";
+import {
+  isColliding,
+  randomDirection,
+  isEggColliding,
+} from "../utils/functions";
+import { reset } from "../utils/reset";
 
 interface EggPhaseProps {
   collectEgg: () => void;
@@ -26,8 +31,7 @@ interface EggPhaseProps {
   updateNPC: (id: number, npc: Partial<NonPlayerCharacter>) => void;
   userInput: string[];
   userSeqIndex: number;
-  // ctx: CanvasRenderingContext2D;
-  // canvas: HTMLCanvasElement;
+  selectedColor: string;
 }
 
 export const useEggPhase = ({
@@ -49,6 +53,7 @@ export const useEggPhase = ({
   updateNPC,
   userInput,
   userSeqIndex,
+  selectedColor,
 }: EggPhaseProps) => {
   return useCallback(
     ({ timeFraction, firstFrameTime, now, canvas, ctx }) => {
@@ -205,7 +210,7 @@ export const useEggPhase = ({
           drawCharacterOnCanvas(ctx, { x, y }, color, pnjSeqIndex, !isFriendly);
         }
       );
-      drawCharacterOnCanvas(ctx, position, "orangered", userSeqIndex, false);
+      drawCharacterOnCanvas(ctx, position, selectedColor, userSeqIndex, false);
       drawHeartsOnCanvas(ctx, heartCount);
       // show egg count on the top right corner
       ctx.font = "24px Perfect DOS";
@@ -226,6 +231,7 @@ export const useEggPhase = ({
       npcs,
       position,
       resetEgg,
+      selectedColor,
       setHeartCount,
       setUserSeqIndex,
       updateNPC,

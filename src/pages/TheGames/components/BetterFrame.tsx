@@ -15,6 +15,8 @@ import { useEgg } from "../hooks/useEgg";
 import { GameBoyInterface } from "./GameBoyInterface";
 import { useEggPhase } from "../hooks/useEggPhase";
 import { useExlibris } from "../hooks/useExlibris";
+import { reset } from "../utils/reset";
+import { useDefeat } from "../hooks/useDefeat";
 
 export const BetterFrame = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -29,6 +31,8 @@ export const BetterFrame = () => {
     isOutOfBound,
     heartCount,
     setHeartCount,
+    selectedColor,
+    setSelectedColor,
   } = usePlayerState();
   const { npcs, addFoesNPC, addFriendlyNPC, updateNPCs, updateNPC, attackNPC } =
     useNPCsState();
@@ -69,14 +73,23 @@ export const BetterFrame = () => {
     updateNPC,
     userInput,
     userSeqIndex,
+    selectedColor,
   });
-  const exlibris = useExlibris();
+  const exlibris = useExlibris({
+    selectedColor,
+    setSelectedColor,
+  });
+  const defeat = useDefeat();
 
   const nextAnimationFrameHandler: NextAnimationFrameHandlerType = ({
     timeFraction,
     firstFrameTime,
     now,
   }) => {
+    if (heartCount <= 0) {
+      setGamePhase("defeat");
+    }
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas?.getContext("2d");
@@ -91,6 +104,20 @@ export const BetterFrame = () => {
           break;
         case "exploration":
           eggPhase({ timeFraction, firstFrameTime, now, canvas, ctx });
+          break;
+        case "defeat":
+          defeat({ timeFraction, firstFrameTime, now, canvas, ctx });
+          if (userInput.includes("e")) {
+            reset({
+              setHeartCount,
+              setGamePhase,
+              setMap,
+              setPosition,
+              npcs,
+              updateNPCs,
+              resetEgg,
+            });
+          }
           break;
         default:
           break;

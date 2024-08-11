@@ -9,16 +9,16 @@ export const useHandleUserMove = ({
 }) => {
   return useCallback(() => {
     if (userInput.includes("ArrowUp")) {
-      setPosition((prev) => ({ x: prev.x, y: prev.y - 5 }));
+      setPosition((prev) => ({ x: prev.x, y: prev.y - 10 }));
     }
     if (userInput.includes("ArrowDown")) {
-      setPosition((prev) => ({ x: prev.x, y: prev.y + 5 }));
+      setPosition((prev) => ({ x: prev.x, y: prev.y + 10 }));
     }
     if (userInput.includes("ArrowLeft")) {
-      setPosition((prev) => ({ x: prev.x - 5, y: prev.y }));
+      setPosition((prev) => ({ x: prev.x - 10, y: prev.y }));
     }
     if (userInput.includes("ArrowRight")) {
-      setPosition((prev) => ({ x: prev.x + 5, y: prev.y }));
+      setPosition((prev) => ({ x: prev.x + 10, y: prev.y }));
     }
   }, [userInput, setPosition]);
 };

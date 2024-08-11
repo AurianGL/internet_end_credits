@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-type Phase =
+export type Phase =
   | "exlibris"
   | "exploration"
   | "preFight"
