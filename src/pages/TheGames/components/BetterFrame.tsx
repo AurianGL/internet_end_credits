@@ -17,6 +17,7 @@ import { useEggPhase } from "../hooks/useEggPhase";
 import { useExlibris } from "../hooks/useExlibris";
 import { reset } from "../utils/reset";
 import { useDefeat } from "../hooks/useDefeat";
+import { useCinematic } from "../hooks/useCinematic";
 
 export const BetterFrame = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -37,8 +38,7 @@ export const BetterFrame = () => {
   const { npcs, addFoesNPC, addFriendlyNPC, updateNPCs, updateNPC, attackNPC } =
     useNPCsState();
 
-  const { gameState, collectEgg, handleNpcInteraction, setGamePhase } =
-    useGameState();
+  const { gameState, collectEgg, setGamePhase } = useGameState();
   const { eggPosition, isEggEvil, resetEgg, moveEgg } = useEgg();
   const [map, setMap] = useState(createMap(400, 400));
 
@@ -75,6 +75,22 @@ export const BetterFrame = () => {
     userSeqIndex,
     selectedColor,
   });
+  const cinematic = useCinematic({
+    eggsCollected: gameState.eggsCollected,
+    handleIsOutOfBound,
+    handleUserInput,
+    heartCount,
+    isOutOfBound,
+    map,
+    npcs,
+    position,
+    setHeartCount,
+    setUserSeqIndex,
+    updateNPC,
+    userInput,
+    userSeqIndex,
+    selectedColor,
+  });
   const exlibris = useExlibris({
     selectedColor,
     setSelectedColor,
@@ -88,6 +104,9 @@ export const BetterFrame = () => {
   }) => {
     if (heartCount <= 0) {
       setGamePhase("defeat");
+    }
+    if (gameState.phase === "exploration" && gameState.eggsCollected > 2) {
+      setGamePhase("cinematic");
     }
 
     const canvas = canvasRef.current;
@@ -104,6 +123,9 @@ export const BetterFrame = () => {
           break;
         case "exploration":
           eggPhase({ timeFraction, firstFrameTime, now, canvas, ctx });
+          break;
+        case "cinematic":
+          cinematic({ timeFraction, firstFrameTime, now, canvas, ctx });
           break;
         case "defeat":
           defeat({ timeFraction, firstFrameTime, now, canvas, ctx });

@@ -3,8 +3,7 @@ import { useState, useEffect } from "react";
 export type Phase =
   | "exlibris"
   | "exploration"
-  | "preFight"
-  | "fightPreparation"
+  | "cinematic"
   | "fightCthulhu"
   | "victory"
   | "defeat";
@@ -35,46 +34,6 @@ export const useGameState = () => {
     });
   };
 
-  const handleNpcInteraction = () => {
-    switch (gameState.phase) {
-      case "preFight":
-        setGameState((prevGameState) => ({
-          ...prevGameState,
-          phase: "fightPreparation",
-        }));
-        break;
-      case "fightPreparation":
-        const playerName = prompt(gameState.dialogs.npcNamePrompt) || "";
-        const isChosenOne =
-          playerName && ["maner", "manon"].includes(playerName.toLowerCase());
-        setGameState((prevGameState) => ({
-          ...prevGameState,
-          playerName,
-          phase: isChosenOne ? "fightCthulhu" : prevGameState.phase,
-        }));
-        break;
-      case "fightCthulhu":
-        if (gameState.playerHealth <= 0.5) {
-          // Logic for NPC offering help
-          alert(gameState.dialogs.npcOfferHelp);
-        } else {
-          // Logic for NPC ignoring
-          alert(gameState.dialogs.npcIgnore);
-        }
-        break;
-      default:
-        break;
-    }
-  };
-
-  // Example of updating player health (replace with your game logic)
-  const takeDamage = () => {
-    setGameState((prevGameState) => ({
-      ...prevGameState,
-      playerHealth: Math.max(0, prevGameState.playerHealth - 0.5),
-    }));
-  };
-
   useEffect(() => {
     if (gameState.playerHealth === 0) {
       setGameState((prevGameState) => ({ ...prevGameState, phase: "defeat" }));
@@ -91,8 +50,6 @@ export const useGameState = () => {
   return {
     gameState,
     collectEgg,
-    handleNpcInteraction,
-    takeDamage,
     setGamePhase,
   };
 };

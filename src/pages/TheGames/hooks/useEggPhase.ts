@@ -10,7 +10,6 @@ import {
   randomDirection,
   isEggColliding,
 } from "../utils/functions";
-import { reset } from "../utils/reset";
 
 interface EggPhaseProps {
   collectEgg: () => void;
@@ -159,14 +158,13 @@ export const useEggPhase = ({
           moveEgg();
           const eggColliding = isEggColliding(position, eggPosition);
           if (eggColliding && isEggEvil) {
+            resetEgg();
             setHeartCount((prev) => prev - 1);
           }
           if (eggColliding && !isEggEvil) {
-            if (userInput.includes("e")) {
-              collectEgg();
-              resetEgg();
-              setHeartCount((prev) => prev + 1);
-            }
+            collectEgg();
+            resetEgg();
+            setHeartCount((prev) => prev + 1);
           }
         }
         setUserSeqIndex((prev) => (prev + 1) % 4);
