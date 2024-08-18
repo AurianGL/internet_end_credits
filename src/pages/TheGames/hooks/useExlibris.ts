@@ -1,14 +1,17 @@
 import { useCallback, useEffect, useState } from "react";
 import { rgbColors } from "../utils/functions";
+import { Phase } from "./useGameState";
 
 interface ExlibrisProps {
   selectedColor: string;
   setSelectedColor: React.Dispatch<React.SetStateAction<string>>;
+  setGamePhase: (phase: Phase) => void;
 }
 
 export const useExlibris = ({
   selectedColor,
   setSelectedColor,
+  setGamePhase,
 }: ExlibrisProps) => {
   const [position, setPosition] = useState({ x: 200, y: 150 });
   const [flicker, setFlicker] = useState(false);
@@ -40,7 +43,9 @@ export const useExlibris = ({
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const text = "Abyss Fortress";
-      const subText = "press E key or A button to start";
+      const instruction = "use arrow keys to move";
+      const instruction2 = "click on stuff sometimes";
+      const subText = "Select your color and click 'e' to start";
 
       if (!flicker) {
         ctx.font = "bold 24px Arial";
@@ -69,6 +74,8 @@ export const useExlibris = ({
       ctx.textBaseline = "middle";
       ctx.fillStyle = "white";
       ctx.fillText(subText, position.x, position.y + 40);
+      ctx.fillText(instruction, position.x, position.y + 150);
+      ctx.fillText(instruction2, position.x, position.y + 200);
 
       rgbColors(0.8).forEach((color, index) => {
         const x = position.x - 125 + index * 100;
@@ -101,10 +108,11 @@ export const useExlibris = ({
             clickY <= y + 50
           ) {
             setSelectedColor(color);
+            return;
           }
         });
       });
     },
-    [flicker, position.x, position.y, selectedColor]
+    [flicker, position.x, position.y, selectedColor, setSelectedColor]
   );
 };

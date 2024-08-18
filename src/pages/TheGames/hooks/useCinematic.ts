@@ -2,7 +2,10 @@ import { useCallback, useMemo, useState } from "react";
 import { drawCharacterOnCanvas } from "../assets/character";
 import { drawHeartsOnCanvas } from "../assets/hearts";
 import { Tile, TILE_SIZE } from "../assets/tile";
-import { NonPlayerCharacter } from "./useNPCsState";
+import { Direction, NonPlayerCharacter } from "./useNPCsState";
+import { Phase } from "./useGameState";
+import { useNavigate } from "react-router-dom";
+import { DecisionTreeStep } from "../assets/cinema";
 
 interface CinematicProps {
   eggsCollected: number;
@@ -19,6 +22,14 @@ interface CinematicProps {
   userInput: string[];
   userSeqIndex: number;
   selectedColor: string;
+  setIsInputVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  inputValue: string;
+  setGamePhase: (phase: Phase) => void;
+  currentStep: DecisionTreeStep;
+  handleInput: (input: string) => void;
+  handleChoice: (choice: number) => void;
+  resetDialog: () => void;
+  splitText: (text: string, maxLength: number) => string[];
 }
 
 const initialAsciiChars = Array.from({ length: 4000 }, () =>
@@ -51,12 +62,26 @@ export const useCinematic = ({
   userInput,
   userSeqIndex,
   selectedColor,
+  setIsInputVisible,
+  inputValue,
+  setGamePhase,
+  currentStep,
+  handleInput,
+  handleChoice,
+  resetDialog,
+  splitText,
 }: CinematicProps) => {
   const [bugPosition, setBugPosition] = useState({ x: 0, y: -400 });
   const [asciiChars, setAsciiChars] = useState<string[]>(initialAsciiChars);
   const [alpha, setAlpha] = useState(0);
+  const [staticAlpha, setstaticAlpha] = useState(0);
   const [frame, setFrame] = useState(0);
 
+  const navigate = useNavigate();
+
+  const [conversationFrame, setConversationFrame] = useState<
+    number | undefined
+  >(undefined);
   const generateAsciiChars = () => {
     const newChars: string[] = [];
     for (let i = 0; i < 100; i++) {
@@ -83,12 +108,14 @@ export const useCinematic = ({
     ({ timeFraction, firstFrameTime, now, canvas, ctx }) => {
       // clear the canvas
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
 
       if (isOutOfBound) {
         handleIsOutOfBound();
         return;
       }
-      if (alpha !== 1) {
+      if (alpha !== 1 && currentStep.type !== "happyEnd") {
         for (let i = 0; i < map.length; i += TILE_SIZE) {
           for (let j = 0; j < map[i].length; j += TILE_SIZE) {
             ctx.fillStyle = map[i][j].color;
@@ -96,9 +123,21 @@ export const useCinematic = ({
           }
         }
       }
+
       // draw a black layer on top of the map with alpha
       ctx.fillStyle = `rgba(0, 0, 0, ${alpha})`;
       ctx.fillRect(0, 0, 400, 400);
+      if (currentStep.type === "happyEnd") {
+        // draw a static noise effect
+        ctx.fillStyle = `rgba(255, 255, 255, ${staticAlpha})`;
+        for (let i = 0; i < 400; i += 1) {
+          for (let j = 0; j < 400; j += 1) {
+            if (Math.random() > 0.7) {
+              ctx.fillRect(i, j, 1, 1);
+            }
+          }
+        }
+      }
 
       if (now - firstFrameTime.current > 100) {
         setFrame((prev) => prev + 1);
@@ -110,7 +149,47 @@ export const useCinematic = ({
           setAlpha((prev) => parseFloat((prev + 0.01).toFixed(2)));
         }
         // update the position of nps so they move toward the nearest edge of the map until they are out of bounds
-        npcs.forEach(({ id, position: { x, y }, seqIndex }) => {
+        npcs.forEach(({ id, position: { x, y }, seqIndex, isFriendly }) => {
+          let direction: Direction = { x: 0, y: 0 };
+
+          if (frame > 250 && isFriendly) {
+            const distance = Math.sqrt(
+              Math.pow(position.x - x, 2) + Math.pow(position.y - y, 2)
+            );
+            const minDistance = 30;
+
+            if (distance < minDistance) {
+              setConversationFrame((prev) => {
+                if (prev === undefined) {
+                  return 1;
+                }
+                return prev + 1;
+              });
+
+              // Calculate the angle to the user character
+              const angle = Math.atan2(position.y - y, position.x - x);
+
+              // Set direction to circle around the user character
+              direction = {
+                x: Math.cos(angle + Math.PI / 2) as 1, // Move perpendicular to the angle
+                y: Math.sin(angle + Math.PI / 2) as 1, // Move perpendicular to the angle
+              };
+            } else {
+              direction = {
+                x: position.x - x > 0 ? 1 : -1,
+                y: position.y - y > 0 ? 1 : -1,
+              };
+            }
+            updateNPC(id, {
+              position: {
+                x: x + direction.x * 5,
+                y: y + direction.y * 5,
+              },
+              seqIndex: (seqIndex + 1) % 4,
+              direction,
+            });
+            return;
+          }
           const distances: Record<string, number> = {
             top: y,
             bottom: 400 - y,
@@ -122,7 +201,6 @@ export const useCinematic = ({
             distances[a] < distances[b] ? a : b
           );
 
-          let direction = { x: 0, y: 0 };
           switch (nearestEdge) {
             case "top":
               direction.y = -1;
@@ -157,32 +235,200 @@ export const useCinematic = ({
         }
         if (frame < 200) {
           generateAsciiChars();
-        } else {
-          const specificCharsString = "HELLO LOST SOULS";
+        } else if (frame > 200) {
+          let specificCharsString;
+          switch (true) {
+            case frame >= 200 && frame < 250:
+              specificCharsString = "ARE YOU THE LAST LIVING SOUL ? \n";
+              break;
+            case frame >= 250 && frame < 300:
+              specificCharsString = "what are we going to do? \n";
+              break;
+            case frame >= 300 && frame < 350:
+              specificCharsString = "How are we going to work this out? \n";
+              break;
+            case frame >= 350 && frame < 400:
+              specificCharsString = `I ain't happy, I'm feeling glad \n
+                                      I got sunshine in a bag \n
+                                      I'm useless, but not for long \n
+                                      The future is coming on \n`;
+              break;
+            case frame > 400 && frame < 450:
+              specificCharsString = `I'm walking to the something \n
+                                      Blah blah blah blah blah blah blah \n
+                                      (Collapse) \n
+                                      I'm drinking too much blah blah \n
+                                      (Fall out) \n
+                                      I'm feeling really blah blah, I want to blah blah blah \n
+                                      (Collapse) \n
+                                      And in the end it means I blah blah blah blah blah blah blah (Depend) \n
+                                      I brought myself together \n
+                                      Blah blah blah blah blah blah blah \n
+                                      (Watch out) \n
+                                      I didn't need the patience, life blah blah blah blah blah \n
+                                      (Collapse) \n
+                                      Don't you get too close or I'll blah blah blah blah blah \n
+                                      (Break up) \n
+                                      Stick it up your nose, blah blah blah blah blah blah blah \n
+                                      The end`;
+              break;
+            default:
+              specificCharsString = "CHOOZE PAZUZU \n";
+              break;
+          }
           const specificChars = specificCharsString.split(""); // Convert string to array of characters
           const specificIndex = Math.round(Math.random() * 4000); // Example index where you want to insert the characters
           setAsciiChars((prev) =>
             insertCharsAtIndex(prev, specificIndex, specificChars)
           );
         }
-
-        setBugPosition((prev) => {
-          if (prev.y < 0) {
+        if ((bugPosition.y !== 0 && frame < 200) || frame > 300) {
+          setBugPosition((prev) => {
+            // if (prev.y < 0 || prev ) {
             return { x: prev.x, y: prev.y + 2 }; // Move down by 2 pixels
-          }
-          return prev;
-        });
+            // }
+            // return prev;
+          });
+        }
         setUserSeqIndex((prev) => (prev + 1) % 4);
         firstFrameTime.current = now;
+      }
+
+      // show egg count on the top right corner
+      ctx.font = "16x arial";
+      ctx.fillStyle = "white";
+      ctx.fillText(eggsCollected.toString(), 380, 20);
+      if (conversationFrame && alpha > 0) {
+        const questionLines = splitText(currentStep.question, 40);
+
+        questionLines.forEach((line, index) => {
+          ctx.fillText(line, 200, 10 + index * 20);
+        });
+        if (currentStep.type === "happyEnd") {
+          if (conversationFrame % 10 === 0) {
+            console.log("end");
+            if (alpha > 0) {
+              setAlpha((prev) => parseFloat((prev - 0.01).toFixed(2)));
+            }
+            if (staticAlpha < 1) {
+              setstaticAlpha((prev) => parseFloat((prev + 0.01).toFixed(2)));
+            }
+            if (alpha <= 0.1) {
+              setGamePhase("static");
+              return;
+            }
+            updateNPC(1, {
+              color: `rgba(255, 0, 102, ${alpha})`,
+            });
+          }
+        }
+        if (currentStep.type === "blueEnd") {
+          if (conversationFrame % 10 === 0) {
+            console.log("end");
+            if (alpha > 0) {
+              setAlpha((prev) => parseFloat((prev - 0.01).toFixed(2)));
+            }
+            if (staticAlpha < 1) {
+              setstaticAlpha((prev) => parseFloat((prev + 0.01).toFixed(2)));
+            }
+            if (alpha <= 0.1) {
+              resetDialog();
+              navigate("/bluescreen");
+              return;
+            }
+            updateNPC(1, {
+              color: `rgba(255, 0, 102, ${alpha})`,
+            });
+          }
+        }
+        if (currentStep.type === "end") {
+          if (conversationFrame % 10 === 0) {
+            if (staticAlpha <= 0.01) {
+              setGamePhase("exlibris");
+              return;
+            }
+            setstaticAlpha((prev) => parseFloat((prev + 0.01).toFixed(2)));
+            setAlpha((prev) => parseFloat((prev - 0.01).toFixed(2)));
+            updateNPC(1, {
+              color: `rgba(255, 0, 102, ${alpha})`,
+            });
+          }
+        }
+        if (currentStep.type === "input") {
+          setIsInputVisible(true);
+          if (inputValue) {
+            handleInput(inputValue);
+          }
+        } else {
+          setIsInputVisible(false);
+        }
+        if (currentStep.type === "choice") {
+          window.userName = inputValue;
+          const rect = canvas.getBoundingClientRect();
+          const isPointInRect = (x: number, y: number, rect: any) => {
+            return (
+              x >= rect.x &&
+              x <= rect.x + rect.width &&
+              y >= rect.y &&
+              y <= rect.y + rect.height
+            );
+          };
+          const choice1Rect = {
+            x: 200,
+            y: 330 - 10,
+            width: ctx.measureText(currentStep.choices[0].text).width,
+            height: 20,
+          };
+          const choice2Rect = {
+            x: 200,
+            y: 360 - 10,
+            width: ctx.measureText(currentStep.choices[1].text).width,
+            height: 20,
+          };
+          const handleClick = (event: any) => {
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
+            if (isPointInRect(x, y, choice1Rect)) {
+              handleChoice(0);
+              canvas.removeEventListener("click", handleClick);
+              // Handle choice 1 selection
+            } else if (isPointInRect(x, y, choice2Rect)) {
+              handleChoice(1);
+              canvas.removeEventListener("click", handleClick);
+              // Handle choice 2 selection
+            }
+          };
+          ctx.fillText("1-" + currentStep.choices[0].text, 200, 330);
+          ctx.fillText("2-" + currentStep.choices[1].text, 200, 360);
+          canvas.addEventListener("click", handleClick);
+        }
       }
       npcs.forEach(
         ({ position: { x, y }, seqIndex: pnjSeqIndex, isFriendly, color }) => {
           const npcIsOutOfBound = x < -25 || x > 425 || y < -25 || y > 425;
+          if (frame > 400 && isFriendly) {
+            drawCharacterOnCanvas(
+              ctx,
+              { x, y },
+              color,
+              pnjSeqIndex,
+              !isFriendly
+            );
+          }
           if (npcIsOutOfBound) return;
-          drawCharacterOnCanvas(ctx, { x, y }, color, pnjSeqIndex, !isFriendly);
+          if (alpha > 0.1) {
+            drawCharacterOnCanvas(
+              ctx,
+              { x, y },
+              color,
+              pnjSeqIndex,
+              !isFriendly
+            );
+          }
         }
       );
-      ctx.font = "10px monospace";
+      ctx.font = "16px arial";
       ctx.fillStyle = "white";
       asciiChars.forEach((char, index) => {
         const x = bugPosition.x + (index % 100) * 10;
@@ -191,29 +437,38 @@ export const useCinematic = ({
       });
       drawCharacterOnCanvas(ctx, position, selectedColor, userSeqIndex, false);
       drawHeartsOnCanvas(ctx, heartCount);
-      // show egg count on the top right corner
-      ctx.font = "24px Perfect DOS";
-      ctx.fillStyle = "white";
-      ctx.fillText(eggsCollected.toString(), 380, 20);
     },
     [
       alpha,
       asciiChars,
       bugPosition.x,
       bugPosition.y,
+      conversationFrame,
+      currentStep.choices,
+      currentStep.question,
+      currentStep.type,
       eggsCollected,
       frame,
+      handleChoice,
+      handleInput,
       handleIsOutOfBound,
       handleUserInput,
       heartCount,
+      inputValue,
       isOutOfBound,
       isPlayerCollidingWithBug,
       map,
+      navigate,
       npcs,
       position,
+      resetDialog,
       selectedColor,
+      setGamePhase,
       setHeartCount,
+      setIsInputVisible,
       setUserSeqIndex,
+      splitText,
+      staticAlpha,
       updateNPC,
       userInput.length,
       userSeqIndex,

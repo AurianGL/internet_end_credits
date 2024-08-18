@@ -1,10 +1,10 @@
-import { useCallback } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { Direction, NonPlayerCharacter } from "../hooks/useNPCsState";
 import { drawCharacterOnCanvas } from "../assets/character";
-import { dialogs } from "../assets/dialogs";
+import { dialogs, explorationDialogs } from "../assets/dialogs";
 import { drawEggOnCanvas } from "../assets/eggs";
 import { drawHeartsOnCanvas } from "../assets/hearts";
-import { Tile, TILE_SIZE } from "../assets/tile";
+import { drawMap, Tile, TILE_SIZE } from "../assets/tile";
 import {
   isColliding,
   randomDirection,
@@ -54,6 +54,9 @@ export const useEggPhase = ({
   userSeqIndex,
   selectedColor,
 }: EggPhaseProps) => {
+  const [frame, setFrame] = useState(0);
+  // const imageDataRef = useRef<ImageData>();
+
   return useCallback(
     ({ timeFraction, firstFrameTime, now, canvas, ctx }) => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -64,13 +67,18 @@ export const useEggPhase = ({
         return;
       }
 
+      // ctx.filter = "blur(4px)";
       for (let i = 0; i < map.length; i += TILE_SIZE) {
         for (let j = 0; j < map[i].length; j += TILE_SIZE) {
           ctx.fillStyle = map[i][j].color;
           ctx.fillRect(i, j, TILE_SIZE, TILE_SIZE);
         }
       }
-
+      // const imageData = imageDataRef.current ?? drawMap(ctx, map);
+      // ctx.putImageData(imageData, 0, 0);
+      // ctx.fillStyle = "aqua";
+      // ctx.fillRect(0, 0, 400, 400);
+      // ctx.filter = "none";
       // move npcs if more than 1 second has passed
       if (now - firstFrameTime.current > 100) {
         if (now - firstFrameTime.current > 50 / 2) {
@@ -113,13 +121,13 @@ export const useEggPhase = ({
                     }
                   : {
                       x:
-                        Math.random() < 0.1
+                        Math.random() < 0.2
                           ? randomDirection()
                           : eggPosition.x - x > 0
                           ? 1
                           : -1,
                       y:
-                        Math.random() < 0.1
+                        Math.random() < 0.2
                           ? randomDirection()
                           : eggPosition.y - y > 0
                           ? 1
@@ -168,6 +176,7 @@ export const useEggPhase = ({
           }
         }
         setUserSeqIndex((prev) => (prev + 1) % 4);
+        setFrame((prev) => prev + 1);
         firstFrameTime.current = now;
       }
       const eggColor = isEggEvil ? "red" : "gold";
@@ -182,10 +191,9 @@ export const useEggPhase = ({
         }) => {
           const npcIsColliding = isColliding(position, { x, y });
           if (npcIsColliding) {
-            const text =
-              dialogs[isFriendly ? "friendlyNPC" : "enemyNPC"]["greeting"];
+            const text = explorationDialogs(frame, eggsCollected);
 
-            ctx.font = "16px Perfect DOS";
+            ctx.font = "12px monospace";
             ctx.fillStyle = "black";
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
@@ -219,6 +227,7 @@ export const useEggPhase = ({
       collectEgg,
       eggPosition,
       eggsCollected,
+      frame,
       handleIsOutOfBound,
       handleUserInput,
       heartCount,

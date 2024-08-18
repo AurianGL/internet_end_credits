@@ -13,8 +13,8 @@ export interface NonPlayerCharacter {
   move: boolean;
   isFriendly: boolean;
   life: number;
-  color: "lightCoral" | "darkkhaki";
-  textColor: "salmon" | "darkseagreen";
+  color: string;
+  textColor: string;
   mood: "sticky" | "wandering";
 }
 
@@ -27,7 +27,7 @@ const initialNPCs: NonPlayerCharacter[] = [
     move: true,
     isFriendly: true,
     life: 1,
-    color: "lightCoral",
+    color: "rgba(255, 0, 102, 1)",
     textColor: "salmon",
     mood: "sticky",
   },
@@ -52,13 +52,10 @@ export const useNPCsState = () => {
     if (npcs.length > 3) {
       return;
     }
-    const xOrY = Math.random() < 0.5 ? "x" : "y";
-    const headOrTail = Math.random() < 0.5 ? 0 : 400;
+
     const newNPC: NonPlayerCharacter = {
       id: npcs.length + 1,
       position: {
-        // x: xOrY === "x" ? Math.random() * 400 : headOrTail,
-        // y: xOrY === "y" ? Math.random() * 400 : headOrTail,
         x: 300,
         y: 300,
       },
@@ -86,7 +83,7 @@ export const useNPCsState = () => {
       move: true,
       isFriendly: true,
       life: 1,
-      color: "lightCoral",
+      color: "rgba(255, 0, 102, 1)",
       textColor: "salmon",
       mood: "sticky",
     };
@@ -129,6 +126,10 @@ export const useNPCsState = () => {
     return;
   }, [addFriendlyNPC, npcs]);
 
+  const resetNPCs = () => {
+    setNpcs(initialNPCs);
+  };
+
   return {
     npcs,
     addFoesNPC,
@@ -136,5 +137,6 @@ export const useNPCsState = () => {
     updateNPC,
     updateNPCs,
     attackNPC,
+    resetNPCs,
   };
 };

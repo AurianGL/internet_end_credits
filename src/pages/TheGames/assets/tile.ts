@@ -6,32 +6,32 @@ export interface Tile {
 }
 
 export const rock: Tile = {
-  color: "midnightblue",
+  color: "#2eb8b8",
   crossable: true,
 };
 
 export const grass: Tile = {
-  color: "navy",
+  color: "#002db3",
   crossable: true,
 };
 
 export const water: Tile = {
-  color: "aqua",
+  color: "#00b3b3",
   crossable: true,
 };
 
 export const sand: Tile = {
-  color: "royalblue",
+  color: "#6695ff",
   crossable: true,
 };
 
 export const road: Tile = {
-  color: "teal",
+  color: "#00e6e6",
   crossable: true,
 };
 
 export const tree: Tile = {
-  color: "turquoise",
+  color: "#00e6b8",
   crossable: true,
 };
 
@@ -61,17 +61,17 @@ export const createMap = (width: number, height: number) => {
       if (i > 0 && j > 0) {
         const topTile = map[i - 1][j];
         const leftTile = map[i][j - 1];
-        if (Math.random() < 0.98) {
+        if (Math.random() < 0.95) {
           newTile = Math.random() < 0.7 ? topTile : leftTile;
         } else {
           newTile = randomBiome();
         }
       } else if (i > 0) {
         const topTile = map[i - 1][j];
-        newTile = Math.random() < 0.98 ? topTile : randomBiome();
+        newTile = Math.random() < 0.95 ? topTile : randomBiome();
       } else if (j > 0) {
         const leftTile = map[i][j - 1];
-        newTile = Math.random() < 0.98 ? leftTile : randomBiome();
+        newTile = Math.random() < 0.95 ? leftTile : randomBiome();
       } else {
         newTile = randomBiome();
       }
@@ -79,4 +79,39 @@ export const createMap = (width: number, height: number) => {
     }
   }
   return map;
+};
+
+export const drawMap = (ctx: CanvasRenderingContext2D, map: any[][]) => {
+  const width = map.length * TILE_SIZE;
+  const height = map[0].length * TILE_SIZE;
+  const imageData = ctx.createImageData(width, height);
+  const data = imageData.data;
+
+  for (let i = 0; i < map.length; i++) {
+    for (let j = 0; j < map[i].length; j++) {
+      const color = map[i][j].color;
+      const [r, g, b, a] = hexToRgba(color);
+      const x = i * TILE_SIZE;
+      const y = j * TILE_SIZE;
+
+      for (let dx = 0; dx < TILE_SIZE; dx++) {
+        for (let dy = 0; dy < TILE_SIZE; dy++) {
+          const index = ((y + dy) * width + (x + dx)) * 4;
+          data[index] = r;
+          data[index + 1] = g;
+          data[index + 2] = b;
+          data[index + 3] = a;
+        }
+      }
+    }
+  }
+  return imageData;
+};
+
+const hexToRgba = (hex: string): [number, number, number, number] => {
+  const bigint = parseInt(hex.slice(1), 16);
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+  return [r, g, b, 255]; // Assuming full opacity
 };

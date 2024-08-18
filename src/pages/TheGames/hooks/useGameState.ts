@@ -1,26 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export type Phase =
   | "exlibris"
   | "exploration"
   | "cinematic"
-  | "fightCthulhu"
+  | "static"
   | "victory"
   | "defeat";
 
 export const useGameState = () => {
   const [gameState, setGameState] = useState({
     phase: "exlibris", // 'exploration', 'preFight', 'fightPreparation', 'fightCthulhu', 'victory', 'defeat'
-    eggsCollected: 0,
-    playerName: "",
-    playerHealth: 1, // Assuming 1 represents full health
-    dialogs: {
-      npcGreeting: "Have you found all the ancient eggs yet?",
-      npcNamePrompt: "Tell me, traveler, what is your name?",
-      npcChosenOne: "You are the one I was expecting!",
-      npcIgnore: "...",
-      npcOfferHelp: "The path ahead is perilous. Let me aid you in your fight.",
-    },
+    eggsCollected: 2,
   });
 
   const collectEgg = () => {
@@ -34,12 +25,6 @@ export const useGameState = () => {
     });
   };
 
-  useEffect(() => {
-    if (gameState.playerHealth === 0) {
-      setGameState((prevGameState) => ({ ...prevGameState, phase: "defeat" }));
-    }
-  }, [gameState.playerHealth]);
-
   const setGamePhase = (phase: Phase) => {
     setGameState((prev) => ({
       ...prev,
@@ -47,9 +32,17 @@ export const useGameState = () => {
     }));
   };
 
+  const resetGame = () => {
+    setGameState({
+      phase: "exlibris",
+      eggsCollected: 2,
+    });
+  };
+
   return {
     gameState,
     collectEgg,
     setGamePhase,
+    resetGame,
   };
 };
