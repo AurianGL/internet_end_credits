@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { createMap } from "../assets/tile";
+import { nightSky } from "../assets/nightsky";
 import { usePlayerState } from "../hooks/usePlayerState";
 import { useNPCsState } from "../hooks/useNPCsState";
 
@@ -59,7 +60,7 @@ export const BetterFrame = () => {
     splitText,
     setStep,
   } = useDialogDecisionTree();
-  const [map, setMap] = useState(createMap(400, 400));
+  const [map, setMap] = useState(nightSky());
 
   const handleIsOutOfBound = useIsOutOfBound({
     position,
@@ -67,7 +68,7 @@ export const BetterFrame = () => {
     npcs,
     updateNPCs,
     setMap,
-    createMap,
+    createMap: nightSky,
   });
   const handleUserInput = useHandleUserMove({
     userInput,

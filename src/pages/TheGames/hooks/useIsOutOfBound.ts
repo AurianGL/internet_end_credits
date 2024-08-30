@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { Tile } from "../assets/tile";
 import { NonPlayerCharacter } from "./useNPCsState";
+import { nightSky, Star } from "../assets/nightsky";
 
 export const useIsOutOfBound = ({
   position,
@@ -19,11 +20,11 @@ export const useIsOutOfBound = ({
   >;
   npcs: NonPlayerCharacter[];
   updateNPCs: (npcs: NonPlayerCharacter[]) => void;
-  setMap: (map: Tile[][]) => void;
-  createMap: (width: number, height: number) => Tile[][];
+  setMap: (map: Star[]) => void;
+  createMap: (width: number, height: number) => Star[];
 }) => {
   return useCallback(() => {
-    setMap(createMap(400, 400));
+    setMap(nightSky());
     if (position.x < 0) setPosition((prev) => ({ x: 395, y: prev.y }));
     if (position.x > 400) setPosition((prev) => ({ x: 5, y: prev.y }));
     if (position.y < 0) setPosition((prev) => ({ x: prev.x, y: 395 }));
@@ -42,5 +43,5 @@ export const useIsOutOfBound = ({
     });
 
     updateNPCs(newNPCsPostions);
-  }, [position, setPosition, npcs, updateNPCs, setMap, createMap]);
+  }, [position, setPosition, npcs, updateNPCs, setMap]);
 };

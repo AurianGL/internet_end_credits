@@ -10,6 +10,7 @@ import {
   randomDirection,
   isEggColliding,
 } from "../utils/functions";
+import { drawStars, Star } from "../assets/nightsky";
 
 interface EggPhaseProps {
   collectEgg: () => void;
@@ -20,7 +21,7 @@ interface EggPhaseProps {
   heartCount: number;
   isEggEvil: boolean;
   isOutOfBound: boolean;
-  map: Tile[][];
+  map: Star[];
   moveEgg: () => void;
   npcs: NonPlayerCharacter[];
   position: { x: number; y: number };
@@ -68,12 +69,8 @@ export const useEggPhase = ({
       }
 
       // ctx.filter = "blur(4px)";
-      for (let i = 0; i < map.length; i += TILE_SIZE) {
-        for (let j = 0; j < map[i].length; j += TILE_SIZE) {
-          ctx.fillStyle = map[i][j].color;
-          ctx.fillRect(i, j, TILE_SIZE, TILE_SIZE);
-        }
-      }
+      drawStars(ctx, map);
+
       // const imageData = imageDataRef.current ?? drawMap(ctx, map);
       // ctx.putImageData(imageData, 0, 0);
       // ctx.fillStyle = "aqua";

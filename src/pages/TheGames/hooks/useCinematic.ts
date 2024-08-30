@@ -6,6 +6,7 @@ import { Direction, NonPlayerCharacter } from "./useNPCsState";
 import { Phase } from "./useGameState";
 import { useNavigate } from "react-router-dom";
 import { DecisionTreeStep } from "../assets/cinema";
+import { drawStars, Star } from "../assets/nightsky";
 
 interface CinematicProps {
   eggsCollected: number;
@@ -13,7 +14,7 @@ interface CinematicProps {
   handleUserInput: () => void;
   heartCount: number;
   isOutOfBound: boolean;
-  map: Tile[][];
+  map: Star[];
   npcs: NonPlayerCharacter[];
   position: { x: number; y: number };
   setHeartCount: React.Dispatch<React.SetStateAction<number>>;
@@ -116,12 +117,7 @@ export const useCinematic = ({
         return;
       }
       if (alpha !== 1 && currentStep.type !== "happyEnd") {
-        for (let i = 0; i < map.length; i += TILE_SIZE) {
-          for (let j = 0; j < map[i].length; j += TILE_SIZE) {
-            ctx.fillStyle = map[i][j].color;
-            ctx.fillRect(i, j, TILE_SIZE, TILE_SIZE);
-          }
-        }
+        drawStars(ctx, map);
       }
 
       // draw a black layer on top of the map with alpha

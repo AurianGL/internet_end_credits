@@ -4,13 +4,13 @@ export const MusicBox = () => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="flex bg-slate-800 p-2">
+    <div className="flex bg-black ">
       <div
-        className="flex items-start "
+        className="flex items-start drop-shadow-[0_35px_35px_rgba(245,50,150,1)]"
         onClick={() => setIsExpanded(!isExpanded)}
         style={{ height: "416px" }}
       >
-        <h2>{">"}</h2>
+        <h2 className=" ">{">"}</h2>
       </div>
       {isExpanded && (
         <div className="iframe-section">
