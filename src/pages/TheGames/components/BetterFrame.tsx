@@ -232,7 +232,14 @@ export const BetterFrame = () => {
 
   return (
     <div className="flex flex-col justify-start align-top relative">
-      <canvas ref={canvasRef} width={400} height={400} />
+      <canvas
+        ref={canvasRef}
+        width={400}
+        height={400}
+        style={{
+          imageRendering: "pixelated",
+        }}
+      />
       {isInputVisible && (
         <Formik
           initialValues={{

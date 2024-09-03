@@ -152,7 +152,7 @@ export const useCinematic = ({
             const distance = Math.sqrt(
               Math.pow(position.x - x, 2) + Math.pow(position.y - y, 2)
             );
-            const minDistance = 30;
+            const minDistance = 64;
 
             if (distance < minDistance) {
               setConversationFrame((prev) => {
@@ -403,24 +403,17 @@ export const useCinematic = ({
       npcs.forEach(
         ({ position: { x, y }, seqIndex: pnjSeqIndex, isFriendly, color }) => {
           const npcIsOutOfBound = x < -25 || x > 425 || y < -25 || y > 425;
+          const image = new Image();
           if (frame > 400 && isFriendly) {
-            drawCharacterOnCanvas(
-              ctx,
-              { x, y },
-              color,
-              pnjSeqIndex,
-              !isFriendly
-            );
+            image.src = process.env.PUBLIC_URL + "/owlone.png";
+            ctx.drawImage(image, x, y, 48, 48);
           }
           if (npcIsOutOfBound) return;
           if (alpha > 0.1) {
-            drawCharacterOnCanvas(
-              ctx,
-              { x, y },
-              color,
-              pnjSeqIndex,
-              !isFriendly
-            );
+            image.src =
+              process.env.PUBLIC_URL +
+              (isFriendly ? "/owlone.png" : "/owltwo.png");
+            ctx.drawImage(image, x, y, 48, 48);
           }
         }
       );
@@ -431,7 +424,9 @@ export const useCinematic = ({
         const y = bugPosition.y + Math.floor(index / 100) * 10;
         ctx.fillText(char, x, y);
       });
-      drawCharacterOnCanvas(ctx, position, selectedColor, userSeqIndex, false);
+      const image = new Image();
+      image.src = process.env.PUBLIC_URL + "/witchone.png";
+      ctx.drawImage(image, position.x, position.y, 64, 64);
       drawHeartsOnCanvas(ctx, heartCount);
     },
     [
@@ -458,7 +453,6 @@ export const useCinematic = ({
       npcs,
       position,
       resetDialog,
-      selectedColor,
       setGamePhase,
       setHeartCount,
       setIsInputVisible,
@@ -467,7 +461,6 @@ export const useCinematic = ({
       staticAlpha,
       updateNPC,
       userInput.length,
-      userSeqIndex,
     ]
   );
 };

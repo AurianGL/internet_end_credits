@@ -11,6 +11,8 @@ import {
   isEggColliding,
 } from "../utils/functions";
 import { drawStars, Star } from "../assets/nightsky";
+import { drawWitchOnCanvas, generateWitchOnBroom } from "../assets/witches";
+import img from "../../../../public/witchone.png";
 
 interface EggPhaseProps {
   collectEgg: () => void;
@@ -69,7 +71,24 @@ export const useEggPhase = ({
       }
 
       // ctx.filter = "blur(4px)";
-      drawStars(ctx, map);
+
+      const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      gradient.addColorStop(0.6, "#0e002e"); // Dark blue
+      gradient.addColorStop(0.88, "#552f73"); // Mid blue
+      gradient.addColorStop(0.94, "#5a166f"); // Orange
+      gradient.addColorStop(1, "#670d08"); // Yellow-orange (sunset)
+
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const stars = map.map((star) => {
+        star.size += star.pulse;
+        if (star.size > 2 || star.size < 1) {
+          star.pulse = -star.pulse;
+        }
+        return star;
+      });
+      drawStars(ctx, stars);
 
       // const imageData = imageDataRef.current ?? drawMap(ctx, map);
       // ctx.putImageData(imageData, 0, 0);
@@ -210,10 +229,20 @@ export const useEggPhase = ({
             ctx.fillStyle = "black";
             ctx.fillText(text, 400 / 2, 400 - textHeight + 2);
           }
-          drawCharacterOnCanvas(ctx, { x, y }, color, pnjSeqIndex, !isFriendly);
+          const image = new Image();
+
+          image.src =
+            process.env.PUBLIC_URL +
+            (isFriendly ? "/owlone.png" : "/owltwo.png");
+          ctx.drawImage(image, x, y, 48, 48);
+
+          // drawWitchOnCanvas(ctx, { x, y }, generateWitchOnBroom(color));
+          // drawCharacterOnCanvas(ctx, { x, y }, color, pnjSeqIndex, !isFriendly);
         }
       );
-      drawCharacterOnCanvas(ctx, position, selectedColor, userSeqIndex, false);
+      const image = new Image();
+      image.src = process.env.PUBLIC_URL + "/witchone.png";
+      ctx.drawImage(image, position.x, position.y, 64, 64);
       drawHeartsOnCanvas(ctx, heartCount);
       // show egg count on the top right corner
       ctx.font = "24px Perfect DOS";
@@ -235,12 +264,10 @@ export const useEggPhase = ({
       npcs,
       position,
       resetEgg,
-      selectedColor,
       setHeartCount,
       setUserSeqIndex,
       updateNPC,
       userInput,
-      userSeqIndex,
     ]
   );
 };

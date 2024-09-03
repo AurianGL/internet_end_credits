@@ -42,7 +42,6 @@ export const nightSky = () => {
 };
 
 export const drawStars = (ctx: CanvasRenderingContext2D, stars: Star[]) => {
-  ctx.fillStyle = "#000";
   ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
   stars.forEach((star) => {

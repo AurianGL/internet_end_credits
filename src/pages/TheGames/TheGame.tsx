@@ -8,7 +8,7 @@ export const TheGame = () => {
         <h1 className="w-full text-center">ABYSS FORTRESS</h1>
         <div className=" ">
           <div
-            className="shadow-cyan-800 shadow-2xl absolute z-50 bg-scanline bg-[length:4px_4px] pointer-events-none"
+            className="absolute z-50 bg-scanline bg-[length:4px_4px] pointer-events-none"
             style={{ height: "400px", width: "400px" }}
           />
           <div
