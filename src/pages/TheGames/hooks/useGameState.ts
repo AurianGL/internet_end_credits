@@ -11,7 +11,7 @@ export type Phase =
 export const useGameState = () => {
   const [gameState, setGameState] = useState({
     phase: "exlibris", // 'exploration', 'preFight', 'fightPreparation', 'fightCthulhu', 'victory', 'defeat'
-    eggsCollected: 2,
+    eggsCollected: 0,
   });
 
   const collectEgg = () => {
@@ -35,7 +35,7 @@ export const useGameState = () => {
   const resetGame = () => {
     setGameState({
       phase: "exlibris",
-      eggsCollected: 2,
+      eggsCollected: 0,
     });
   };
 

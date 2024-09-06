@@ -23,6 +23,7 @@ import { Formik, Form, Field, FormikHelpers } from "formik";
 import { useStaticPhase } from "../hooks/useStaticPhase";
 import { useDialogDecisionTree } from "../hooks/useDialogsDecisionTree";
 import { dialogsPhases } from "../assets/cinema";
+import { WITCH } from "../assets/witches";
 
 export const BetterFrame = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -30,7 +31,7 @@ export const BetterFrame = () => {
   const { userInput } = useHandleUserInput();
   const [isInputVisible, setIsInputVisible] = useState(false);
   const [inputValue, setInputValue] = useState("");
-
+  const [witch, setWitch] = useState(WITCH[0]);
   const {
     position,
     setPosition,
@@ -94,6 +95,7 @@ export const BetterFrame = () => {
     userInput,
     userSeqIndex,
     selectedColor,
+    witch,
   });
   const cinematic = useCinematic({
     eggsCollected: gameState.eggsCollected,
@@ -118,11 +120,13 @@ export const BetterFrame = () => {
     handleChoice,
     resetDialog,
     splitText,
+    witch,
   });
   const exlibris = useExlibris({
     selectedColor,
     setSelectedColor,
     setGamePhase,
+    setWitch,
   });
   const defeat = useDefeat();
   const staticPhase = useStaticPhase({ currentStep, splitText });

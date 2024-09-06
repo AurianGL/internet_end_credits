@@ -11,10 +11,10 @@ export const dialogs = {
 export const explorationDialogs = (frame: number, eggCount: number) => {
   if (eggCount === 0) {
     if (frame < 200) {
-      return "Try to catch the bugs!";
+      return "Try to catch the orbs!";
     }
     if (frame < 400) {
-      return "Time's flying by! But so are those bugs!";
+      return "Time's flying by! But so are those orbs!";
     }
     if (frame < 600) {
       return "What's the matter, slowpoke?";
@@ -25,10 +25,10 @@ export const explorationDialogs = (frame: number, eggCount: number) => {
   }
   if (eggCount === 1) {
     if (frame < 400) {
-      return "You're one tentacle-rrific bug catcher!";
+      return "You're one tentacle-rrific orb catcher!";
     }
     if (frame < 600) {
-      return "I'm not a bug!";
+      return "I'm not an orb!";
     }
     if (frame < 600) {
       return "Don't get cocky, kid.";
@@ -46,7 +46,7 @@ export const explorationDialogs = (frame: number, eggCount: number) => {
     }
   }
   const randomDialogs = [
-    "here comes bigger bugs",
+    "here comes bigger orbs",
     "wanna meet your masters ?",
     "you're not ready for this.",
     "Tannhäuser Gate are close now",

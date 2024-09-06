@@ -47,7 +47,7 @@ export const drawStars = (ctx: CanvasRenderingContext2D, stars: Star[]) => {
   stars.forEach((star) => {
     ctx.beginPath();
     ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-    ctx.fillStyle = "#fff";
+    ctx.fillStyle = "#dfd57b";
     ctx.fill();
   });
 };

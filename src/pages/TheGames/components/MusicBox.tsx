@@ -10,12 +10,12 @@ export const MusicBox = () => {
         onClick={() => setIsExpanded(!isExpanded)}
         style={{ height: "416px" }}
       >
-        <h2 className=" ">{">"}</h2>
+        <h2 className="font-goth text-3xl">{">"}</h2>
       </div>
       {isExpanded && (
         <div className="iframe-section">
           <div
-            className="text-section"
+            className="text-section font-goth"
             onClick={() => setIsExpanded(!isExpanded)}
           >
             I think those were what I had in mind when I was thinking about the

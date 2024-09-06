@@ -12,7 +12,7 @@ export const useEgg = () => {
       x: Math.floor(Math.random() * 400),
       y: -50,
     });
-    setIsEggEvil(Math.random() > 0.5);
+    setIsEggEvil(Math.random() > 0.7);
   };
 
   // move egg on a leaf falling pattern

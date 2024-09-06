@@ -31,6 +31,7 @@ interface CinematicProps {
   handleChoice: (choice: number) => void;
   resetDialog: () => void;
   splitText: (text: string, maxLength: number) => string[];
+  witch: string;
 }
 
 const initialAsciiChars = Array.from({ length: 4000 }, () =>
@@ -61,8 +62,6 @@ export const useCinematic = ({
   setUserSeqIndex,
   updateNPC,
   userInput,
-  userSeqIndex,
-  selectedColor,
   setIsInputVisible,
   inputValue,
   setGamePhase,
@@ -71,6 +70,7 @@ export const useCinematic = ({
   handleChoice,
   resetDialog,
   splitText,
+  witch,
 }: CinematicProps) => {
   const [bugPosition, setBugPosition] = useState({ x: 0, y: -400 });
   const [asciiChars, setAsciiChars] = useState<string[]>(initialAsciiChars);
@@ -117,12 +117,27 @@ export const useCinematic = ({
         return;
       }
       if (alpha !== 1 && currentStep.type !== "happyEnd") {
-        drawStars(ctx, map);
+        const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+        gradient.addColorStop(0.6, "#0e002e"); // Dark blue
+        gradient.addColorStop(0.88, "#552f73"); // Mid blue
+        gradient.addColorStop(0.94, "#5a166f"); // Orange
+        gradient.addColorStop(1, "#670d08"); // Yellow-orange (sunset)
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
       }
 
       // draw a black layer on top of the map with alpha
       ctx.fillStyle = `rgba(0, 0, 0, ${alpha})`;
       ctx.fillRect(0, 0, 400, 400);
+      const stars = map.map((star) => {
+        star.size += star.pulse;
+        if (star.size > 2 || star.size < 1) {
+          star.pulse = -star.pulse;
+        }
+        return star;
+      });
+      drawStars(ctx, stars);
+
       if (currentStep.type === "happyEnd") {
         // draw a static noise effect
         ctx.fillStyle = `rgba(255, 255, 255, ${staticAlpha})`;
@@ -395,9 +410,19 @@ export const useCinematic = ({
               // Handle choice 2 selection
             }
           };
+          const handlePressNumber = (event: KeyboardEvent) => {
+            if (event.key === "1") {
+              handleChoice(0);
+              window.removeEventListener("keydown", handlePressNumber);
+            } else if (event.key === "2") {
+              handleChoice(1);
+              window.removeEventListener("keydown", handlePressNumber);
+            }
+          };
           ctx.fillText("1-" + currentStep.choices[0].text, 200, 330);
           ctx.fillText("2-" + currentStep.choices[1].text, 200, 360);
           canvas.addEventListener("click", handleClick);
+          window.addEventListener("keydown", handlePressNumber);
         }
       }
       npcs.forEach(
@@ -417,15 +442,16 @@ export const useCinematic = ({
           }
         }
       );
-      ctx.font = "16px arial";
+      ctx.font = "12px arial";
       ctx.fillStyle = "white";
       asciiChars.forEach((char, index) => {
         const x = bugPosition.x + (index % 100) * 10;
         const y = bugPosition.y + Math.floor(index / 100) * 10;
         ctx.fillText(char, x, y);
       });
+      ctx.font = "16px arial";
       const image = new Image();
-      image.src = process.env.PUBLIC_URL + "/witchone.png";
+      image.src = process.env.PUBLIC_URL + witch;
       ctx.drawImage(image, position.x, position.y, 64, 64);
       drawHeartsOnCanvas(ctx, heartCount);
     },
@@ -451,7 +477,8 @@ export const useCinematic = ({
       map,
       navigate,
       npcs,
-      position,
+      position.x,
+      position.y,
       resetDialog,
       setGamePhase,
       setHeartCount,
@@ -461,6 +488,7 @@ export const useCinematic = ({
       staticAlpha,
       updateNPC,
       userInput.length,
+      witch,
     ]
   );
 };

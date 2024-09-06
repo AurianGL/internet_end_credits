@@ -30,8 +30,8 @@ export const PAGES = [
     Component: "WhereIsHome",
   },
   {
-    name: "The Game",
-    url: "/thegame",
+    name: "nightflight",
+    url: "/nightflight",
     Component: "TheGame",
   },
 ];

@@ -9,23 +9,23 @@ export const randomDirection = () => {
 const WIDTH = 25;
 const HEIGHT = 35;
 
-type position = { x: number; y: number };
+type rectProps = { x: number; y: number; size: number };
 
-export const isColliding = (rect1: position, rect2: position) => {
+export const isColliding = (rect1: rectProps, rect2: rectProps) => {
   return (
-    rect1.x < rect2.x + WIDTH &&
-    rect1.x + WIDTH > rect2.x &&
-    rect1.y < rect2.y + HEIGHT &&
-    rect1.y + HEIGHT > rect2.y
+    rect1.x < rect2.x + rect1.size &&
+    rect1.x + rect1.size > rect2.x &&
+    rect1.y < rect2.y + rect2.size &&
+    rect1.y + rect1.size > rect2.y
   );
 };
 
-export const isEggColliding = (rect1: position, rect2: position) => {
+export const isEggColliding = (rect1: rectProps, rect2: rectProps) => {
   return (
     rect1.x < rect2.x + 5 * 3 &&
-    rect1.x + WIDTH > rect2.x &&
+    rect1.x + rect1.size > rect2.x &&
     rect1.y < rect2.y + 7 * 3 &&
-    rect1.y + HEIGHT > rect2.y
+    rect1.y + rect1.size > rect2.y
   );
 };
 

@@ -1,16 +1,19 @@
 import { useCallback, useEffect, useState } from "react";
 import { rgbColors } from "../utils/functions";
 import { Phase } from "./useGameState";
+import { WITCH } from "../assets/witches";
 
 interface ExlibrisProps {
   selectedColor: string;
   setSelectedColor: React.Dispatch<React.SetStateAction<string>>;
+  setWitch: React.Dispatch<React.SetStateAction<string>>;
   setGamePhase: (phase: Phase) => void;
 }
 
 export const useExlibris = ({
   selectedColor,
   setSelectedColor,
+  setWitch,
   setGamePhase,
 }: ExlibrisProps) => {
   const [position, setPosition] = useState({ x: 200, y: 150 });
@@ -42,13 +45,13 @@ export const useExlibris = ({
     ({ timeFraction, firstFrameTime, now, canvas, ctx }) => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      const text = "Abyss Fortress";
+      const text = "Night Flight";
       const instruction = "use arrow keys to move";
       const instruction2 = "click on stuff sometimes";
       const subText = "Select your color and click 'e' to start";
 
       if (!flicker) {
-        ctx.font = "bold 24px Arial";
+        ctx.font = "bold 24px Jaini";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         // Draw red component
@@ -80,15 +83,19 @@ export const useExlibris = ({
       rgbColors(0.8).forEach((color, index) => {
         const x = position.x - 125 + index * 100;
         const y = position.y + 60;
-
+        const witch = WITCH[index];
+        const image = new Image();
+        image.src = process.env.PUBLIC_URL + witch;
         if (selectedColor === color && flicker) {
           // a randm number between 0.5 and 0.1 with only one decimal
           const alpha = Math.floor(Math.random() * 4 + 1) / 10;
           ctx.fillStyle = rgbColors(alpha)[index];
           ctx.fillRect(x, y, 50, 50); // Flicker effect
+          ctx.drawImage(image, x, y);
         } else {
           ctx.fillStyle = color;
           ctx.fillRect(x, y, 50, 50);
+          ctx.drawImage(image, x, y);
         }
       });
 
@@ -108,11 +115,12 @@ export const useExlibris = ({
             clickY <= y + 50
           ) {
             setSelectedColor(color);
+            setWitch(WITCH[index]);
             return;
           }
         });
       });
     },
-    [flicker, position.x, position.y, selectedColor, setSelectedColor]
+    [flicker, position.x, position.y, selectedColor, setSelectedColor, setWitch]
   );
 };

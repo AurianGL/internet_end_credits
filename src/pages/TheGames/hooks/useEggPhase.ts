@@ -11,8 +11,6 @@ import {
   isEggColliding,
 } from "../utils/functions";
 import { drawStars, Star } from "../assets/nightsky";
-import { drawWitchOnCanvas, generateWitchOnBroom } from "../assets/witches";
-import img from "../../../../public/witchone.png";
 
 interface EggPhaseProps {
   collectEgg: () => void;
@@ -34,6 +32,7 @@ interface EggPhaseProps {
   userInput: string[];
   userSeqIndex: number;
   selectedColor: string;
+  witch: string;
 }
 
 export const useEggPhase = ({
@@ -56,6 +55,7 @@ export const useEggPhase = ({
   userInput,
   userSeqIndex,
   selectedColor,
+  witch,
 }: EggPhaseProps) => {
   const [frame, setFrame] = useState(0);
   // const imageDataRef = useRef<ImageData>();
@@ -109,7 +109,10 @@ export const useEggPhase = ({
             }) => {
               // if nps is friendly, move it towards the user or is out of bound
               const npcIsOutOfBound = x < -25 || x > 425 || y < -25 || y > 425;
-              const npcIsColliding = isColliding(position, { x, y });
+              const npcIsColliding = isColliding(
+                { ...position, size: 64 },
+                { x, y, size: 32 }
+              );
               if (
                 npcIsOutOfBound ||
                 (isFriendly &&
@@ -137,13 +140,13 @@ export const useEggPhase = ({
                     }
                   : {
                       x:
-                        Math.random() < 0.2
+                        Math.random() < 0.2 || eggPosition.y < 10
                           ? randomDirection()
                           : eggPosition.x - x > 0
                           ? 1
                           : -1,
                       y:
-                        Math.random() < 0.2
+                        Math.random() < 0.2 || eggPosition.y < 40
                           ? randomDirection()
                           : eggPosition.y - y > 0
                           ? 1
@@ -166,7 +169,10 @@ export const useEggPhase = ({
               if (npcIsColliding && userInput.includes("e")) {
                 setHeartCount((prev) => prev - (isFriendly ? -1 : 1));
               }
-              const npcIsCollidingWithEgg = isColliding({ x, y }, eggPosition);
+              const npcIsCollidingWithEgg = isColliding(
+                { x, y, size: 32 },
+                { ...eggPosition, size: 16 }
+              );
               if (npcIsCollidingWithEgg) {
                 resetEgg();
               }
@@ -180,7 +186,10 @@ export const useEggPhase = ({
           resetEgg();
         } else {
           moveEgg();
-          const eggColliding = isEggColliding(position, eggPosition);
+          const eggColliding = isEggColliding(
+            { ...position, size: 64 },
+            { ...eggPosition, size: 16 }
+          );
           if (eggColliding && isEggEvil) {
             resetEgg();
             setHeartCount((prev) => prev - 1);
@@ -205,7 +214,10 @@ export const useEggPhase = ({
           textColor,
           color,
         }) => {
-          const npcIsColliding = isColliding(position, { x, y });
+          const npcIsColliding = isColliding(
+            { ...position, size: 64 },
+            { x, y, size: 32 }
+          );
           if (npcIsColliding) {
             const text = explorationDialogs(frame, eggsCollected);
 
@@ -234,14 +246,15 @@ export const useEggPhase = ({
           image.src =
             process.env.PUBLIC_URL +
             (isFriendly ? "/owlone.png" : "/owltwo.png");
-          ctx.drawImage(image, x, y, 48, 48);
+          const size = isFriendly ? 48 : 32;
+          ctx.drawImage(image, x, y, size, size);
 
           // drawWitchOnCanvas(ctx, { x, y }, generateWitchOnBroom(color));
           // drawCharacterOnCanvas(ctx, { x, y }, color, pnjSeqIndex, !isFriendly);
         }
       );
       const image = new Image();
-      image.src = process.env.PUBLIC_URL + "/witchone.png";
+      image.src = process.env.PUBLIC_URL + witch;
       ctx.drawImage(image, position.x, position.y, 64, 64);
       drawHeartsOnCanvas(ctx, heartCount);
       // show egg count on the top right corner
@@ -268,6 +281,7 @@ export const useEggPhase = ({
       setUserSeqIndex,
       updateNPC,
       userInput,
+      witch,
     ]
   );
 };

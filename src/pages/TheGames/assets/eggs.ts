@@ -32,9 +32,10 @@ export const drawEggOnCanvas = (
   color: string,
   position: { x: number; y: number }
 ) => {
-  const heartPixel = createEggPixel(color, eggPattern);
-  heartPixel.forEach(({ x, y, color }, index) => {
-    ctx.fillStyle = color;
-    ctx.fillRect(position.x + x * 3, position.y + y * 3, 3, 3);
-  });
+  ctx.shadowBlur = 20;
+  ctx.shadowColor = color;
+  ctx.fillStyle = color;
+  ctx.arc(position.x, position.y, 7, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.shadowBlur = 0;
 };

@@ -32,7 +32,8 @@ module.exports = {
       }
     },
     fontFamily: {
-      'death': ['Perfect\\ dos']
+      'death': ['Perfect\\ dos'],
+      'goth': ['Jacquard\\ 12']
     }
   },
   plugins: [],
