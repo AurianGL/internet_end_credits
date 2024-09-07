@@ -47,8 +47,8 @@ export const useExlibris = ({
 
       const text = "Night Flight";
       const instruction = "use arrow keys to move";
-      const instruction2 = "click on stuff sometimes";
-      const subText = "Select your color and click 'e' to start";
+      const instruction2 = "numbers keys to select dialogs";
+      const subText = "Select your witch and click 'e' to start";
 
       if (!flicker) {
         ctx.font = "bold 24px Jaini";

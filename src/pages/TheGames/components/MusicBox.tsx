@@ -18,8 +18,8 @@ export const MusicBox = () => {
             className="text-section font-goth"
             onClick={() => setIsExpanded(!isExpanded)}
           >
-            I think those were what I had in mind when I was thinking about the
-            game
+            Reckon them's what I 'ad in me 'ead when I were mullin' it over,
+            innit?
           </div>
 
           <iframe

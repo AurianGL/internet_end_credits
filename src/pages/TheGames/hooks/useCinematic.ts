@@ -360,7 +360,6 @@ export const useCinematic = ({
         });
         if (currentStep.type === "happyEnd") {
           if (conversationFrame % 10 === 0) {
-            console.log("end");
             if (alpha > 0) {
               setAlpha((prev) => parseFloat((prev - 0.01).toFixed(2)));
             }
@@ -378,7 +377,6 @@ export const useCinematic = ({
         }
         if (currentStep.type === "blueEnd") {
           if (conversationFrame % 10 === 0) {
-            console.log("end");
             if (alpha > 0) {
               setAlpha((prev) => parseFloat((prev - 0.01).toFixed(2)));
             }

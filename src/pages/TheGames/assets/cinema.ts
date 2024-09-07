@@ -6,6 +6,7 @@ export type KeyType =
   | "MATRIX_PHASE"
   | "GOAT_PHASE"
   | "WALL_PHASE"
+  | "FUNNY_PHASE"
   | "END_PHASE";
 
 export type DecisionTreeStep = {
@@ -61,7 +62,7 @@ export const firstPhase: DecisionTreeStep[] = [
   },
   {
     // 2
-    question: "You've tried to fight this big bad bug...",
+    question: "You've tried to catch this big orbs...",
     type: "choice",
     choices: [
       { text: "Pffuu, you noticed ? (/ω＼)", nextStep: 0, key: "SECOND_PHASE" },
@@ -94,12 +95,13 @@ export const firstPhase: DecisionTreeStep[] = [
 export const secondPhase: DecisionTreeStep[] = [
   {
     // 0
-    question: "Not bad, not bad at all. But you look hurt a bit...",
+    question:
+      "Tryna' reach for the stars, are we? Shame you fell on your face then, eh?",
     type: "choice",
     choices: [
-      { text: "Just a scratch", nextStep: 1, key: "SECOND_PHASE" },
+      { text: "S'just a nick, mate.", nextStep: 1, key: "SECOND_PHASE" },
       {
-        text: "I'm dying, call the ambulance",
+        text: "Get them blue light boys 'ere pronto!",
         nextStep: 2,
         key: "SECOND_PHASE",
       },
@@ -109,12 +111,16 @@ export const secondPhase: DecisionTreeStep[] = [
   {
     // 1
     question:
-      "you sure ? you got half a heart left...might not be enough for the next phase",
+      "Yer reckon? Lookin' a bit peaky there. Might not 'ave enough juice for what's comin'.",
     type: "choice",
     choices: [
-      { text: "I'm fine, I'm fine (๑˘ᵕ˘)", nextStep: 2, key: "EVIL_PHASE" },
       {
-        text: "Got a portable blood bank ?",
+        text: "Not dead yet, am I? I'll do (๑˘ᵕ˘)",
+        nextStep: 2,
+        key: "EVIL_PHASE",
+      },
+      {
+        text: "Got one of them walkin' blood wagons on ya?",
         nextStep: 2,
         key: "SECOND_PHASE",
       },
@@ -124,17 +130,26 @@ export const secondPhase: DecisionTreeStep[] = [
   {
     // 2
     question:
-      "Naah, I got better than that : This magick potion. One sip and you'll be back to your old, buggy self in no time. Downside? You might turn into a sentient turnip. Worth the risk?",
+      "Nah, sod that! I got somethin' better: this 'ere magic muck.  Neck it, and you'll be reet as rain, good as new. Only thing is, might turn ya into a talkin' turnip.  Worth a punt, yeah?",
     type: "choice",
     choices: [
-      { text: "Yeay, turnip me !", nextStep: 3, key: "SECOND_PHASE" },
-      { text: "Only if you drink it first ", nextStep: 4, key: "SECOND_PHASE" },
+      {
+        text: "Reet on!  Make us a root vegetable, then!",
+        nextStep: 3,
+        key: "SECOND_PHASE",
+      },
+      {
+        text: "Aye, go on then. You 'ave first dibs.",
+        nextStep: 4,
+        key: "SECOND_PHASE",
+      },
     ],
     next: undefined,
   },
   {
     // 3
-    question: "(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ *poof* You're a turnip now. How do you feel?",
+    question:
+      "(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ *poof* Right, so you're a turnip now. How's it feelin' then?",
     type: "choice",
     choices: [
       {
@@ -143,7 +158,7 @@ export const secondPhase: DecisionTreeStep[] = [
         key: "FOURTH_PHASE",
       },
       {
-        text: "so dreams actually comes true ? ",
+        text: "Daft dreams come good after all?",
         nextStep: 1,
         key: "MATRIX_PHASE",
       },
@@ -158,8 +173,8 @@ export const secondPhase: DecisionTreeStep[] = [
     choices: [
       {
         text: "You look bad, I'll pass",
-        nextStep: 2, // yep change
-        key: "FOURTH_PHASE",
+        nextStep: 1, // yep change
+        key: "EVIL_PHASE",
       },
       {
         text: "sip... hey not bad ! glup glup",
@@ -175,7 +190,7 @@ export const evilPhase: DecisionTreeStep[] = [
   {
     // 0
     question:
-      "You can take that fake apology, and shove it right up your hairy....",
+      "You can take that dodgy apology and stick it where the sun don't shine, ya muppet!",
     type: "choice",
     choices: [
       { text: "Ho ! watch your mouth!", nextStep: 2, key: "EVIL_PHASE" },
@@ -186,7 +201,7 @@ export const evilPhase: DecisionTreeStep[] = [
   {
     // 1
     question:
-      "What's with my style ? Do you know how hard to fill those digital empty spaces ? ",
+      "What's up wi' me style? You 'avin' a laugh?  D'ya know what it's like tryin' to fill these empty spaces?",
     type: "choice",
     choices: [
       { text: "Oh god. A pink floyd stan", nextStep: 0, key: "WALL_PHASE" },
@@ -200,7 +215,7 @@ export const evilPhase: DecisionTreeStep[] = [
     type: "choice",
     choices: [
       { text: "hehe... perfect ( ◣∀◢)ψ", nextStep: 5, key: "EVIL_PHASE" },
-      { text: "hum way to go back ?", nextStep: 3, key: "SECOND_PHASE" },
+      { text: "hum way to go back ?", nextStep: 1, key: "FIRST_PHASE" },
     ],
     next: undefined,
   },
@@ -218,7 +233,7 @@ export const evilPhase: DecisionTreeStep[] = [
   {
     // 4
     question:
-      "Abrcadabra ! Alacazam by the power of the moon, I invoke the spirit of the turnip !",
+      "Abracadabra ! Alacazam by the power of the moon, I invoke the spirit of the turnip !",
     type: "choice",
     choices: [
       { text: "**hide behind your sword**", nextStep: 5, key: "EVIL_PHASE" },
@@ -232,7 +247,9 @@ export const evilPhase: DecisionTreeStep[] = [
   },
   {
     // 5
-    question: `Ho God, I've unleash evil ${window.userName}, not sure I can handle that, this is going totally off script.`,
+    question: `Ho God, I've unleash evil ${
+      window.userName ?? "player"
+    }, not sure I can handle that, this is going totally off script.`,
     type: "choice",
     choices: [
       { text: "Prepare to die !", nextStep: 6, key: "EVIL_PHASE" },
@@ -309,8 +326,12 @@ export const fourthPhase: DecisionTreeStep[] = [
     question: "glad you asked ! he might actually !",
     type: "choice",
     choices: [
-      { text: "I'm not sure I want to know", nextStep: 4, key: "FOURTH_PHASE" },
-      { text: "I'm curious now", nextStep: 5, key: "FOURTH_PHASE" },
+      { text: "Where do I start ?", nextStep: 4, key: "FOURTH_PHASE" },
+      {
+        text: "Bit of cleaning to do first, innit.",
+        nextStep: 4,
+        key: "FOURTH_PHASE",
+      },
     ],
     next: undefined,
   },
@@ -322,6 +343,17 @@ export const fourthPhase: DecisionTreeStep[] = [
     choices: [
       { text: "Is that a MF matrix ref ??", nextStep: 0, key: "MATRIX_PHASE" },
       { text: "You could say that.", nextStep: 1, key: "MATRIX_PHASE" },
+    ],
+    next: undefined,
+  },
+  {
+    // 4
+    question:
+      "Right, time to pull our finger out and get to it, head to https://github.com/AurianGL/internet_end_credits",
+    type: "choice",
+    choices: [
+      { text: "I'm on it !", nextStep: 4, key: "END_PHASE" },
+      { text: "I'll pass", nextStep: 0, key: "END_PHASE" },
     ],
     next: undefined,
   },
@@ -595,8 +627,8 @@ export const wallPhase: DecisionTreeStep[] = [
       },
       {
         text: "bouhou, bring be back to the funny timeline",
-        nextStep: 6,
-        key: "WALL_PHASE",
+        nextStep: 0,
+        key: "FUNNY_PHASE",
       },
     ],
     next: undefined,
@@ -775,6 +807,93 @@ export const endPhase: DecisionTreeStep[] = [
     choices: [],
     next: undefined,
   },
+  {
+    // 5
+    question: "Proper job. Let's scarper before any more has-beens show up.",
+    type: "happyEnd",
+    choices: [],
+    next: undefined,
+  },
+  {
+    // 6
+    question:
+      "Ah, suit yerself then. Your loss, innit? I'm tellin' ya, you're missin' out on a proper brew with a proper rock star. But no worries, I'll just 'ave to console meself with me millions and me adoring fans. Maybe I'll write a song about it - 'The Girl Who Said No to a Brew.' It'll be a right tearjerker, that. Probably go straight to number one, knowhatImean? Anyway, I'm off. Got better things to do, like... well, anythin' really. Stay cool, yeah?",
+    type: "happyEnd",
+    choices: [],
+    next: undefined,
+  },
+];
+
+const funnyPhase: DecisionTreeStep[] = [
+  {
+    // 0
+    question:
+      "Ey up, love. You 'eard about them Pink Floyd lads tryin' to make a comeback?",
+    type: "choice",
+    choices: [
+      { text: "No, what about 'em?", nextStep: 1, key: "FUNNY_PHASE" },
+      { text: "I'm listening", nextStep: 1, key: "FUNNY_PHASE" },
+    ],
+    next: undefined,
+  },
+  {
+    // 1
+    question:
+      "Well, they were gonna do a gig, but they couldn't find the right side of the moon! Proper daft, them lot.",
+    type: "choice",
+    choices: [
+      { text: "That's a good one", nextStep: 2, key: "FUNNY_PHASE" },
+      { text: "that's terrible", nextStep: 3, key: "FUNNY_PHASE" },
+    ],
+    next: undefined,
+  },
+  {
+    // 2
+    question: "Wanna hear another one ? Why'd Damon Albarn cross the road?",
+    type: "choice",
+    choices: [
+      { text: "I dunno, why?", nextStep: 5, key: "FUNNY_PHASE" },
+      { text: "Oh god **face palm**", nextStep: 5, key: "FUNNY_PHASE" },
+    ],
+    next: undefined,
+  },
+  {
+    // 3
+    question:
+      "Not as terrible as Blur though, eh? Bunch of southern softies. Reckon they'd get lost in their own back garden, never mind the moon.",
+    type: "choice",
+    choices: [
+      { text: "You're awful! Leave 'em be", nextStep: 4, key: "FUNNY_PHASE" },
+      { text: "I'm more of a Gorillaz fan", nextStep: 4, key: "FUNNY_PHASE" },
+    ],
+    next: undefined,
+  },
+  {
+    // 4
+    question:
+      "Ah, come off it. They're about as rock 'n' roll as me nan's knitting circle. Speakin' of which, fancy goin' for a brew, like on a date like they say? Promise I won't sing ya any Oasis songs.",
+    type: "choice",
+    choices: [
+      { text: "I'll pass, thanks", nextStep: 6, key: "END_PHASE" },
+      {
+        text: "A brew, eh? Go on then, you've twisted me arm",
+        nextStep: 5,
+        key: "END_PHASE",
+      },
+    ],
+    next: undefined,
+  },
+  {
+    // 5
+    question:
+      "To get to the middle of it! That's where all them Blur songs end up anyway - right in the middle of nowhere.",
+    type: "choice",
+    choices: [
+      { text: "Oh god, That's awful!", nextStep: 4, key: "FUNNY_PHASE" },
+      { text: "Ya not good at that, innit ? ", nextStep: 4, key: "END_PHASE" },
+    ],
+    next: undefined,
+  },
 ];
 
 export const dialogsPhases: Record<KeyType, DecisionTreeStep[]> = {
@@ -785,5 +904,6 @@ export const dialogsPhases: Record<KeyType, DecisionTreeStep[]> = {
   MATRIX_PHASE: matrixPhase,
   GOAT_PHASE: goatPhase,
   WALL_PHASE: wallPhase,
+  FUNNY_PHASE: funnyPhase,
   END_PHASE: endPhase,
 };
