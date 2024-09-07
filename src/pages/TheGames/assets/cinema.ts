@@ -17,6 +17,21 @@ export type DecisionTreeStep = {
     | ((input: string, callback: (input: string) => void) => void);
 };
 
+Object.defineProperties(window, {
+  _userName: {
+    value: "",
+    writable: true,
+  },
+  userName: {
+    get() {
+      return this._userName;
+    },
+    set(value: string) {
+      this._userName = value;
+    },
+  },
+});
+
 export const firstPhase: DecisionTreeStep[] = [
   {
     // 0

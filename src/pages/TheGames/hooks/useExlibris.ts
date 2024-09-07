@@ -6,7 +6,7 @@ import { WITCH } from "../assets/witches";
 interface ExlibrisProps {
   selectedColor: string;
   setSelectedColor: React.Dispatch<React.SetStateAction<string>>;
-  setWitch: React.Dispatch<React.SetStateAction<string>>;
+  setWitch: React.Dispatch<React.SetStateAction<number>>;
   setGamePhase: (phase: Phase) => void;
 }
 
@@ -83,19 +83,17 @@ export const useExlibris = ({
       rgbColors(0.8).forEach((color, index) => {
         const x = position.x - 125 + index * 100;
         const y = position.y + 60;
-        const witch = WITCH[index];
-        const image = new Image();
-        image.src = process.env.PUBLIC_URL + witch;
+
         if (selectedColor === color && flicker) {
           // a randm number between 0.5 and 0.1 with only one decimal
           const alpha = Math.floor(Math.random() * 4 + 1) / 10;
           ctx.fillStyle = rgbColors(alpha)[index];
           ctx.fillRect(x, y, 50, 50); // Flicker effect
-          ctx.drawImage(image, x, y);
+          ctx.drawImage(window.witches[index], x, y);
         } else {
           ctx.fillStyle = color;
           ctx.fillRect(x, y, 50, 50);
-          ctx.drawImage(image, x, y);
+          ctx.drawImage(window.witches[index], x, y);
         }
       });
 
@@ -115,7 +113,7 @@ export const useExlibris = ({
             clickY <= y + 50
           ) {
             setSelectedColor(color);
-            setWitch(WITCH[index]);
+            setWitch(index);
             return;
           }
         });

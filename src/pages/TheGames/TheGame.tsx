@@ -1,7 +1,10 @@
+import { OWLS, WITCHES } from "./assets/witches";
 import { BetterFrame } from "./components/BetterFrame";
 import { MusicBox } from "./components/MusicBox";
 
 export const TheGame = () => {
+  window.owls = OWLS;
+  window.witches = WITCHES;
   return (
     <div className="flex bg-black h-screen items-center  justify-center gap-2 w-full text-white font-monospace">
       <div className="flex flex-col items-center justify-center ">

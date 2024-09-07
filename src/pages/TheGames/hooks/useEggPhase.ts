@@ -32,7 +32,7 @@ interface EggPhaseProps {
   userInput: string[];
   userSeqIndex: number;
   selectedColor: string;
-  witch: string;
+  witch: number;
 }
 
 export const useEggPhase = ({
@@ -241,21 +241,16 @@ export const useEggPhase = ({
             ctx.fillStyle = "black";
             ctx.fillText(text, 400 / 2, 400 - textHeight + 2);
           }
-          const image = new Image();
 
-          image.src =
-            process.env.PUBLIC_URL +
-            (isFriendly ? "/owlone.png" : "/owltwo.png");
           const size = isFriendly ? 48 : 32;
-          ctx.drawImage(image, x, y, size, size);
+          ctx.drawImage(window.owls[isFriendly ? 0 : 1], x, y, size, size);
 
           // drawWitchOnCanvas(ctx, { x, y }, generateWitchOnBroom(color));
           // drawCharacterOnCanvas(ctx, { x, y }, color, pnjSeqIndex, !isFriendly);
         }
       );
-      const image = new Image();
-      image.src = process.env.PUBLIC_URL + witch;
-      ctx.drawImage(image, position.x, position.y, 64, 64);
+
+      ctx.drawImage(window.witches[witch], position.x, position.y, 64, 64);
       drawHeartsOnCanvas(ctx, heartCount);
       // show egg count on the top right corner
       ctx.font = "24px Perfect DOS";

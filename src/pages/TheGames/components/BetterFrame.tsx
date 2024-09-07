@@ -31,7 +31,7 @@ export const BetterFrame = () => {
   const { userInput } = useHandleUserInput();
   const [isInputVisible, setIsInputVisible] = useState(false);
   const [inputValue, setInputValue] = useState("");
-  const [witch, setWitch] = useState(WITCH[0]);
+  const [witch, setWitch] = useState(0);
   const {
     position,
     setPosition,

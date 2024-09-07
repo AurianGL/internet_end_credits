@@ -31,23 +31,23 @@ interface CinematicProps {
   handleChoice: (choice: number) => void;
   resetDialog: () => void;
   splitText: (text: string, maxLength: number) => string[];
-  witch: string;
+  witch: number;
 }
 
-const initialAsciiChars = Array.from({ length: 4000 }, () =>
-  String.fromCharCode(33 + Math.floor(Math.random() * 94))
-);
+// const initialAsciiChars = Array.from({ length: 4000 }, () =>
+//   String.fromCharCode(33 + Math.floor(Math.random() * 94))
+// );
 
-const insertCharsAtIndex = (
-  chars: string[],
-  index: number,
-  newChars: string[]
-) => {
-  const updatedChars = [...chars];
-  // remove char of newChars length starting at index
-  updatedChars.splice(index, newChars.length, ...newChars);
-  return updatedChars; // Ensure the array length remains 100
-};
+// const insertCharsAtIndex = (
+//   chars: string[],
+//   index: number,
+//   newChars: string[]
+// ) => {
+//   const updatedChars = [...chars];
+//   // remove char of newChars length starting at index
+//   updatedChars.splice(index, newChars.length, ...newChars);
+//   return updatedChars; // Ensure the array length remains 100
+// };
 
 export const useCinematic = ({
   eggsCollected,
@@ -73,7 +73,20 @@ export const useCinematic = ({
   witch,
 }: CinematicProps) => {
   const [bugPosition, setBugPosition] = useState({ x: 0, y: -400 });
-  const [asciiChars, setAsciiChars] = useState<string[]>(initialAsciiChars);
+  // const [asciiChars, setAsciiChars] = useState<string[]>(initialAsciiChars);
+  const [orbDiameter, setOrbDiameter] = useState(0);
+  const [smallOrbsPositions, setSmallOrbsPositions] = useState([
+    { x: 0, y: 0 },
+    { x: 0, y: 0 },
+    { x: 0, y: 0 },
+    { x: 0, y: 0 },
+    { x: 0, y: 0 },
+    { x: 0, y: 0 },
+    { x: 0, y: 0 },
+    { x: 0, y: 0 },
+    { x: 0, y: 0 },
+    { x: 0, y: 0 },
+  ]);
   const [alpha, setAlpha] = useState(0);
   const [staticAlpha, setstaticAlpha] = useState(0);
   const [frame, setFrame] = useState(0);
@@ -83,18 +96,18 @@ export const useCinematic = ({
   const [conversationFrame, setConversationFrame] = useState<
     number | undefined
   >(undefined);
-  const generateAsciiChars = () => {
-    const newChars: string[] = [];
-    for (let i = 0; i < 100; i++) {
-      newChars.push(String.fromCharCode(33 + Math.floor(Math.random() * 94))); // Random ASCII characters
-    }
-    setAsciiChars((prev) => {
-      const updatedChars = [...prev];
-      updatedChars.splice(-100, 100); // Remove the last 10 characters
-      updatedChars.unshift(...newChars); // Insert 10 new characters at the beginning
-      return updatedChars;
-    });
-  };
+  // const generateAsciiChars = () => {
+  //   const newChars: string[] = [];
+  //   for (let i = 0; i < 100; i++) {
+  //     newChars.push(String.fromCharCode(33 + Math.floor(Math.random() * 94))); // Random ASCII characters
+  //   }
+  //   setAsciiChars((prev) => {
+  //     const updatedChars = [...prev];
+  //     updatedChars.splice(-100, 100); // Remove the last 10 characters
+  //     updatedChars.unshift(...newChars); // Insert 10 new characters at the beginning
+  //     return updatedChars;
+  //   });
+  // };
 
   const isPlayerCollidingWithBug = useMemo(() => {
     return (
@@ -245,62 +258,91 @@ export const useCinematic = ({
           handleUserInput();
         }
         if (frame < 200) {
-          generateAsciiChars();
+          // generateAsciiChars();
+          setOrbDiameter((prev) => prev + 1);
         } else if (frame > 200) {
-          let specificCharsString;
-          switch (true) {
-            case frame >= 200 && frame < 250:
-              specificCharsString = "ARE YOU THE LAST LIVING SOUL ? \n";
-              break;
-            case frame >= 250 && frame < 300:
-              specificCharsString = "what are we going to do? \n";
-              break;
-            case frame >= 300 && frame < 350:
-              specificCharsString = "How are we going to work this out? \n";
-              break;
-            case frame >= 350 && frame < 400:
-              specificCharsString = `I ain't happy, I'm feeling glad \n
-                                      I got sunshine in a bag \n
-                                      I'm useless, but not for long \n
-                                      The future is coming on \n`;
-              break;
-            case frame > 400 && frame < 450:
-              specificCharsString = `I'm walking to the something \n
-                                      Blah blah blah blah blah blah blah \n
-                                      (Collapse) \n
-                                      I'm drinking too much blah blah \n
-                                      (Fall out) \n
-                                      I'm feeling really blah blah, I want to blah blah blah \n
-                                      (Collapse) \n
-                                      And in the end it means I blah blah blah blah blah blah blah (Depend) \n
-                                      I brought myself together \n
-                                      Blah blah blah blah blah blah blah \n
-                                      (Watch out) \n
-                                      I didn't need the patience, life blah blah blah blah blah \n
-                                      (Collapse) \n
-                                      Don't you get too close or I'll blah blah blah blah blah \n
-                                      (Break up) \n
-                                      Stick it up your nose, blah blah blah blah blah blah blah \n
-                                      The end`;
-              break;
-            default:
-              specificCharsString = "CHOOZE PAZUZU \n";
-              break;
-          }
-          const specificChars = specificCharsString.split(""); // Convert string to array of characters
-          const specificIndex = Math.round(Math.random() * 4000); // Example index where you want to insert the characters
-          setAsciiChars((prev) =>
-            insertCharsAtIndex(prev, specificIndex, specificChars)
-          );
-        }
-        if ((bugPosition.y !== 0 && frame < 200) || frame > 300) {
-          setBugPosition((prev) => {
-            // if (prev.y < 0 || prev ) {
-            return { x: prev.x, y: prev.y + 2 }; // Move down by 2 pixels
-            // }
-            // return prev;
+          // let specificCharsString;
+          // switch (true) {
+          //   case frame >= 200 && frame < 250:
+          //     specificCharsString = "ARE YOU THE LAST LIVING SOUL ? \n";
+          //     break;
+          //   case frame >= 250 && frame < 300:
+          //     specificCharsString = "what are we going to do? \n";
+          //     break;
+          //   case frame >= 300 && frame < 350:
+          //     specificCharsString = "How are we going to work this out? \n";
+          //     break;
+          //   case frame >= 350 && frame < 400:
+          //     specificCharsString = `I ain't happy, I'm feeling glad \n
+          //                             I got sunshine in a bag \n
+          //                             I'm useless, but not for long \n
+          //                             The future is coming on \n`;
+          //     break;
+          //   case frame > 400 && frame < 450:
+          //     specificCharsString = `I'm walking to the something \n
+          //                             Blah blah blah blah blah blah blah \n
+          //                             (Collapse) \n
+          //                             I'm drinking too much blah blah \n
+          //                             (Fall out) \n
+          //                             I'm feeling really blah blah, I want to blah blah blah \n
+          //                             (Collapse) \n
+          //                             And in the end it means I blah blah blah blah blah blah blah (Depend) \n
+          //                             I brought myself together \n
+          //                             Blah blah blah blah blah blah blah \n
+          //                             (Watch out) \n
+          //                             I didn't need the patience, life blah blah blah blah blah \n
+          //                             (Collapse) \n
+          //                             Don't you get too close or I'll blah blah blah blah blah \n
+          //                             (Break up) \n
+          //                             Stick it up your nose, blah blah blah blah blah blah blah \n
+          //                             The end`;
+          //     break;
+          //   default:
+          //     specificCharsString = "CHOOZE PAZUZU \n";
+          //     break;
+          // }
+          // const specificChars = specificCharsString.split(""); // Convert string to array of characters
+          // const specificIndex = Math.round(Math.random() * 4000); // Example index where you want to insert the characters
+          // setAsciiChars((prev) =>
+          //   insertCharsAtIndex(prev, specificIndex, specificChars)
+          // );
+          // Split the orb into multiple smaller orbs
+          setOrbDiameter((prev) => {
+            if (prev <= 1) return 1;
+            return prev - 1;
           });
+          const angleIncrement = (2 * Math.PI) / smallOrbsPositions.length;
+          const speed = 2;
+
+          for (let i = 0; i < smallOrbsPositions.length; i++) {
+            const angle = i * angleIncrement;
+            const orbX =
+              200 + Math.cos(angle) * orbDiameter - smallOrbsPositions[i].x;
+            const orbY =
+              200 + Math.sin(angle) * orbDiameter - smallOrbsPositions[i].y;
+
+            ctx.beginPath();
+            ctx.arc(orbX, orbY, 5, 0, Math.PI * 2);
+            ctx.fillStyle = "green";
+            ctx.fill();
+            ctx.closePath();
+
+            setSmallOrbsPositions((prev) =>
+              prev.map(({ x, y }, index) => ({
+                x: x + Math.cos(angle) * speed,
+                y: y + Math.sin(angle) * speed,
+              }))
+            );
+          }
         }
+        // if ((bugPosition.y !== 0 && frame < 200) || frame > 300) {
+        //   setBugPosition((prev) => {
+        //     // if (prev.y < 0 || prev ) {
+        //     return { x: prev.x, y: prev.y + 2 }; // Move down by 2 pixels
+        //     // }
+        //     // return prev;
+        //   });
+        // }
         setUserSeqIndex((prev) => (prev + 1) % 4);
         firstFrameTime.current = now;
       }
@@ -428,38 +470,44 @@ export const useCinematic = ({
       npcs.forEach(
         ({ position: { x, y }, seqIndex: pnjSeqIndex, isFriendly, color }) => {
           const npcIsOutOfBound = x < -25 || x > 425 || y < -25 || y > 425;
-          const image = new Image();
           if (frame > 400 && isFriendly) {
-            image.src = process.env.PUBLIC_URL + "/owlone.png";
-            ctx.drawImage(image, x, y, 48, 48);
+            ctx.drawImage(window.owls[0], x, y, 48, 48);
           }
           if (npcIsOutOfBound) return;
           if (alpha > 0.1) {
-            image.src =
-              process.env.PUBLIC_URL +
-              (isFriendly ? "/owlone.png" : "/owltwo.png");
-            ctx.drawImage(image, x, y, 48, 48);
+            ctx.drawImage(
+              isFriendly ? window.owls[0] : window.owls[1],
+              x,
+              y,
+              48,
+              48
+            );
           }
         }
       );
       ctx.font = "12px arial";
       ctx.fillStyle = "white";
-      asciiChars.forEach((char, index) => {
-        const x = bugPosition.x + (index % 100) * 10;
-        const y = bugPosition.y + Math.floor(index / 100) * 10;
-        ctx.fillText(char, x, y);
-      });
+      // asciiChars.forEach((char, index) => {
+      //   const x = bugPosition.x + (index % 100) * 10;
+      //   const y = bugPosition.y + Math.floor(index / 100) * 10;
+      //   ctx.fillText(char, x, y);
+      // });
+      // draw the growing orb
+      // if (orbDiameter < 100) {
+      //   setOrbDiameter((prev) => prev + 1);
+      // }
+      ctx.beginPath();
+      ctx.arc(200, 200, orbDiameter, 0, Math.PI * 2);
+      ctx.fillStyle = "white";
+      ctx.fill();
+      ctx.closePath();
+
       ctx.font = "16px arial";
-      const image = new Image();
-      image.src = process.env.PUBLIC_URL + witch;
-      ctx.drawImage(image, position.x, position.y, 64, 64);
+      ctx.drawImage(window.witches[witch], position.x, position.y, 64, 64);
       drawHeartsOnCanvas(ctx, heartCount);
     },
     [
       alpha,
-      asciiChars,
-      bugPosition.x,
-      bugPosition.y,
       conversationFrame,
       currentStep.choices,
       currentStep.question,
@@ -477,6 +525,7 @@ export const useCinematic = ({
       map,
       navigate,
       npcs,
+      orbDiameter,
       position.x,
       position.y,
       resetDialog,
@@ -484,6 +533,7 @@ export const useCinematic = ({
       setHeartCount,
       setIsInputVisible,
       setUserSeqIndex,
+      smallOrbsPositions,
       splitText,
       staticAlpha,
       updateNPC,
