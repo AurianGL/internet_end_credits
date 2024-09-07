@@ -75,18 +75,13 @@ export const useCinematic = ({
   const [bugPosition, setBugPosition] = useState({ x: 0, y: -400 });
   // const [asciiChars, setAsciiChars] = useState<string[]>(initialAsciiChars);
   const [orbDiameter, setOrbDiameter] = useState(0);
-  const [smallOrbsPositions, setSmallOrbsPositions] = useState([
-    { x: 0, y: 0 },
-    { x: 0, y: 0 },
-    { x: 0, y: 0 },
-    { x: 0, y: 0 },
-    { x: 0, y: 0 },
-    { x: 0, y: 0 },
-    { x: 0, y: 0 },
-    { x: 0, y: 0 },
-    { x: 0, y: 0 },
-    { x: 0, y: 0 },
-  ]);
+  const [smallOrbsPositions, setSmallOrbsPositions] = useState(() => {
+    let positions: { x: number; y: number }[] = [];
+    for (let i = 0; i < 100; i++) {
+      positions.push({ x: Math.random() * 400, y: Math.random() * 400 });
+    }
+    return positions;
+  });
   const [alpha, setAlpha] = useState(0);
   const [staticAlpha, setstaticAlpha] = useState(0);
   const [frame, setFrame] = useState(0);
@@ -261,6 +256,7 @@ export const useCinematic = ({
           // generateAsciiChars();
           setOrbDiameter((prev) => prev + 1);
         } else if (frame > 200) {
+          setHeartCount(1);
           // let specificCharsString;
           // switch (true) {
           //   case frame >= 200 && frame < 250:
@@ -313,27 +309,32 @@ export const useCinematic = ({
           });
           const angleIncrement = (2 * Math.PI) / smallOrbsPositions.length;
           const speed = 2;
+          setSmallOrbsPositions((prev) =>
+            prev.map(({ x, y }, index) => ({
+              x: x + Math.cos(angleIncrement * index) * speed,
+              y: y + Math.sin(angleIncrement * index) * speed,
+            }))
+          );
+          // for (let i = 0; i < smallOrbsPositions.length; i++) {
+          //   const angle = i * angleIncrement;
+          //   const orbX =
+          //     200 + Math.cos(angle) * orbDiameter - smallOrbsPositions[i].x;
+          //   const orbY =
+          //     200 + Math.sin(angle) * orbDiameter - smallOrbsPositions[i].y;
 
-          for (let i = 0; i < smallOrbsPositions.length; i++) {
-            const angle = i * angleIncrement;
-            const orbX =
-              200 + Math.cos(angle) * orbDiameter - smallOrbsPositions[i].x;
-            const orbY =
-              200 + Math.sin(angle) * orbDiameter - smallOrbsPositions[i].y;
+          //   ctx.beginPath();
+          //   ctx.arc(orbX, orbY, 5, 0, Math.PI * 2);
+          //   ctx.fillStyle = "green";
+          //   ctx.fill();
+          //   ctx.closePath();
 
-            ctx.beginPath();
-            ctx.arc(orbX, orbY, 5, 0, Math.PI * 2);
-            ctx.fillStyle = "green";
-            ctx.fill();
-            ctx.closePath();
-
-            setSmallOrbsPositions((prev) =>
-              prev.map(({ x, y }, index) => ({
-                x: x + Math.cos(angle) * speed,
-                y: y + Math.sin(angle) * speed,
-              }))
-            );
-          }
+          //   setSmallOrbsPositions((prev) =>
+          //     prev.map(({ x, y }, index) => ({
+          //       x: x + Math.cos(angle) * speed,
+          //       y: y + Math.sin(angle) * speed,
+          //     }))
+          //   );
+          // }
         }
         // if ((bugPosition.y !== 0 && frame < 200) || frame > 300) {
         //   setBugPosition((prev) => {
@@ -467,6 +468,19 @@ export const useCinematic = ({
           window.addEventListener("keydown", handlePressNumber);
         }
       }
+      if (frame > 200) {
+        smallOrbsPositions.forEach(({ x, y }) => {
+          ctx.beginPath();
+          ctx.arc(x, y, 5, 0, Math.PI * 2);
+          const alpha = (frame - 200) / 100;
+          const gradient = ctx.createRadialGradient(x, y, 0, x, y, 5);
+          gradient.addColorStop(0.2, `rgba(255, 255, 255, ${alpha})`);
+          gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
+          ctx.fillStyle = gradient;
+          ctx.fill();
+          ctx.closePath();
+        });
+      }
       npcs.forEach(
         ({ position: { x, y }, seqIndex: pnjSeqIndex, isFriendly, color }) => {
           const npcIsOutOfBound = x < -25 || x > 425 || y < -25 || y > 425;
@@ -498,7 +512,17 @@ export const useCinematic = ({
       // }
       ctx.beginPath();
       ctx.arc(200, 200, orbDiameter, 0, Math.PI * 2);
-      ctx.fillStyle = "white";
+      const gradient = ctx.createRadialGradient(
+        200,
+        200,
+        0,
+        200,
+        200,
+        orbDiameter
+      );
+      gradient.addColorStop(0.5, "white");
+      gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
+      ctx.fillStyle = gradient;
       ctx.fill();
       ctx.closePath();
 

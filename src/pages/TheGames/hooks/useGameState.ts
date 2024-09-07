@@ -35,7 +35,7 @@ export const useGameState = () => {
   const resetGame = () => {
     setGameState({
       phase: "exlibris",
-      eggsCollected: 0,
+      eggsCollected: 2,
     });
   };
 

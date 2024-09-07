@@ -276,6 +276,7 @@ export const BetterFrame = () => {
                 name="userName"
                 placeholder="Jane"
                 className="text-black"
+                autoComplete="true"
               />
             </Form>
           )}
