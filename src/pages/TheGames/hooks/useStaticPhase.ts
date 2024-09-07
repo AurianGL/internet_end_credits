@@ -4,9 +4,16 @@ import { DecisionTreeStep } from "../assets/cinema";
 interface StaticProps {
   currentStep: DecisionTreeStep;
   splitText: (text: string, maxLineLength: number) => string[];
+  witch: number;
+  position: { x: number; y: number };
 }
 
-export const useStaticPhase = ({ currentStep, splitText }: StaticProps) => {
+export const useStaticPhase = ({
+  currentStep,
+  splitText,
+  witch,
+  position,
+}: StaticProps) => {
   const [frame, setFrame] = useState(0);
 
   return useCallback(
@@ -33,6 +40,7 @@ export const useStaticPhase = ({ currentStep, splitText }: StaticProps) => {
       questionLines.forEach((line, index) => {
         ctx.fillText(line, 200, 20 + index * 20);
       });
+      ctx.drawImage(window.witches[witch], position.x, position.y, 64, 64);
     },
     [currentStep.question, splitText]
   );

@@ -22,7 +22,7 @@ Object.defineProperties(window, {
   },
 });
 
-const OWL = ["/owlone.png", "/owltwo.png"];
+const OWL = ["/owlone.png", "/owltwo.png", "/goya.png"];
 export const OWLS = OWL.map((owl) => {
   const img = new Image();
   img.src = process.env.PUBLIC_URL + owl;

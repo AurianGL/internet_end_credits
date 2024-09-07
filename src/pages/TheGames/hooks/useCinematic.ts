@@ -484,11 +484,11 @@ export const useCinematic = ({
       npcs.forEach(
         ({ position: { x, y }, seqIndex: pnjSeqIndex, isFriendly, color }) => {
           const npcIsOutOfBound = x < -25 || x > 425 || y < -25 || y > 425;
-          if (frame > 400 && isFriendly) {
-            ctx.drawImage(window.owls[0], x, y, 48, 48);
+          if (frame > 200 && isFriendly) {
+            if (npcIsOutOfBound) return;
+            ctx.drawImage(window.owls[2], x, y, 98, 98);
           }
-          if (npcIsOutOfBound) return;
-          if (alpha > 0.1) {
+          if (isFriendly && frame < 200) {
             ctx.drawImage(
               isFriendly ? window.owls[0] : window.owls[1],
               x,

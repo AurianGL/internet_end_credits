@@ -129,7 +129,12 @@ export const BetterFrame = () => {
     setWitch,
   });
   const defeat = useDefeat();
-  const staticPhase = useStaticPhase({ currentStep, splitText });
+  const staticPhase = useStaticPhase({
+    currentStep,
+    splitText,
+    witch,
+    position,
+  });
   const userName = useMemo(() => {
     return window.userName;
   }, []);
