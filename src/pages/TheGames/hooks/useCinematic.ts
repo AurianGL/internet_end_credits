@@ -305,7 +305,7 @@ export const useCinematic = ({
           // Split the orb into multiple smaller orbs
           setOrbDiameter((prev) => {
             if (prev <= 1) return 1;
-            return prev - 1;
+            return prev - 2;
           });
           const angleIncrement = (2 * Math.PI) / smallOrbsPositions.length;
           const speed = 2;
@@ -518,8 +518,25 @@ export const useCinematic = ({
         200,
         orbDiameter
       );
-      gradient.addColorStop(0.5, "white");
-      gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
+      if (orbDiameter < 150) {
+        gradient.addColorStop(0.5, "white");
+        gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
+      } else {
+        const tot = 50;
+        const current = orbDiameter - 150;
+        const coef = current / tot;
+        console.log("current", current);
+        console.log(coef);
+
+        const color = `rgba(255, ${Math.round(255 * (1 - coef))}, ${Math.round(
+          255 * (1 - coef)
+        )}, 1)`;
+        const extcolor = `rgba(255, ${Math.round(
+          255 * (1 - coef)
+        )}, ${Math.round(255 * coef)}, 0)`;
+        gradient.addColorStop(0.5, color);
+        gradient.addColorStop(1, extcolor);
+      }
       ctx.fillStyle = gradient;
       ctx.fill();
       ctx.closePath();
