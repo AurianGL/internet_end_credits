@@ -96,7 +96,7 @@ export const secondPhase: DecisionTreeStep[] = [
   {
     // 0
     question:
-      "Tryna' reach for the stars, are we? Shame you fell on your face then, eh?",
+      "Tryna' reach for the stars, are we? Shame you fell on your face then, eh? only half a heart left ?",
     type: "choice",
     choices: [
       { text: "S'just a nick, mate.", nextStep: 1, key: "SECOND_PHASE" },
@@ -116,8 +116,8 @@ export const secondPhase: DecisionTreeStep[] = [
     choices: [
       {
         text: "Not dead yet, am I? I'll do (๑˘ᵕ˘)",
-        nextStep: 2,
-        key: "EVIL_PHASE",
+        nextStep: 5,
+        key: "SECOND_PHASE",
       },
       {
         text: "Got one of them walkin' blood wagons on ya?",
@@ -173,13 +173,81 @@ export const secondPhase: DecisionTreeStep[] = [
     choices: [
       {
         text: "You look bad, I'll pass",
-        nextStep: 1, // yep change
+        nextStep: 1,
         key: "EVIL_PHASE",
       },
       {
         text: "sip... hey not bad ! glup glup",
         nextStep: 0,
         key: "FOURTH_PHASE",
+      },
+    ],
+    next: undefined,
+  },
+  {
+    // 5
+    question:
+      "Right, so you're still standin'. Guess you're tougher than you look.  What's next then?",
+    type: "choice",
+    choices: [
+      {
+        text: "I'm ready for anything",
+        nextStep: 6,
+        key: "SECOND_PHASE",
+      },
+      {
+        text: "What's the worst that could happen?",
+        nextStep: 7,
+        key: "SECOND_PHASE",
+      },
+    ],
+    next: undefined,
+  },
+  {
+    // 6
+    question:
+      "Ey up, fancy goin' out? I mean, I'm not usually one for birds on broomsticks, but for you, I might just hop on and take a ride ?",
+    type: "choice",
+    choices: [
+      { text: "I'm not a bird, ya muppet !", nextStep: 8, key: "SECOND_PHASE" },
+      {
+        text: "are ya looking for trouble there !",
+        nextStep: 8,
+        key: "SECOND_PHASE",
+      },
+    ],
+    next: undefined,
+  },
+  {
+    // 7
+    question:
+      "Depends, on you, innit?  Could be a right mess, or could be a right laugh. Only one way to find out, eh?",
+    type: "choice",
+    choices: [
+      { text: "Aight, I'm all for laughing.", nextStep: 0, key: "FUNNY_PHASE" },
+      {
+        text: "It's already a mess, innit ? ",
+        nextStep: 8,
+        key: "SECOND_PHASE",
+      },
+    ],
+    next: undefined,
+  },
+  {
+    // 8
+    question:
+      "Alright, alright, keep yer hair on!  Just tryin' to be friendly, innit?  No need to get yer knickers in a twist.",
+    type: "choice",
+    choices: [
+      {
+        text: "To late, my wrath is unleashed!",
+        nextStep: 2,
+        key: "EVIL_PHASE",
+      },
+      {
+        text: "I'm gonna give you one more chance, start over.",
+        nextStep: 1,
+        key: "FIRST_PHASE",
       },
     ],
     next: undefined,
@@ -248,7 +316,7 @@ export const evilPhase: DecisionTreeStep[] = [
   {
     // 5
     question: `Ho God, I've unleash evil ${
-      window.userName ?? "player"
+      window.userName || "player"
     }, not sure I can handle that, this is going totally off script.`,
     type: "choice",
     choices: [

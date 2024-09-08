@@ -525,8 +525,6 @@ export const useCinematic = ({
         const tot = 50;
         const current = orbDiameter - 150;
         const coef = current / tot;
-        console.log("current", current);
-        console.log(coef);
 
         const color = `rgba(255, ${Math.round(255 * (1 - coef))}, ${Math.round(
           255 * (1 - coef)
