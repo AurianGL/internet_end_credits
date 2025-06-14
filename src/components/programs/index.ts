@@ -4,6 +4,7 @@ import { Durer } from "../../winComponents/durer";
 import { Paint } from "../../winComponents/paint";
 import { Tourniquet } from "../../winComponents/tourniquet";
 import { PgrLoader } from "../PgrLoader";
+import { War } from "../../winComponents/war";
 
 export type programsComponents =
 	| typeof Tourniquet
@@ -11,7 +12,9 @@ export type programsComponents =
 	| typeof Durer
 	| typeof Home
 	| typeof Contact
-	| typeof PgrLoader;
+	| typeof PgrLoader
+	| typeof War;
+
 const programs: Record<string, programsComponents> = {
 	Home,
 	Tourniquet,
@@ -19,6 +22,7 @@ const programs: Record<string, programsComponents> = {
 	Durer,
 	Contact,
 	PgrLoader,
+	War,
 };
 
 export default programs;

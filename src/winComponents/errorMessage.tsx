@@ -6,9 +6,10 @@ interface Props {
 	arrInd: number;
 	clickOk: () => void;
 	clickX: (arrInd: number) => void;
+	message?: string;
 }
 
-export const ErrorMessage = ({ active, arrInd, clickOk, clickX }: Props) => {
+export const ErrorMessage = ({ active, arrInd, clickOk, clickX, message = "The Internet has ended. Click OK to continue." }: Props) => {
 	return (
 		<WindowsDrag>
 			<div className="error-container windows">
@@ -25,7 +26,7 @@ export const ErrorMessage = ({ active, arrInd, clickOk, clickX }: Props) => {
 				</div>
 				<div className="error-content">
 					<div className="error-message">
-						The Internet has ended. <br /> Click OK to continue.
+						{message}
 					</div>
 					<button
 						type="button"

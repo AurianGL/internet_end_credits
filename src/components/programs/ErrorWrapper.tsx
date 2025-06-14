@@ -20,7 +20,11 @@ export const ErrorWrapper: programsWrapper = ({
         className={`absolute box-border error-container windows ${
           currentProgram === cle ? "z-40" : "z-auto"
         }`}
-        style={{ height: "20vh" }}
+        style={{ 
+          height: "150px",
+          top: "25%",
+          left: "25%",
+        }}
       >
         <div className="win-header">
           <p className="win-title">{name}</p>
