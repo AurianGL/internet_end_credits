@@ -34,4 +34,9 @@ export const PAGES = [
     url: "/nightflight",
     Component: "TheGame",
   },
+  {
+    name: "War",
+    url: "/war",
+    Component: "War",
+  },
 ];

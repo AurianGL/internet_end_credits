@@ -21,7 +21,8 @@ export type ProgramsType = Record<
 	| "crux"
 	| "painting"
 	| "whereIsHome"
-	| "paint",
+	| "paint"
+	| "war",
 	program
 >;
 
@@ -97,4 +98,11 @@ export const PROGRAMS: ProgramsType = {
 		props: {},
 		icon: "pgr",
 	},
+  war: {
+    name: "War",
+    PgrComponent: programs.War,
+    Wrapper: wrappers.ErrorWrapper,
+    props: {},
+    icon: "pgr",
+  },
 };

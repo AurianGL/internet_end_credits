@@ -41,6 +41,7 @@ const Art = () => {
 				</ExternalLink>
 				<FolderIcon name="Terminal" cle="terminal" />
 				<FolderIcon name="Where is Home" cle="whereIsHome" />
+				<FolderIcon name="War" cle="war" />
 				{programs.map((program) => {
 					const { name, PgrComponent, props, Wrapper, bgColor } =
 						PROGRAMS[program];
